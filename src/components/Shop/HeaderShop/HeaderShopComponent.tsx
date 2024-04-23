@@ -27,8 +27,8 @@ const HeaderShopComponent = (props: {}) => {
   return (
     <>
       <header className="bg-white pt-[0.5rem] w-[117.563rem] flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.25rem] text-black font-baloo-2">
-        <div className="w-[83rem] flex flex-col items-start justify-start gap-[0.05rem] max-w-full">
-          <div className="w-[83rem] box-border flex flex-row items-center justify-between pt-[0.875rem] px-[0.375rem] pb-[0.625rem] max-w-full text-[1.125rem] text-gray-100 border-b-[1px] border-solid border-whitesmoke-300 mq450:gap-[2.063rem] mq900:gap-[4.063rem] mq1350:gap-[8.188rem]">
+        <div className="w-[78rem] flex flex-col items-start justify-start gap-[0.05rem] max-w-full">
+          <div className="w-[83rem] box-border flex flex-row items-center justify-between pt-[0.875rem] px-[0.375rem] pb-[0.625rem] max-w-full text-[1.125rem] text-black border-b-[1px] border-solid border-whitesmoke-300 gap-[5rem]">
             <div className="w-[50rem] flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border max-w-full">
               <div className="self-stretch flex flex-row items-center justify-between max-w-full">
                 <img
@@ -37,7 +37,7 @@ const HeaderShopComponent = (props: {}) => {
                   alt=""
                   src="/Icons/divcrcategorytoggle.svg"
                 />
-                <div className="w-[33.063rem] flex flex-col items-start justify-start px-[0rem] pb-[0rem] text-black">
+                <div className="w-[30rem] flex flex-col items-start justify-start px-[0rem] pb-[0rem] text-black">
                   <div className="flex flex-row items-center justify-start gap-[3rem] max-w-full mq1350:hidden">
                     <div
                       onClick={() => {
@@ -97,9 +97,9 @@ const HeaderShopComponent = (props: {}) => {
                     src="/Icons/mail_icon.svg"
                     style={{ transform: "translateY(-2px)" }}
                   />
-                  <div className="relative tracking-[0.48px] font-medium whitespace-nowrap mq1350:hidden">
+                  <div className="relative tracking-[1px] font-medium whitespace-nowrap mq1350:hidden">
                     <a
-                      className="links_hover self-stretch relative tracking-[0.48px] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
+                      className="links_hover self-stretch relative tracking-[1px] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
                       href={`mailto:${CORE_INFORMATION.MAIL_CONSTANT}`}
                       target="_blank"
                     >
@@ -116,9 +116,9 @@ const HeaderShopComponent = (props: {}) => {
                     src="/Icons/phone_icon.svg"
                     style={{ transform: "translateY(-2px)" }}
                   />
-                  <div className="relative tracking-[0.48px] font-medium whitespace-nowrap mq1350:hidden">
+                  <div className="relative tracking-[1px] font-medium whitespace-nowrap mq1350:hidden">
                     <a
-                      className="links_hover self-stretch relative tracking-[0.48px] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
+                      className="links_hover self-stretch relative tracking-[1px] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
                       href={`tel:${CORE_INFORMATION.PHONE_CONSTANT}`}
                       target="_blank"
                     >
@@ -130,7 +130,7 @@ const HeaderShopComponent = (props: {}) => {
             </div>
           </div>
 
-          <div className="w-[83rem] box-border flex flex-row items-center justify-between pt-[0.875rem] px-[0.375rem] pb-[0.625rem] max-w-full text-[1.125rem] text-gray-100 border-b-[1px] border-solid border-whitesmoke-300 mq450:gap-[2.063rem] mq900:gap-[4.063rem] mq1350:gap-[8.188rem]">
+          <div className="w-[83rem] box-border flex flex-row items-center justify-between pt-[0.875rem] px-[0.375rem] pb-[0.625rem] max-w-full text-[1.125rem] text-black border-b-[1px] border-solid border-whitesmoke-300 gap-[5rem]">
             <div className="w-[50rem] flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border max-w-full">
               <div className="self-stretch flex flex-row items-start justify-between max-w-full gap-[1.25rem]">
                 <img
@@ -142,7 +142,7 @@ const HeaderShopComponent = (props: {}) => {
                     navigateToPage(PATH_SHOP.root);
                   }}
                 />
-                <div className="overflow-hidden w-[33.063rem] flex flex-col items-start justify-start pt-[0.25rem] px-[0rem] pb-[0rem] box-border max-w-full">
+                <div className="overflow-hidden w-[30rem] flex flex-col items-start justify-start pt-[0.25rem] px-[0rem] pb-[0rem] box-border max-w-full">
                   <div
                     style={{ borderRight: "0px" }}
                     className="overflow-hidden self-stretch rounded-8xs bg-white flex flex-row items-end justify-between py-[0rem] pr-[0.125rem] pl-[0.625rem] gap-[1.25rem] border-[1px] border-solid border-chocolate"
@@ -220,8 +220,8 @@ const HeaderShopComponent = (props: {}) => {
                 </div>
               </div>
             </div>
-            <div className="min-w-[28rem] flex flex-row items-center justify-end pt-[0rem] px-[0rem] pb-[0.137rem] text-black">
-              <div className="flex flex-row items-center justify-end">
+            <div className="min-w-[28rem] flex flex-row items-center justify-between pt-[0rem] px-[0rem] pb-[0.137rem] text-black">
+              {/* <div className="flex flex-row items-center justify-end">
                 <img
                   className=" w-[1.656rem] h-[1.2rem] z-[1]"
                   alt=""
@@ -257,8 +257,9 @@ const HeaderShopComponent = (props: {}) => {
                     Đăng Ký
                   </span>
                 </div>
-              </div>
-              {/* <div className="flex flex-row items-center justify-end">
+              </div> */}
+
+              <div className="flex flex-row items-center justify-end">
                 <img
                   className=" w-[1.656rem] h-[1.2rem] z-[1]"
                   alt=""
@@ -313,7 +314,7 @@ const HeaderShopComponent = (props: {}) => {
                     {`Giỏ Hàng (0)`}
                   </span>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
