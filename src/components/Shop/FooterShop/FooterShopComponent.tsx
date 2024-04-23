@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import "./index.scss";
 import { CORE_INFORMATION } from "@/constants/CoreInformation";
 import { PATH_SHOP } from "@/routes/paths";
@@ -9,21 +10,26 @@ const FooterShopComponent = (props: {}) => {
 
   return (
     <>
-      <footer className="mr-[-0.313rem] self-stretch bg-black box-border flex flex-col items-start justify-start pt-[5rem] px-[5rem] pb-[1.975rem] gap-[4rem] max-w-full z-[1] text-left text-[1.375rem] text-chocolate font-baloo border-t-[1px] border-solid border-black mq450:pt-[3.25rem] mq450:pb-[1.313rem] mq450:box-border mq900:gap-[1.25rem] mq900:pl-[4.813rem] mq900:pr-[4.813rem] mq900:box-border mq1350:gap-[2.5rem] mq1350:pl-[9.688rem] mq1350:pr-[9.688rem] mq1350:box-border">
+      <footer className="mr-[-0.313rem] self-stretch bg-black box-border flex flex-col items-start justify-start pt-[5rem] px-[5rem] pb-[1.975rem] gap-[4rem] max-w-full z-[1] text-left text-[1.375rem] text-chocolate font-baloo border-t-[1px] border-solid border-black mq450:pt-[3.25rem] mq450:pb-[1.313rem] mq450:box-border mq900:gap-[1.25rem] mq900:pl-[4.813rem] mq900:pr-[4.813rem] mq1350:gap-[2.5rem] mq1350:pl-[9.688rem] mq1350:pr-[9.688rem] mq1350:box-border">
         <div className="w-[80.213rem] flex flex-row items-start justify-between max-w-full gap-[1.25rem] mq1725:flex-wrap">
           <div className="w-[19.438rem] flex flex-col items-start justify-start py-[0rem] pr-[1.062rem] pl-[0rem] box-border gap-[0.681rem] text-white font-baloo-2">
             <img
-              className="w-[13.625rem] h-[6.625rem] relative object-cover"
+              onClick={() => {
+                router.push(PATH_SHOP.root);
+              }}
+              className="cursor-pointer w-[13.625rem] h-[6.625rem] relative object-cover"
               loading="lazy"
               alt="Logo"
               src="/Logo/Logo_dark.png"
             />
             <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.687rem]">
               <div className="flex-1 flex flex-row items-center justify-start gap-[0.843rem] mq450:flex-wrap">
-                <img
+                <Image
                   className="h-[1.5rem] w-[1.281rem] relative overflow-hidden shrink-0"
                   alt=""
                   src="/Icons/mail_icon.svg"
+                  width={19}
+                  height={16}
                 />
                 <div className="flex-1 flex flex-col items-start justify-start pt-[0.131rem] px-[0rem] pb-[0rem] box-border min-w-[10.125rem]">
                   <div className="self-stretch relative tracking-[0.48px] leading-[1.625rem] whitespace-nowrap mq450:text-[1.125rem] mq450:leading-[1.313rem]">
@@ -40,10 +46,12 @@ const FooterShopComponent = (props: {}) => {
             </div>
             <div className="w-[15.813rem] flex flex-row items-center justify-start py-[0rem] px-[0.687rem] box-border">
               <div className="flex-1 flex flex-row items-end justify-start gap-[0.843rem] mq450:flex-wrap">
-                <img
+                <Image
                   className="h-[1.5rem] w-[1.281rem] relative overflow-hidden shrink-0 min-h-[1.5rem]"
                   alt=""
                   src="/Icons/phone_icon.svg"
+                  width={19}
+                  height={16}
                 />
                 <div className="flex-1 flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.118rem] box-border min-w-[8rem]">
                   <div className="self-stretch relative tracking-[0.48px] leading-[1.25rem] mq450:text-[1.125rem] mq450:leading-[1rem]">
@@ -125,42 +133,50 @@ const FooterShopComponent = (props: {}) => {
             </div>
             <div className="gap-[0.25rem] mq450:flex-wrap flex flex-col justify-between">
               <div className="self-stretch flex flex-row items-start justify-start ">
-                <img
-                  className="self-stretch h-[5.6rem] relative rounded-8xs max-w-full overflow-hidden shrink-0 object-cover"
-                  loading="lazy"
+                <Image
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
                   alt=""
                   src="/mock/group--6--18--link--1jpg@2x.png"
+                  width={134}
+                  height={60}
                 />
-                <img
-                  className="h-[5.6rem] ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
-                  loading="lazy"
+                <Image
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
                   alt=""
                   src="/mock/group--7--18--link--2jpg@2x.png"
+                  width={134}
+                  height={60}
                 />
-                <img
-                  className="h-[5.6rem] ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
-                  loading="lazy"
+                <Image
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
                   alt=""
                   src="/mock/group--8--18--link--3jpg@2x.png"
+                  width={134}
+                  height={60}
                 />
-                <img
-                  className="h-[5.6rem] ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
-                  loading="lazy"
+                <Image
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
                   alt=""
                   src="/mock/group--9--18--link--4jpg@2x.png"
+                  width={134}
+                  height={60}
                 />
               </div>
               <div className="mt-2 flex flex-col items-start justify-start gap-[0.625rem] min-w-[4.688rem] max-w-[5.125rem]">
                 <div className="flex flex-row items-start justify-start gap-[0.25rem]">
-                  <img
-                    className="h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
-                    alt=""
+                  <Image
+                    className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
+                    alt="facebook_icon"
                     src="/Icons/facebook_icon.svg"
+                    width={52}
+                    height={52}
                   />
-                  <img
-                    className="h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
-                    alt=""
+                  <Image
+                    className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
+                    alt="insta_icon"
                     src="/Icons/insta_icon.svg"
+                    width={52}
+                    height={52}
                   />
                 </div>
               </div>

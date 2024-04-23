@@ -1,0 +1,3 @@
+export const LOCALSTORAGE_CONSTANTS = {
+    CURRENT_PAGE: "CURRENT_PAGE",
+}
