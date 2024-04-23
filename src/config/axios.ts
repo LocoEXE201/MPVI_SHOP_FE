@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 export enum AxiosClientFactoryEnum {
   AUTH = 'auth',
   SHOP = 'shop',
+  WAREHOUSE = 'warehouse',
 }
 
 export const parseParams = (params: any) => {
@@ -30,6 +31,7 @@ export const parseParams = (params: any) => {
 
 const auth = `https://mpviauth.azurewebsites.net/api/`;
 const shop = `https://mpvishopapi.azurewebsites.net/api/`;
+const warehouse = `https://mpviwarehouse.azurewebsites.net/api/`;
 
 const request = axios.create({
   baseURL: auth,
@@ -63,6 +65,25 @@ requestManagement.interceptors.response.use(
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
 
+const requestWarehouse = axios.create({
+    baseURL: warehouse,
+    paramsSerializer: parseParams,
+    headers: {
+        Authorization:
+          'Bearer '
+      }
+});
+  
+  
+requestWarehouse.interceptors.request.use((options) => {
+    return options;
+  });
+  
+requestWarehouse.interceptors.response.use(
+    (response) => response,
+    (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+  );
+
 class AxiosClientFactory {
   getAxiosClient(type?: AxiosClientFactoryEnum, config: AxiosRequestConfig = {}) {
     switch (type) {
@@ -70,6 +91,8 @@ class AxiosClientFactory {
         return request;
       case 'shop':
         return requestManagement;
+      case 'warehouse':
+        return requestWarehouse;
       default:
         return request;
     }
@@ -81,6 +104,7 @@ const axiosClientFactory = new AxiosClientFactory();
 const axiosInstances = {
   auth: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.AUTH),
   shop: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SHOP),
+  warehouse: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.WAREHOUSE),
 };
 
 export { axiosClientFactory };
