@@ -1,0 +1,10 @@
+.links_hover {
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+.links_hover:hover {
+  color: #cb6f04 !important;
+  transition: all ease 0.3s;
+  font-weight: bolder;
+}
