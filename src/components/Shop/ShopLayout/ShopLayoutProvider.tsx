@@ -11,7 +11,9 @@ export default function ShopLayoutComponent({
   return (
     <>
       <HeaderShop />
-      <main style={{ minHeight: "80vh" }}>{children}</main>
+      <main style={{ minHeight: "80vh" }} className="font-baloo-2">
+        {children}
+      </main>
       <FooterShop />
     </>
   );

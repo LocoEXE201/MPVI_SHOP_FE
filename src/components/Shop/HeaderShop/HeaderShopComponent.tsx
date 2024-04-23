@@ -8,11 +8,15 @@ const HeaderShopComponent = (props: {}) => {
 
   return (
     <>
-      <header style={{ minHeight: "10vh" }} className="bg-yellow-200">
-        Header Content Here
+      <header
+        style={{ minHeight: "10vh" }}
+        className="bg-slate-400 font-baloo-2"
+      >
+        <p className="font-baloo">Header Content Here</p>
+
         <div className="flex gap-10">
           <div
-            className="cursor-pointer"
+            className="links_hover cursor-pointer"
             onClick={() => {
               router.push(PATH_SHOP.root);
             }}
@@ -20,7 +24,7 @@ const HeaderShopComponent = (props: {}) => {
             Trang Chủ
           </div>
           <div
-            className="cursor-pointer"
+            className="links_hover cursor-pointer"
             onClick={() => {
               router.push(PATH_SHOP.about);
             }}
@@ -28,7 +32,7 @@ const HeaderShopComponent = (props: {}) => {
             Giới Thiệu
           </div>
           <div
-            className="cursor-pointer"
+            className="links_hover cursor-pointer"
             onClick={() => {
               router.push(PATH_SHOP.products);
             }}
@@ -36,7 +40,7 @@ const HeaderShopComponent = (props: {}) => {
             Sản Phẩm
           </div>
           <div
-            className="cursor-pointer"
+            className="links_hover cursor-pointer"
             onClick={() => {
               router.push(PATH_SHOP.news);
             }}
@@ -46,7 +50,7 @@ const HeaderShopComponent = (props: {}) => {
         </div>
         <div className="flex gap-10">
           <div
-            className="cursor-pointer"
+            className="links_hover cursor-pointer"
             onClick={() => {
               router.push(PATH_AUTH.login);
             }}
@@ -54,7 +58,7 @@ const HeaderShopComponent = (props: {}) => {
             Đăng Nhập
           </div>
           <div
-            className="cursor-pointer"
+            className="links_hover cursor-pointer"
             onClick={() => {
               router.push(PATH_AUTH.register);
             }}
