@@ -4,12 +4,13 @@ const sweetAlert = {
   alertSuccess: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: "center",
       width: `${width.toString()}rem`,
       background: "#eef6ec",
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -25,12 +26,13 @@ const sweetAlert = {
   alertFailed: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: "center",
       width: `${width.toString()}rem`,
       background: "#fee3e2",
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -46,12 +48,13 @@ const sweetAlert = {
   alertInfo: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: "center",
       width: `${width.toString()}rem`,
       background: "#d0efff",
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -67,12 +70,13 @@ const sweetAlert = {
   alertWarning: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: "center",
       width: `${width.toString()}rem`,
       background: "#ffffcc",
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);

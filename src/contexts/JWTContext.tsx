@@ -122,8 +122,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
             sweetAlert.alertInfo(
               "Phiên đăng nhập hết hạn",
               "Xin vui lòng đăng nhập lại",
-              2000,
-              30
+              3000,
+              25
             );
           }
 
@@ -194,7 +194,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
             sweetAlert.alertFailed(
               `Đăng nhập thất bại`,
               `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-              2000,
+              5000,
               30
             );
           }
@@ -205,7 +205,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
           sweetAlert.alertFailed(
             `Đăng nhập thất bại`,
             `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-            2000,
+            5000,
             30
           );
           router.push(PATH_AUTH.login);
@@ -213,7 +213,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         .finally(() => {
           if (getUserInfo()) {
             setTimeout(() => {
-              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 20);
+              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 22);
             }, 200);
           }
         });
@@ -223,7 +223,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       sweetAlert.alertFailed(
         `Đăng nhập thất bại`,
         `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-        2000,
+        5000,
         30
       );
       router.push(PATH_AUTH.login);
@@ -273,7 +273,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
               `Đăng nhập thất bại`,
               `Email này hiện chưa được đăng ký`,
               2000,
-              25
+              28
             );
           }
           console.log(response);
@@ -285,13 +285,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
             `Đăng nhập thất bại`,
             `Email này hiện chưa được đăng ký`,
             2000,
-            25
+            28
           );
         })
         .finally(() => {
           if (getUserInfo()) {
             setTimeout(() => {
-              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 20);
+              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 22);
             }, 200);
           }
         });
@@ -301,7 +301,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       sweetAlert.alertFailed(
         `Đăng nhập thất bại`,
         `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-        2000,
+        5000,
         30
       );
       router.push(PATH_AUTH.login);
@@ -349,17 +349,17 @@ function AuthProvider({ children }: { children: ReactNode }) {
       disableLoading();
     }
 
-    if (
-      response.data.isSuccess &&
-      !response.data.result.succeeded &&
-      response.data.result.errors[0] != null
-    ) {
-      disableLoading();
-      localStorage.setItem(
-        "REGISTER_CONFIRMING_ERROR",
-        response.data.result.errors[0].description
-      );
-    }
+    // if (
+    //   response.data.isSuccess &&
+    //   !response.data.result.succeeded &&
+    //   response.data.result.errors[0] != null
+    // ) {
+    //   disableLoading();
+    //   localStorage.setItem(
+    //     "REGISTER_CONFIRMING_ERROR",
+    //     response.data.result.errors[0].description
+    //   );
+    // }
   };
 
   const logout = async () => {
