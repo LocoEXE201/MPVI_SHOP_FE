@@ -11,10 +11,11 @@ import {
   AuthUser,
   JWTContextType,
 } from "@/types/authentication";
-import { AccountRoleCode } from "@/enums/accountRole";
+import { AccountRoleCode, checkRoleCode } from "@/enums/accountRole";
 import { useRouter } from "next/navigation";
 import useAppContext from "@/hooks/useAppContext";
 import { PATH_AUTH } from "@/routes/paths";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 
 // ----------------------------------------------------------------------
 
@@ -167,12 +168,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
             const { id, name, email, phoneNumber, role, address } =
               response.data.result.user;
 
+            var userRole: string[] = [];
+            userRole.push(checkRoleCode(role));
+
             const user = {
               id: id,
               name: name,
               email: email,
               phoneNumber: phoneNumber,
-              // role: role,
+              role: userRole,
               // address: address,
             };
 
@@ -241,17 +245,18 @@ function AuthProvider({ children }: { children: ReactNode }) {
             response.data.result != null &&
             response.data.result.user != null
           ) {
-            console.log(response);
-
             const { id, name, email, phoneNumber, role } =
               response.data.result.user;
+
+            var userRole: string[] = [];
+            userRole.push(checkRoleCode(role));
 
             const user = {
               id: id,
               name: name,
               email: email,
               phoneNumber: phoneNumber,
-              // role: role,
+              role: userRole,
             };
 
             const accessToken = response.data.result.token;
@@ -276,10 +281,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
               28
             );
           }
-          console.log(response);
         })
         .catch((error) => {
-          console.log("haha", error);
+          console.log(error);
           disableLoading();
           sweetAlert.alertFailed(
             `Đăng nhập thất bại`,
@@ -313,34 +317,23 @@ function AuthProvider({ children }: { children: ReactNode }) {
     password: string,
     name: string,
     phoneNumber: string,
-    role: string,
-    address: string
+    role: string
+    // address: string
   ) => {
     enableLoading();
 
-    const trimmedPhone = phoneNumber.replace(/^0+/, "");
-    const parsedPhone = "+84" + trimmedPhone;
     const response = await axiosInstances.auth.post("/auth/register", {
-      email,
-      password,
-      name,
-      phoneNumber: parsedPhone,
-      role,
-      address,
-    });
-
-    console.log({
-      email,
-      password,
-      name,
-      phoneNumber: parsedPhone,
-      role,
-      address,
+      email: email,
+      password: password,
+      name: name,
+      phoneNumber: phoneNumber,
+      role: role,
+      // address,
     });
 
     if (response.data.isSuccess && response.data.result.succeeded) {
       localStorage.setItem(
-        "REGISTER_CONFIRMING_USER",
+        LOCALSTORAGE_CONSTANTS.REGISTER_CONFIRMING_USER,
         JSON.stringify({
           email,
           password,

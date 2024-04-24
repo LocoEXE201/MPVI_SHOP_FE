@@ -21,6 +21,7 @@ const config: Config = {
           "700": "rgba(122, 122, 122, 0.47)",
           "800": "rgba(255, 255, 255, 0.47)",
         },
+        primay: "#cb6f04",
         chocolate: "#cb6f04",
         whitesmoke: {
           "100": "#f7f7f8",

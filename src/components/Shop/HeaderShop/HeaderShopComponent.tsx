@@ -145,7 +145,7 @@ const HeaderShopComponent = (props: {}) => {
                 <div className="overflow-hidden w-[30rem] flex flex-col items-start justify-start pt-[0.25rem] px-[0rem] pb-[0rem] box-border max-w-full">
                   <div
                     style={{ borderRight: "0px" }}
-                    className="overflow-hidden self-stretch rounded-8xs bg-white flex flex-row items-end justify-between py-[0rem] pr-[0.125rem] pl-[0.625rem] gap-[1.25rem] border-[1px] border-solid border-chocolate"
+                    className="overflow-hidden self-stretch rounded-8xs bg-white flex flex-row items-end justify-between py-[0rem] pr-[0.125rem] pl-[0.625rem] gap-[1.25rem] border-[1px] border-solid border-primay"
                   >
                     <div className="w-[12.375rem] flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.75rem] box-border mq900:w-[0rem] mq1350:hidden">
                       <div className="self-stretch h-[1.125rem] relative flex items-center shrink-0 whitespace-nowrap mq900:hidden">
@@ -220,8 +220,8 @@ const HeaderShopComponent = (props: {}) => {
                 </div>
               </div>
             </div>
-            <div className="min-w-[28rem] flex flex-row items-center justify-between pt-[0rem] px-[0rem] pb-[0.137rem] text-black">
-              {/* <div className="flex flex-row items-center justify-end">
+            <div className="min-w-[28rem] flex flex-row items-center justify-end pt-[0rem] px-[0rem] pb-[0.137rem] text-black">
+              <div className="flex flex-row items-center justify-end">
                 <img
                   className=" w-[1.656rem] h-[1.2rem] z-[1]"
                   alt=""
@@ -257,9 +257,9 @@ const HeaderShopComponent = (props: {}) => {
                     Đăng Ký
                   </span>
                 </div>
-              </div> */}
+              </div>
 
-              <div className="flex flex-row items-center justify-end">
+              {/* <div className="flex flex-row items-center justify-end">
                 <img
                   className=" w-[1.656rem] h-[1.2rem] z-[1]"
                   alt=""
@@ -314,7 +314,7 @@ const HeaderShopComponent = (props: {}) => {
                     {`Giỏ Hàng (0)`}
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ const sweetAlert = {
   alertSuccess: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "center",
+      position: "top-end",
       width: `${width.toString()}rem`,
       background: "#eef6ec",
       showConfirmButton: false,
@@ -26,7 +26,7 @@ const sweetAlert = {
   alertFailed: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "center",
+      position: "top-end",
       width: `${width.toString()}rem`,
       background: "#fee3e2",
       showConfirmButton: false,
@@ -48,7 +48,7 @@ const sweetAlert = {
   alertInfo: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "center",
+      position: "top-end",
       width: `${width.toString()}rem`,
       background: "#d0efff",
       showConfirmButton: false,
@@ -70,7 +70,7 @@ const sweetAlert = {
   alertWarning: function (title: any, html: any, time: any, width: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: "center",
+      position: "top-end",
       width: `${width.toString()}rem`,
       background: "#ffffcc",
       showConfirmButton: false,
