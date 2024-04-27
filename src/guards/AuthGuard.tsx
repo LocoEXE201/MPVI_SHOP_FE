@@ -1,6 +1,7 @@
 import { useState, ReactNode, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 
 type AuthGuardProps = {
   children: ReactNode;
@@ -14,9 +15,14 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     null
   );
 
+  const navigateToPage = (route: string) => {
+    localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    router.push(route);
+  };
+
   useEffect(() => {
     if (!isAuthenticated && isInitialized) {
-      router.push("/");
+      navigateToPage("/");
     }
   }, [isAuthenticated, isInitialized, pathname, requestedLocation]);
 
