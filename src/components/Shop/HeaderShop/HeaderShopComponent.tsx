@@ -28,7 +28,7 @@ const HeaderShopComponent = (props: {}) => {
   };
 
   const isActivePage = (route: string) => {
-    if (typeof window !== "undefined") {
+    if (typeof window === "undefined") {
       return false;
     }
     return (

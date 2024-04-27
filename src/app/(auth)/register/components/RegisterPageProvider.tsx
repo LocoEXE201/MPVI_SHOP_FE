@@ -8,9 +8,17 @@ import { AuthContextProvider } from "@/contexts/AuthGoogleContext";
 import GuestGuard from "@/guards/GuestGuard";
 import ShopLayout from "@/components/Shop/ShopLayout";
 import RegisterPageComponent from "./RegisterPageComponent";
+import { useEffect } from "react";
 
 const RegisterPageProvider = (props: {}) => {
-  localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, PATH_AUTH.register);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        LOCALSTORAGE_CONSTANTS.CURRENT_PAGE,
+        PATH_AUTH.register
+      );
+    }
+  }, []);
 
   return (
     <>

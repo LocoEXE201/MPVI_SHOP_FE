@@ -2,9 +2,14 @@
 
 import ShopLayout from "@/components/Shop/ShopLayout";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
+import { useEffect } from "react";
 
 const HomePageProvider = (props: {}) => {
-  localStorage.removeItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE);
+    }
+  }, []);
 
   return (
     <>
