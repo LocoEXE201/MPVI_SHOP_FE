@@ -1,10 +1,16 @@
 "use client";
 import "./index.scss";
 import HeaderShopComponent from "./HeaderShopComponent";
+import { AuthProvider } from "@/contexts/JWTContext";
+import { AppProvider } from "@/contexts/AppContext";
 
 const HeaderShop = (props: {}) => {
   return (
-    <HeaderShopComponent />
+    <AppProvider>
+      <AuthProvider>
+        <HeaderShopComponent />
+      </AuthProvider>
+    </AppProvider>
   );
 };
 

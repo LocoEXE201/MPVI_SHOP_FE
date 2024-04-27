@@ -16,6 +16,9 @@ import { useRouter } from "next/navigation";
 import useAppContext from "@/hooks/useAppContext";
 import { PATH_AUTH } from "@/routes/paths";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
+import Swal from "sweetalert2";
+import { ResponseDTO } from "@/types/responseDTO";
+import authApi from "@/api/auth/authApi";
 
 // ----------------------------------------------------------------------
 
@@ -151,6 +154,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
     initialize();
   }, []);
 
+  const navigateToPage = (route: string) => {
+    localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    router.push(route);
+  };
+
   const login = async (username: string, password: string) => {
     try {
       enableLoading();
@@ -191,7 +199,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
                 user,
               },
             });
-            router.push("/");
+            navigateToPage("/");
             disableLoading();
           } else {
             disableLoading();
@@ -212,7 +220,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
             5000,
             30
           );
-          router.push(PATH_AUTH.login);
+          navigateToPage(PATH_AUTH.login);
         })
         .finally(() => {
           if (getUserInfo()) {
@@ -230,7 +238,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         5000,
         30
       );
-      router.push(PATH_AUTH.login);
+      navigateToPage(PATH_AUTH.login);
     }
   };
 
@@ -270,7 +278,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
                 user,
               },
             });
-            router.push("/");
+            navigateToPage("/");
             disableLoading();
           } else {
             disableLoading();
@@ -308,8 +316,162 @@ function AuthProvider({ children }: { children: ReactNode }) {
         5000,
         30
       );
-      router.push(PATH_AUTH.login);
+      navigateToPage(PATH_AUTH.login);
     }
+  };
+
+  const handleEnterVerifyCode = (email: string, password: string) => {
+    Swal.fire({
+      title: `Xác thực email của bạn`,
+      html: `Chúng tôi vừa gửi một mã xác nhận tới email: </br><strong>${email}.</strong>  </br>
+    Bạn vui lòng kiểm tra email và nhập mã xác nhận vào bên dưới đây để kích hoạt tài khoản của bạn.`,
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      confirmButtonColor: "#3085d6",
+      cancelButtonText: "Hủy bỏ",
+      focusConfirm: true,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: false,
+      preConfirm: (login) => {},
+    }).then((result) => {
+      if (result.isConfirmed) {
+        enableLoading();
+        authApi
+          .confirmEmail(email, result.value)
+          .then(async (response) => {
+            var res: ResponseDTO = response.data;
+            if (
+              res.isSuccess &&
+              res.message &&
+              res.message != "" &&
+              res.message.toLowerCase().includes("confirm successfully")
+            ) {
+              enableLoading();
+              var fullname: string = "";
+              await axiosInstances.auth
+                .post("/auth/login", {
+                  username: email,
+                  password: password,
+                })
+                .then((response) => {
+                  if (
+                    response.data.isSuccess &&
+                    response.data.result != null &&
+                    response.data.result.user != null
+                  ) {
+                    const { id, name, email, phoneNumber, role, address } =
+                      response.data.result.user;
+
+                    var userRole: string[] = [];
+                    userRole.push(checkRoleCode(role));
+
+                    const user = {
+                      id: id,
+                      name: name,
+                      email: email,
+                      phoneNumber: phoneNumber,
+                      role: userRole,
+                      // address: address,
+                    };
+
+                    fullname = name;
+
+                    const accessToken = response.data.result.token;
+
+                    setSession(accessToken);
+                    setUserInfo(user);
+
+                    dispatch({
+                      type: Types.Login,
+                      payload: {
+                        user,
+                      },
+                    });
+                    navigateToPage("/");
+                    disableLoading();
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                  disableLoading();
+                })
+                .finally(() => {
+                  if (getUserInfo()) {
+                    setTimeout(() => {
+                      Swal.fire({
+                        title: `Welcome, ${fullname}`,
+                        html: `Tài khoản của bạn đã được kích hoạt. </br> Xin chân thành cám ơn bạn đã đăng ký tài khoản. </br>
+                    Chúc bạn có những trải nghiệm thật tốt với các sản phẩm của chúng tôi.`,
+                        icon: "success",
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: "Bấm vào đây để tiếp tục",
+                        allowOutsideClick: false,
+                        focusConfirm: false,
+                        confirmButtonColor: "green",
+                        showCloseButton: false,
+                      });
+                    }, 200);
+                  }
+                });
+            }
+            if (res.isSuccess && (!res.message || res.message == "")) {
+              disableLoading();
+              handleVerifyAgain(email, password);
+            }
+          })
+          .catch((err) => {
+            disableLoading();
+            handleVerifyAgain(email, password);
+          });
+      } else if (result.isDenied === true || result.isDismissed === true) {
+        handleCancelVerif(email, password);
+      }
+    });
+  };
+
+  const handleCancelVerif = (email: string, password: string) => {
+    Swal.fire({
+      title: `Bạn có chắc muốn dừng lại việc xác thực tài khoản?`,
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Không, tiếp tục",
+      cancelButtonText: "Có, dừng lại",
+      allowOutsideClick: false,
+      focusConfirm: true,
+      cancelButtonColor: "red",
+      confirmButtonColor: "green",
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        handleEnterVerifyCode(email, password);
+      }
+    });
+  };
+
+  const handleVerifyAgain = (email: string, password: string) => {
+    Swal.fire({
+      title: `Mã xác nhận không đúng`,
+      html: "Xin bạn vui lòng kiểm tra lại mã xác nhận trong email và nhập lại lần nữa.",
+      icon: "info",
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: "Nhập mã xác nhận lại",
+      allowOutsideClick: false,
+      focusConfirm: true,
+      confirmButtonColor: "#3085d6",
+      showCloseButton: true,
+    }).then((result) => {
+      if (result.isConfirmed == true) {
+        handleEnterVerifyCode(email, password);
+      } else if (result.isDenied === true || result.isDismissed === true) {
+        handleCancelVerif(email, password);
+      }
+    });
   };
 
   const register = async (
@@ -322,37 +484,64 @@ function AuthProvider({ children }: { children: ReactNode }) {
   ) => {
     enableLoading();
 
-    const response = await axiosInstances.auth.post("/auth/register", {
-      email: email,
-      password: password,
-      name: name,
-      phoneNumber: phoneNumber,
-      role: role,
-      // address,
-    });
-
-    if (response.data.isSuccess && response.data.result.succeeded) {
-      localStorage.setItem(
-        LOCALSTORAGE_CONSTANTS.REGISTER_CONFIRMING_USER,
-        JSON.stringify({
-          email,
-          password,
-        })
-      );
-      disableLoading();
-    }
-
-    // if (
-    //   response.data.isSuccess &&
-    //   !response.data.result.succeeded &&
-    //   response.data.result.errors[0] != null
-    // ) {
-    //   disableLoading();
-    //   localStorage.setItem(
-    //     "REGISTER_CONFIRMING_ERROR",
-    //     response.data.result.errors[0].description
-    //   );
-    // }
+    await axiosInstances.auth
+      .post("/auth/register", {
+        email: email,
+        password: password,
+        name: name,
+        phoneNumber: phoneNumber,
+        role: role,
+        // address,
+      })
+      .then((response) => {
+        disableLoading();
+        var res: ResponseDTO = response.data;
+        if (res.isSuccess && res.result.succeeded) {
+          handleEnterVerifyCode(email, password);
+        }
+        if (!res.isSuccess) {
+          Swal.fire({
+            title: `Đã xảy ra lỗi gì đó`,
+            html: "Xin bạn vui lòng thử lại.",
+            icon: "info",
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: "Xác nhận",
+            allowOutsideClick: false,
+            focusConfirm: true,
+            confirmButtonColor: "#3085d6",
+            showCloseButton: true,
+          });
+        }
+        if (res.isSuccess && !res.result.succeeded) {
+          Swal.fire({
+            title: `Email này đã được sử dụng để đăng ký tài khoản`,
+            icon: "info",
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: "Tôi đã rõ",
+            allowOutsideClick: false,
+            focusConfirm: true,
+            confirmButtonColor: "#3085d6",
+            showCloseButton: true,
+          });
+        }
+      })
+      .catch((err) => {
+        disableLoading();
+        Swal.fire({
+          title: `Đã xảy ra lỗi gì đó`,
+          html: "Xin bạn vui lòng thử lại.",
+          icon: "info",
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: "Xác nhận",
+          allowOutsideClick: false,
+          focusConfirm: true,
+          confirmButtonColor: "#3085d6",
+          showCloseButton: true,
+        });
+      });
   };
 
   const logout = async () => {
@@ -360,7 +549,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     setUserInfo({});
     localStorage.removeItem("USER_INFO");
     dispatch({ type: Types.Logout });
-    router.push("/");
+    navigateToPage("/");
   };
 
   const resetPassword = (email: string) => {};

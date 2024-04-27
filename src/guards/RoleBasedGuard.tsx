@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Container, Alert, AlertTitle, Button, Stack } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 
 type RoleBasedGuardProp = {
   accessibleRoles: String[];
@@ -35,6 +36,11 @@ export default function RoleBasedGuard({
     }
   }, [isAuthenticated]);
 
+  const navigateToPage = (route: string) => {
+    localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    router.push(route);
+  };
+
   if (isAuthenticated && ending) {
     if (!accessible) {
       return (
@@ -49,7 +55,7 @@ export default function RoleBasedGuard({
             </Alert>
             <Stack direction="row" justifyContent="center">
               <Button
-                onClick={() => router.push("/")}
+                onClick={() => navigateToPage("/")}
                 variant="outlined"
                 style={{ margin: "0 5px" }}
               >

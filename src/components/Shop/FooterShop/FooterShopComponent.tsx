@@ -4,9 +4,14 @@ import Image from "next/image";
 import "./index.scss";
 import { CORE_INFORMATION } from "@/constants/CoreInformation";
 import { PATH_SHOP } from "@/routes/paths";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 
 const FooterShopComponent = (props: {}) => {
   const router = useRouter();
+  const navigateToPage = (route: string) => {
+    localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    router.push(route);
+  };
 
   return (
     <>
@@ -15,7 +20,7 @@ const FooterShopComponent = (props: {}) => {
           <div className="w-[19.438rem] flex flex-col items-start justify-start py-[0rem] pr-[1.062rem] pl-[0rem] box-border gap-[0.681rem] text-white font-baloo-2">
             <img
               onClick={() => {
-                router.push(PATH_SHOP.root);
+                navigateToPage(PATH_SHOP.root);
               }}
               className="cursor-pointer w-[13.625rem] h-[6.625rem] relative object-cover"
               loading="lazy"
@@ -75,7 +80,7 @@ const FooterShopComponent = (props: {}) => {
               <div className="self-stretch flex flex-col items-start justify-start gap-[0.75rem] text-[1.25rem] text-white font-baloo-2">
                 <div
                   onClick={() => {
-                    router.push(PATH_SHOP.root);
+                    navigateToPage(PATH_SHOP.root);
                   }}
                   className="links_hover relative tracking-[0.48px] leading-[1.625rem] inline-block min-w-[5.75rem] mq450:text-[1rem] mq450:leading-[1.313rem]"
                 >
@@ -83,7 +88,7 @@ const FooterShopComponent = (props: {}) => {
                 </div>
                 <div
                   onClick={() => {
-                    router.push(PATH_SHOP.about);
+                    navigateToPage(PATH_SHOP.about);
                   }}
                   className="links_hover self-stretch relative tracking-[0.48px] leading-[1.625rem] mq450:text-[1rem] mq450:leading-[1.313rem]"
                 >
@@ -91,7 +96,7 @@ const FooterShopComponent = (props: {}) => {
                 </div>
                 <div
                   onClick={() => {
-                    router.push(PATH_SHOP.products);
+                    navigateToPage(PATH_SHOP.products);
                   }}
                   className="links_hover w-[7.375rem] relative tracking-[0.48px] leading-[1.625rem] flex items-center mq450:text-[1rem] mq450:leading-[1.313rem]"
                 >
@@ -99,7 +104,7 @@ const FooterShopComponent = (props: {}) => {
                 </div>
                 <div
                   onClick={() => {
-                    router.push(PATH_SHOP.news);
+                    navigateToPage(PATH_SHOP.news);
                   }}
                   className="links_hover w-[10.625rem] relative tracking-[0.48px] leading-[1.625rem] flex items-center mq450:text-[1rem] mq450:leading-[1.313rem]"
                 >
