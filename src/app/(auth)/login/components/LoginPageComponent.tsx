@@ -13,8 +13,6 @@ import { useRouter } from "next/navigation";
 import { PATH_AUTH } from "@/routes/paths";
 import Loading from "@/components/Loading/Loading";
 import Swal from "sweetalert2";
-import authApi from "@/api/auth/authApi";
-import { ResponseDTO } from "@/types/responseDTO";
 
 const LoginPageComponent = (props: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
@@ -34,7 +32,7 @@ const LoginPageComponent = (props: {}) => {
   const handleForgetPassword = () => {
     Swal.fire({
       title: `Đặt lại mật khẩu`,
-      html: `Xin bạn vui lòng nhập email bạn đã đăng ký tài khoản vào bên dưới đây.`,
+      html: `Xin bạn vui lòng điền địa chỉ email của tài khoản bạn vào phần dưới đây.`,
       input: "email",
       inputAttributes: {
         autocapitalize: "off",
