@@ -21,13 +21,21 @@ const HeaderShopComponent = (props: {}) => {
   const router = useRouter();
   const { logout, isAuthenticated } = useAuth();
   const navigateToPage = (route: string) => {
-    localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    }
     router.push(route);
   };
 
-  const isActivePage = (route: string) =>
-    localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
-    localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) == route;
+  const isActivePage = (route: string) => {
+    if (typeof window !== "undefined") {
+      return false;
+    }
+    return (
+      localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+      localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) == route
+    );
+  };
 
   return (
     <>
@@ -49,7 +57,8 @@ const HeaderShopComponent = (props: {}) => {
                         navigateToPage(PATH_SHOP.root);
                       }}
                       className={`links_hover relative font-medium inline-block whitespace-nowrap ${
-                        isActivePage(PATH_SHOP.root) ||
+                        typeof window !== "undefined" &&
+                        (isActivePage(PATH_SHOP.root) ||
                         localStorage.getItem(
                           LOCALSTORAGE_CONSTANTS.CURRENT_PAGE
                         ) == null ||
@@ -57,7 +66,7 @@ const HeaderShopComponent = (props: {}) => {
                           LOCALSTORAGE_CONSTANTS.CURRENT_PAGE
                         ) == undefined
                           ? "active_current_link"
-                          : ""
+                          : "")
                       }`}
                     >
                       Trang Chủ
@@ -66,7 +75,12 @@ const HeaderShopComponent = (props: {}) => {
                       onClick={() => {
                         navigateToPage(PATH_SHOP.about);
                       }}
-                      className={`links_hover relative font-medium inline-block whitespace-nowrap ${isActivePage(PATH_SHOP.about) ? "active_current_link" : ""}`}
+                      className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                        typeof window !== "undefined" &&
+                        isActivePage(PATH_SHOP.about)
+                          ? "active_current_link"
+                          : ""
+                      }`}
                     >
                       Giới Thiệu
                     </div>
@@ -74,7 +88,12 @@ const HeaderShopComponent = (props: {}) => {
                       onClick={() => {
                         navigateToPage(PATH_SHOP.products);
                       }}
-                      className={`links_hover relative font-medium inline-block whitespace-nowrap ${isActivePage(PATH_SHOP.products) ? "active_current_link" : ""}`}
+                      className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                        typeof window !== "undefined" &&
+                        isActivePage(PATH_SHOP.products)
+                          ? "active_current_link"
+                          : ""
+                      }`}
                     >
                       Sản Phẩm
                     </div>
@@ -82,7 +101,12 @@ const HeaderShopComponent = (props: {}) => {
                       onClick={() => {
                         navigateToPage(PATH_SHOP.news);
                       }}
-                      className={`links_hover relative font-medium inline-block whitespace-nowrap ${isActivePage(PATH_SHOP.news) ? "active_current_link" : ""}`}
+                      className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                        typeof window !== "undefined" &&
+                        isActivePage(PATH_SHOP.news)
+                          ? "active_current_link"
+                          : ""
+                      }`}
                     >
                       Tin Tức
                     </div>
@@ -243,16 +267,22 @@ const HeaderShopComponent = (props: {}) => {
                         onClick={() => {
                           navigateToPage(PATH_AUTH.login);
                         }}
-                        className={`links_hover ${isActivePage(PATH_AUTH.login) ? "active_current_link" : ""}`}
+                        className={`links_hover ${
+                          typeof window !== "undefined" &&
+                          isActivePage(PATH_AUTH.login)
+                            ? "active_current_link"
+                            : ""
+                        }`}
                       >
                         Đăng Nhập
                       </span>
                       <span
                         className={`px-1 ${
-                          isActivePage(PATH_AUTH.login) ||
+                          typeof window !== "undefined" &&
+                          (isActivePage(PATH_AUTH.login) ||
                           isActivePage(PATH_AUTH.register)
                             ? "active_current_link"
-                            : ""
+                            : "")
                         }`}
                       >
                         {" "}
@@ -262,7 +292,12 @@ const HeaderShopComponent = (props: {}) => {
                         onClick={() => {
                           navigateToPage(PATH_AUTH.register);
                         }}
-                        className={`links_hover ${isActivePage(PATH_AUTH.register) ? "active_current_link" : ""}`}
+                        className={`links_hover ${
+                          typeof window !== "undefined" &&
+                          isActivePage(PATH_AUTH.register)
+                            ? "active_current_link"
+                            : ""
+                        }`}
                       >
                         Đăng Ký
                       </span>
@@ -287,7 +322,12 @@ const HeaderShopComponent = (props: {}) => {
                         onClick={() => {
                           // navigateToPage(PATH_AUTH.login);
                         }}
-                        className={`links_hover ${isActivePage(PATH_AUTH.login) ? "active_current_link" : ""}`}
+                        className={`links_hover ${
+                          typeof window !== "undefined" &&
+                          isActivePage(PATH_AUTH.login)
+                            ? "active_current_link"
+                            : ""
+                        }`}
                       >
                         {`Giỏ Hàng (0)`}
                       </span>
@@ -306,7 +346,12 @@ const HeaderShopComponent = (props: {}) => {
                         onClick={() => {
                           // navigateToPage(PATH_AUTH.login);
                         }}
-                        className={`links_hover ${isActivePage(PATH_AUTH.login) ? "active_current_link" : ""}`}
+                        className={`links_hover ${
+                          typeof window !== "undefined" &&
+                          isActivePage(PATH_AUTH.login)
+                            ? "active_current_link"
+                            : ""
+                        }`}
                       >
                         Đơn Hàng
                       </span>
@@ -325,7 +370,12 @@ const HeaderShopComponent = (props: {}) => {
                         onClick={() => {
                           // navigateToPage(PATH_AUTH.login);
                         }}
-                        className={`links_hover ${isActivePage(PATH_AUTH.login) ? "active_current_link" : ""}`}
+                        className={`links_hover ${
+                          typeof window !== "undefined" &&
+                          isActivePage(PATH_AUTH.login)
+                            ? "active_current_link"
+                            : ""
+                        }`}
                       >
                         Tài Khoản
                       </span>
