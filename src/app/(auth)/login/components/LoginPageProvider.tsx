@@ -3,7 +3,7 @@
 import { AppProvider } from "@/contexts/AppContext";
 import { AuthProvider } from "@/contexts/JWTContext";
 import GuestGuard from "@/guards/GuestGuard";
-import ShopLayout from "@/components/Shop/ShopLayout";
+import ShopLayout from "@/components/Templates/ShopLayout";
 import LoginPageComponent from "./LoginPageComponent";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { PATH_AUTH } from "@/routes/paths";

@@ -44,12 +44,20 @@ const HeaderShopComponent = (props: {}) => {
           <div className="w-[83rem] py-[0.6rem] pb-[0.5rem] box-border flex flex-row items-center justify-between max-w-full text-[1.125rem] text-black border-b-[1px] border-solid border-whitesmoke-300 gap-[5rem]">
             <div className="w-[50rem] flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border max-w-full">
               <div className="self-stretch flex flex-row items-center justify-between max-w-full">
-                <img
+                {/* <img
                   className="cursor-pointer h-[1.75rem] w-[1.813rem] relative rounded-8xs min-h-[1.75rem]"
                   loading="lazy"
                   alt=""
                   src="/Icons/divcrcategorytoggle.svg"
-                />
+                /> */}
+                <p
+                  onClick={() => {
+                    navigateToPage(PATH_SHOP.root);
+                  }}
+                  className="cursor-pointer linkS_hover font-baloo text-primay text-[1.25rem]"
+                >
+                  Love Connection
+                </p>
                 <div className="w-[28rem] flex flex-col items-start justify-start px-[0rem] pb-[0rem] text-black">
                   <div className="flex flex-row items-center justify-start gap-[3rem] max-w-full mq1350:hidden">
                     <div

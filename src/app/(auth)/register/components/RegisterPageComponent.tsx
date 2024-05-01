@@ -3,7 +3,7 @@
 import { Form, Input } from "antd";
 import { useFormik } from "formik";
 
-import PageTitle from "@/components/Shop/PageTitle";
+import PageTitle from "@/components/Molecules/PageTitle";
 import { useAuthGoogle } from "@/contexts/AuthGoogleContext";
 import { useEffect, useState } from "react";
 import useAppContext from "@/hooks/useAppContext";
@@ -12,7 +12,7 @@ import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { useRouter } from "next/navigation";
 import { PATH_AUTH } from "@/routes/paths";
 import { AccountRoleString } from "@/enums/accountRole";
-import Loading from "@/components/Loading/Loading";
+import Loading from "@/components/Templates/Loading/Loading";
 
 const RegisterPageComponent = (props: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
