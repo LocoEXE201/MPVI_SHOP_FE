@@ -1,4 +1,4 @@
-import PageTitle from "@/components/Shop/PageTitle";
+import PageTitle from "@/components/Molecules/PageTitle";
 import useAppContext from "@/hooks/useAppContext";
 import React from "react";
 import Slider from "@mui/material/Slider";
