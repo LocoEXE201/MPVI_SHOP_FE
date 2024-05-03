@@ -1,6 +1,5 @@
 "use client";
 
-import ShopLayout from "@/components/Shop/ShopLayout";
 import ProductsComponent from "./ProductsComponent";
 import { AuthProvider } from "@/contexts/JWTContext";
 import { AppProvider } from "@/contexts/AppContext";
@@ -9,6 +8,7 @@ import GuestGuard from "@/guards/GuestGuard";
 import { useEffect } from "react";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { PATH_SHOP } from "@/routes/paths";
+import ShopLayout from "@/components/Templates/ShopLayout";
 
 const ProductsPageProvider = (props: {}) => {
   useEffect(() => {

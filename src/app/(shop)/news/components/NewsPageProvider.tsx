@@ -1,6 +1,6 @@
 "use client";
 
-import ShopLayout from "@/components/Shop/ShopLayout";
+import ShopLayout from "@/components/Templates/ShopLayout";
 
 const NewsPageProvider = (props: {}) => {
   return (

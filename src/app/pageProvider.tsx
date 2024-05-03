@@ -1,6 +1,6 @@
 "use client";
 
-import ShopLayout from "@/components/Shop/ShopLayout";
+import ShopLayout from "@/components/Templates/ShopLayout";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { useEffect } from "react";
 

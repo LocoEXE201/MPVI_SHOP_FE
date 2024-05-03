@@ -1,7 +1,7 @@
 "use client";
 
 import authApi from "@/api/auth/authApi";
-import Loading from "@/components/Loading/Loading";
+import Loading from "@/components/Templates/Loading/Loading";
 import useAppContext from "@/hooks/useAppContext";
 import { PATH_AUTH } from "@/routes/paths";
 import { ResponseDTO } from "@/types/responseDTO";
