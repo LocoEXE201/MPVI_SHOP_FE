@@ -15,4 +15,5 @@ export const PATH_SHOP = {
   about: "/about",
   news: "/news",
   products: "/products",
+  productDetails:(productId: number) => `/products/productDetails/${productId}`,
 };
