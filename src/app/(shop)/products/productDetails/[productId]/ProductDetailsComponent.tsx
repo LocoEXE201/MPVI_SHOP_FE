@@ -1,4 +1,4 @@
-import PageTitle from "@/components/Shop/PageTitle";
+import PageTitle from "@/components/Molecules/PageTitle";
 import React from "react";
 import { formatPrice } from "../../../../../utils/formatPrice";
 import { Checkbox, Col, ConfigProvider, Row, Space } from "antd";
