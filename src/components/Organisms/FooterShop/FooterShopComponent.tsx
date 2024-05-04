@@ -15,7 +15,7 @@ const FooterShopComponent = (props: {}) => {
 
   return (
     <>
-      <footer className="mr-[-0.313rem] self-stretch bg-black box-border flex flex-col items-start justify-start pt-[5rem] px-[5rem] pb-[1.975rem] gap-[4rem] max-w-full z-[1] text-left text-[1.375rem] text-primay font-baloo border-t-[1px] border-solid border-black mq450:pt-[3.25rem] mq450:pb-[1.313rem] mq450:box-border mq900:gap-[1.25rem] mq900:pl-[4.813rem] mq900:pr-[4.813rem] mq1350:gap-[2.5rem] mq1350:pl-[9.688rem] mq1350:pr-[9.688rem] mq1350:box-border">
+      <footer className="mr-[-0.313rem] self-stretch bg-black box-border flex flex-col items-start justify-start pt-[5rem] px-[5rem] pb-[1.975rem] gap-[4rem] max-w-full z-[1] text-left text-[1.375rem] text-primary font-baloo border-t-[1px] border-solid border-black mq450:pt-[3.25rem] mq450:pb-[1.313rem] mq450:box-border mq900:gap-[1.25rem] mq900:pl-[4.813rem] mq900:pr-[4.813rem] mq1350:gap-[2.5rem] mq1350:pl-[9.688rem] mq1350:pr-[9.688rem] mq1350:box-border">
         <div className="w-[80.213rem] flex flex-row items-start justify-between max-w-full gap-[1.25rem] mq1725:flex-wrap">
           <div className="w-[19.438rem] flex flex-col items-start justify-start py-[0rem] pr-[1.062rem] pl-[0rem] box-border gap-[0.681rem] text-white font-baloo-2">
             <img
@@ -190,7 +190,7 @@ const FooterShopComponent = (props: {}) => {
         </div>
         <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0.062rem] pl-[0.187rem] box-border max-w-full text-center text-gray-800 font-poppins">
           <div className="flex-1 box-border flex flex-row items-center justify-center pt-[2.125rem] pb-[0.337rem] pr-[1.25rem] pl-[5.187rem] gap-[0.187rem] max-w-full border-t-[1px] border-solid border-white mq900:flex-wrap mq900:pl-[2.563rem] mq900:box-border">
-            <div className="relative tracking-[0.48px] leading-[1.063rem] text-primay text-[1.2rem] mq450:leading-[0.813rem]">
+            <div className="relative tracking-[0.48px] leading-[1.063rem] text-primary text-[1.2rem] mq450:leading-[0.813rem]">
               <span className="text-gray-800">
                 <span> &copy; 2024 </span>
               </span>
