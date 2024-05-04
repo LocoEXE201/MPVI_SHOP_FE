@@ -1,0 +1,21 @@
+.product_card_container:hover {
+  transition: all ease 0.3s;
+
+  .product_card_image {
+    transform: scale(1.1);
+    transition: all ease 0.3s;
+  }
+
+  .product_card_image:hover {
+    transition: all ease 0.3s;
+  }
+
+  .product_card_lock_image {
+    transform: translateY(-10px);
+    transition: all ease 0.3s;
+  }
+
+  .product_card_lock_image:hover {
+    transition: all ease 0.3s;
+  }
+}

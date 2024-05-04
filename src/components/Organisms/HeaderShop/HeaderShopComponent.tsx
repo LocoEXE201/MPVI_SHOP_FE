@@ -54,7 +54,7 @@ const HeaderShopComponent = (props: {}) => {
                   onClick={() => {
                     navigateToPage(PATH_SHOP.root);
                   }}
-                  className="cursor-pointer linkS_hover font-baloo text-primay text-[1.25rem]"
+                  className="cursor-pointer linkS_hover font-baloo text-primary text-[1.25rem]"
                 >
                   Love Connection
                 </p>
@@ -182,7 +182,7 @@ const HeaderShopComponent = (props: {}) => {
                 <div className="overflow-hidden w-[28rem] flex flex-col items-start justify-start pt-[0.25rem] px-[0rem] pb-[0rem] box-border max-w-full">
                   <div
                     style={{ borderRight: "0px" }}
-                    className="overflow-hidden self-stretch rounded-8xs bg-white flex flex-row items-end justify-between py-[0rem] pr-[0.125rem] pl-[0.625rem] gap-[1.25rem] border-[1px] border-solid border-primay"
+                    className="overflow-hidden self-stretch rounded-8xs bg-white flex flex-row items-end justify-between py-[0rem] pr-[0.125rem] pl-[0.625rem] gap-[1.25rem] border-[1px] border-solid border-primary"
                   >
                     <div className="flex-1 flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.75rem] box-border mq900:w-[0rem] mq1350:hidden">
                       <div className="w-full self-stretch h-[1.125rem] relative flex items-center shrink-0 whitespace-nowrap mq900:hidden">

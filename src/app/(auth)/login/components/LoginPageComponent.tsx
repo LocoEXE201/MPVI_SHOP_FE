@@ -95,7 +95,7 @@ const LoginPageComponent = (props: {}) => {
           py-[1rem] px-[2.5rem]"
           >
             <div className="w-[35vw] flex max-w-full flex-1 flex-col items-end justify-start gap-[5px_0px]">
-              <h1 className="text-[1.5rem] w-full text-center font-baloo text-primay">
+              <h1 className="text-[1.5rem] w-full text-center font-baloo text-primary">
                 Đăng Nhập
               </h1>
               <div className="w-full" style={{ margin: "0 auto" }}>
@@ -197,7 +197,7 @@ const LoginPageComponent = (props: {}) => {
                     <button
                       type="submit"
                       style={{ fontWeight: "bolder" }}
-                      className="hover:bg-yellow-600 bg-primay text-white mt-2 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[10px] [border:none]"
+                      className="hover:bg-yellow-600 bg-primary text-white mt-2 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[10px] [border:none]"
                     >
                       <div className="font-baloo relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
                         Đăng Nhập

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import HomePageProvider from "./pageProvider";
+import HomePageComponent from "./pageComponent";
 
 export const metadata: Metadata = {
   title: "Loco. - Love Connection",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <HomePageProvider />
+      <HomePageComponent />
     </>
   );
 }
