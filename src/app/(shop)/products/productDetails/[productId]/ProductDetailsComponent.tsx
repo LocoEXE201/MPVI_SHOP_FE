@@ -11,6 +11,10 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import ProductCard from "@/components/Shop/ProductCard";
 import DetailFrame from "@/components/Shop/DetailFrame";
+import { useParams } from "next/navigation";
+import categoryApi from "@/api/warehouse/categoryApi";
+import Loading from "@/components/Templates/Loading/Loading";
+import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
 
 function valuetext(value: number) {
   return `đ ${value * 10000}`;
@@ -18,9 +22,20 @@ function valuetext(value: number) {
 
 const minDistance = 10;
 
+interface ProductCardProps {
+  categoryId: number;
+  categoryName: string;
+  image: string;
+  priceIn: number;
+  rate: number;
+  superCategoryName: string;
+}
+
 const ProductDetailsComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-
+  const params = useParams();
+  const categoryId = params.productId;
+  const [category, setCategory] = React.useState<ProductCardProps[] | null>();
   const [value2, setValue2] = React.useState<number[]>([37, 52]);
 
   const handleChange2 = (
@@ -64,8 +79,37 @@ const ProductDetailsComponent = () => {
     },
   ];
 
+  const getAllCategory: any = async () => {
+    try {
+      enableLoading();
+      const response = await categoryApi.getAllCategory();
+      if (response.status === 200) {
+        // console.log(response.data);
+        disableLoading();
+        setCategory(response.data.result);
+      } else {
+        console.log("Failed to fetch data. Status code:", response.status);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
+
+  const categoryItem = category?.find(
+    (cate) => Number(cate.categoryId) === Number(categoryId)
+  );
+  const name = categoryItem?.categoryName;
+  console.log(categoryItem);
+
   return (
     <>
+      <Loading loading={isLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
       <div className="flex items-center justify-center">
         <div className="w-[1600px] h-[1900px] flex flex-row mt-2.5  mb-6">
@@ -168,7 +212,7 @@ const ProductDetailsComponent = () => {
                         href: `${PATH_SHOP.products}`,
                       },
                       {
-                        title: "Gấu Bông Len Thủ Công",
+                        title: `${name}`,
                       },
                     ]}
                     style={{ fontSize: "18px" }}
@@ -179,7 +223,7 @@ const ProductDetailsComponent = () => {
             <div className="flex flex-row gap-4 items-center">
               <div className="flex flex-col w-[495px] h-[591px] items-center ">
                 <div className="flex w-[471px] h-[470px] justify-center items-center content-center border-[1px] border-zinc-400 border-solid rounded mb-1.5 ">
-                  <img src="/mock/image 4.png" className="object-contain" />
+                  <img src={categoryItem?.image} className="object-contain" />
                 </div>
                 <div>
                   <ul className="flex flex-row gap-4 ">
@@ -209,7 +253,7 @@ const ProductDetailsComponent = () => {
               </div>
               <div className="flex flex-col gap-3 w-[495px] h-[591px]">
                 <div className="font-baloo text-xl">
-                  Gấu bông len thủ công - Nhiều hình dáng
+                  {categoryItem?.categoryName}
                 </div>
                 <div className="font-baloo-2 text-base text-zinc-400">
                   Gấu bông được làm thủ công từ sợi lên tự nhiên và mềm mại. Có
@@ -221,7 +265,7 @@ const ProductDetailsComponent = () => {
                     className="text-base text-red-400"
                     allowHalf
                     disabled
-                    defaultValue={5}
+                    defaultValue={categoryItem?.rate}
                     style={{ marginTop: "3px" }}
                   />
                   <div className="font-poppins text-base text-zinc-400">
@@ -230,7 +274,7 @@ const ProductDetailsComponent = () => {
                 </div>
                 <div className="flex flex-row gap-2">
                   <div className="font-poppins text-2xl text-chocolate font-semibold">
-                    45.000đ
+                    {formatPrice((categoryItem?.priceIn ?? 0) * 1000)}đ
                   </div>
                   <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
                     60.000đ
@@ -293,10 +337,21 @@ const ProductDetailsComponent = () => {
             </div>
             <div className="flex flex-col  gap-4 ">
               <div className="grid grid-cols-4 col-auto gap-x-20 ">
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                {category?.map((cate: any, index) => {
+                  if (index < 4) {
+                    return (
+                      <ProductCardComponent
+                        key={index}
+                        categoryId={cate.categoryId}
+                        categoryName={cate.categoryName}
+                        image={cate.image}
+                        priceIn={cate.priceIn}
+                        rate={cate.rate}
+                        superCategoryName={cate.superCategory.superCategoryName}
+                      />
+                    );
+                  }
+                })}
               </div>
               <div className="flex w-[1360px] justify-end items-end content-end border-box ml-10 ">
                 <button className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold ">
