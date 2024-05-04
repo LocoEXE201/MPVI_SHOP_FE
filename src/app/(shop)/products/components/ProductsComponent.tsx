@@ -1,6 +1,6 @@
 import PageTitle from "@/components/Molecules/PageTitle";
 import useAppContext from "@/hooks/useAppContext";
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "@mui/material/Slider";
 import { Checkbox, Col, Row } from "antd";
 import type { GetProp } from "antd";
@@ -11,6 +11,9 @@ import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import "./index.scss";
+import categoryApi from "@/api/warehouse/categoryApi";
+import Loading from "@/components/Templates/Loading/Loading";
+import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
 // Define custom theme
 const theme = createTheme({
   palette: {
@@ -31,9 +34,32 @@ const minDistance = 10;
 
 const ProductsComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-
+  const [category, setCategory] = React.useState<string[]>([]);
   const [value2, setValue2] = React.useState<number[]>([37, 52]);
 
+  const getAllCategory: any = async () => {
+    try {
+      enableLoading();
+      const response = await categoryApi.getAllCategory();
+      if (response.status === 200) {
+        // console.log(response.data);
+        disableLoading();
+        setCategory(response.data.result);
+      } else {
+        console.log("Failed to fetch data. Status code:", response.status);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
+
+  console.log(category);
   const handleChange2 = (
     event: Event,
     newValue: number | number[],
@@ -64,6 +90,7 @@ const ProductsComponent = (prop: {}) => {
 
   return (
     <>
+      <Loading loading={isLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
       <div className="w-[83rem] flex flex-row items-start justify-center max-w-full gap-5 mt-2.5">
         <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
@@ -180,15 +207,17 @@ const ProductsComponent = (prop: {}) => {
             </div>
           </div>
           <div className="grid grid-cols-3 gap-x-48 gap-y-9">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {category.map((cate: any, index) => (
+              <ProductCardComponent
+                key={index}
+                categoryId={cate.categoryId}
+                categoryName={cate.categoryName}
+                image={cate.image}
+                priceIn={cate.priceIn}
+                rate={cate.rate}
+                superCategoryName={cate.superCategory.superCategoryName}
+              />
+            ))}
           </div>
           <div className=" w-[966px] h-[47px] flex justify-center items-center content-center my-px">
             <ThemeProvider theme={theme}>
