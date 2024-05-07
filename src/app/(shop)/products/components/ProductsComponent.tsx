@@ -59,7 +59,6 @@ const ProductsComponent = (prop: {}) => {
     getAllCategory();
   }, []);
 
-  console.log(category);
   const handleChange2 = (
     event: Event,
     newValue: number | number[],
@@ -187,7 +186,8 @@ const ProductsComponent = (prop: {}) => {
               </button>
             </div>
             <div className="w-[600px] font-baloo-2 text-gray-100 text-sm ">
-              Chúng tôi tìm thấy <span>29</span> sản phẩm bạn cần tìm
+              Chúng tôi tìm thấy <span>{category.length}</span> sản phẩm bạn cần
+              tìm
             </div>
             <div className=" flex font-baloo text-gray-100 text-sm content-center mt-0.5 ">
               Sắp xếp
