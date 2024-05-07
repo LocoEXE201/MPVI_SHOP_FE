@@ -3,6 +3,7 @@ import { Rate } from "antd";
 import Link from "next/link";
 import { PATH_SHOP } from "@/routes/paths";
 import { formatPrice } from "../../../utils/formatPrice";
+import "./index.scss";
 
 interface ProductCardProps {
   categoryId: number;
@@ -28,10 +29,10 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
   return (
     <>
       <Link href={`${PATH_SHOP.productDetails(categoryId)}`}>
-        <div className=" flex flex-col gap-3 w-[300px] rounded-2xl shadow-lg p-3 box-border">
+        <div className="flex flex-col gap-3 w-[300px] rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
           <div className=" flex justify-center items-center content-center">
             <img
-              className="object-contain box-content"
+              className="object-contain box-content transition ease-in-out duration-500 hover:scale-110 "
               src={image}
               alt="Fruit"
             ></img>
@@ -43,28 +44,28 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
             <div className="w-[186px] h-[39px] font-baloo-2 text-lg text-black font-medium mb-2">
               {categoryName}
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center content-center">
               <Rate
                 className="text-sm text-red-400"
                 allowHalf
                 disabled
                 defaultValue={rate}
               />
-              <div className="text-sm text-zinc-400 mt-1">({rate})</div>
+              <div className="text-sm text-zinc-400">({rate})</div>
             </div>
           </div>
           <div className="flex flex-row justify-between items-center">
             <div className="flex flex-row gap-2 items-center ">
               <div className="font-quicksand text-chocolate text-lg font-bold">
-                {formatPrice(priceIn * 1000)}đ
+                {formatPrice(priceIn * 1000)}₫
               </div>
               <div className="font-quicksand text-zinc-400 text-xs font-bold line-through mt-0.5">
-                50.000đ
+                50.000₫
               </div>
             </div>
             <div>
               <button
-                className="w-[81.91px] h-[36px] flex flex-row bg-chocolate justify-center items-center gap-2 text-white font-bold rounded"
+                className="w-[81.91px] h-[36px] flex flex-row bg-chocolate justify-center items-center gap-2 text-white font-bold rounded cursor-pointer hover:bg-orange-500"
                 onClick={handleChange}
               >
                 <img src="/Icons/cart.svg" className="w-[16px] h-[16px]" />

@@ -1,22 +1,19 @@
 "use client";
 
-import ProductsComponent from "./ProductsComponent";
-import { AuthProvider } from "@/contexts/JWTContext";
+import ShopLayout from "@/components/Templates/ShopLayout";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { AppProvider } from "@/contexts/AppContext";
 import { AuthContextProvider } from "@/contexts/AuthGoogleContext";
-import GuestGuard from "@/guards/GuestGuard";
-import { useEffect } from "react";
-import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
+import { AuthProvider } from "@/contexts/JWTContext";
 import { PATH_SHOP } from "@/routes/paths";
-import ShopLayout from "@/components/Templates/ShopLayout";
+import React, { useEffect } from "react";
+import CartComponent from "./CartComponent";
+import GuestGuard from "@/guards/GuestGuard";
 
-const ProductsPageProvider = (props: {}) => {
+const CartPageProvider = (prop: {}) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(
-        LOCALSTORAGE_CONSTANTS.CURRENT_PAGE,
-        PATH_SHOP.products
-      );
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, PATH_SHOP.cart);
     }
   }, []);
 
@@ -27,7 +24,7 @@ const ProductsPageProvider = (props: {}) => {
           <AuthContextProvider>
             {/* <GuestGuard> */}
             <ShopLayout>
-              <ProductsComponent />
+              <CartComponent />
             </ShopLayout>
             {/* </GuestGuard> */}
           </AuthContextProvider>
@@ -37,4 +34,4 @@ const ProductsPageProvider = (props: {}) => {
   );
 };
 
-export default ProductsPageProvider;
+export default CartPageProvider;

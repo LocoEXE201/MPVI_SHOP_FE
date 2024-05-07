@@ -37,6 +37,7 @@ const ProductDetailsComponent = () => {
   const categoryId = params.productId;
   const [category, setCategory] = React.useState<ProductCardProps[] | null>();
   const [value2, setValue2] = React.useState<number[]>([37, 52]);
+  const [quantity, setQuantity] = React.useState<number>(0);
 
   const handleChange2 = (
     event: Event,
@@ -79,6 +80,18 @@ const ProductDetailsComponent = () => {
     },
   ];
 
+  const addQuantity = (quantity: any) => {
+    setQuantity(quantity + 1);
+  };
+
+  const reduceQuantity = (quantity: any) => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    } else {
+      setQuantity(0);
+    }
+  };
+
   const getAllCategory: any = async () => {
     try {
       enableLoading();
@@ -105,7 +118,7 @@ const ProductDetailsComponent = () => {
     (cate) => Number(cate.categoryId) === Number(categoryId)
   );
   const name = categoryItem?.categoryName;
-  console.log(categoryItem);
+  // console.log(categoryItem);
 
   return (
     <>
@@ -223,29 +236,41 @@ const ProductDetailsComponent = () => {
             <div className="flex flex-row gap-4 items-center">
               <div className="flex flex-col w-[495px] h-[591px] items-center ">
                 <div className="flex w-[471px] h-[470px] justify-center items-center content-center border-[1px] border-zinc-400 border-solid rounded mb-1.5 ">
-                  <img src={categoryItem?.image} className="object-contain" />
+                  <img
+                    src={categoryItem?.image}
+                    className="object-contain transition ease-in-out duration-300 hover:scale-110"
+                  />
                 </div>
                 <div>
-                  <ul className="flex flex-row gap-4 ">
+                  <ul className="flex flex-row gap-4  ">
                     <li className="w-[85px] h-[85px]">
-                      <img src="/mock/image 5.png" className="object-contain" />
+                      <img
+                        src="/mock/image 5.png"
+                        className="object-contain transition ease-in-out hover:scale-110"
+                      />
                     </li>
                     <li className="w-[85px] h-[85px]">
-                      <img src="/mock/image 9.png" className="object-contain" />
+                      <img
+                        src="/mock/image 9.png"
+                        className="object-contain transition ease-in-out hover:scale-110"
+                      />
                     </li>
                     <li className="w-[85px] h-[85px]">
-                      <img src="/mock/image 8.png" className="object-contain" />
+                      <img
+                        src="/mock/image 8.png"
+                        className="object-contain transition ease-in-out hover:scale-110"
+                      />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
                         src="/mock/image 10.png"
-                        className="object-contain"
+                        className="object-contain transition ease-in-out hover:scale-110"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
                         src="/mock/image 11.png"
-                        className="object-contain"
+                        className="object-contain transition ease-in-out hover:scale-110"
                       />
                     </li>
                   </ul>
@@ -280,11 +305,55 @@ const ProductDetailsComponent = () => {
                     60.000đ
                   </div>
                 </div>
-                <div className="font-baloo-2 font-semibold text-base">
-                  Phân loại:
+                <div className="flex flex-row gap-2 font-baloo-2 text-lg">
+                  <div className="font-semibold">Phân loại:</div>
+                  <ul className="flex flex-row justify-around gap-1">
+                    <li>
+                      <button className="w-[80px] h-[30px] flex items-center justify-center bg-chocolate font-medium text-white border-[1px] border-solid border-zinc-200 rounded">
+                        Teddy
+                      </button>
+                    </li>
+                    <li>
+                      <button className="w-[70px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
+                        Pooh
+                      </button>
+                    </li>
+                    <li>
+                      <button className="w-[80px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
+                        Thỏ
+                      </button>
+                    </li>
+                    <li>
+                      <button className="w-[80px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
+                        Gấu Dâu
+                      </button>
+                    </li>
+                    <li>
+                      <button className="w-[80px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
+                        Cáo
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-                <div className="font-baloo-2 font-semibold text-base">
-                  Số lượng:
+                <div className="flex flex-row gap-2 font-baloo-2 font-semibold text-lg">
+                  <div>Số lượng:</div>
+                  <div className="flex flex-row gap-3">
+                    <button
+                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
+                      onClick={() => addQuantity(quantity)}
+                    >
+                      +
+                    </button>
+                    <div className="flex items-center content-center text-chocolate text-xl">
+                      {quantity}
+                    </div>
+                    <button
+                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
+                      onClick={() => reduceQuantity(quantity)}
+                    >
+                      -
+                    </button>
+                  </div>
                 </div>
                 <div className="flex flex-row gap-4">
                   <button className="w-[152px] h-[40px] flex flex-row gap-1 bg-chocolate text-white text-base justify-center items-center content-center rounded">
@@ -331,11 +400,10 @@ const ProductDetailsComponent = () => {
                 />
               </ConfigProvider>
             </div>
-            <div className=""></div>
-            <div className="flex justify-center items-center content-center  font-baloo text-9xl ">
+            <div className="flex justify-center items-center content-center font-baloo text-9xl ">
               Sản Phẩm Khác
             </div>
-            <div className="flex flex-col  gap-4 ">
+            <div className="flex flex-col gap-4 ">
               <div className="grid grid-cols-4 col-auto gap-x-20 ">
                 {category?.map((cate: any, index) => {
                   if (index < 4) {

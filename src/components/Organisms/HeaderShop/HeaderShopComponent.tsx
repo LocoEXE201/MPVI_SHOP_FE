@@ -328,7 +328,7 @@ const HeaderShopComponent = (props: {}) => {
                     <div className="tracking-[0.48px] leading-[1rem] font-medium flex items-center whitespace-nowrap z-[2]">
                       <span
                         onClick={() => {
-                          // navigateToPage(PATH_AUTH.login);
+                          navigateToPage(PATH_SHOP.cart);
                         }}
                         className={`links_hover ${
                           typeof window !== "undefined" &&
