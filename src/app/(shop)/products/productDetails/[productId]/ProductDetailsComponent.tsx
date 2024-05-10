@@ -9,12 +9,13 @@ import { PATH_SHOP } from "@/routes/paths";
 import { Rate } from "antd";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import ProductCard from "@/components/Shop/ProductCard";
 import DetailFrame from "@/components/Shop/DetailFrame";
 import { useParams } from "next/navigation";
 import categoryApi from "@/api/warehouse/categoryApi";
 import Loading from "@/components/Templates/Loading/Loading";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
+import { useRouter } from "next/navigation";
 
 function valuetext(value: number) {
   return `đ ${value * 10000}`;
@@ -38,6 +39,14 @@ const ProductDetailsComponent = () => {
   const [category, setCategory] = React.useState<ProductCardProps[] | null>();
   const [value2, setValue2] = React.useState<number[]>([37, 52]);
   const [quantity, setQuantity] = React.useState<number>(0);
+  const router = useRouter();
+
+  const navigateToPage = (route: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    }
+    router.push(route);
+  };
 
   const handleChange2 = (
     event: Event,
@@ -121,12 +130,12 @@ const ProductDetailsComponent = () => {
   // console.log(categoryItem);
 
   return (
-    <>
+    <div>
       <Loading loading={isLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
-      <div className="flex items-center justify-center">
-        <div className="w-[1600px] h-[1900px] flex flex-row mt-2.5  mb-6">
-          <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
+      <div className="flex items-center justify-center w-full">
+        <div className="w-full max-h-max flex flex-row mt-2.5 mb-6">
+          <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded box-border">
             <div>
               <div className="font-baloo text-lg">Danh Mục Sản Phẩm</div>
               <hr className="h-px bg-zinc-200 border-0" />
@@ -197,7 +206,7 @@ const ProductDetailsComponent = () => {
               </button>
             </div>
           </div>
-          <div className="w-[1400px] h-[1597px] flex flex-col gap-3 p-1 box-border ">
+          <div className="w-full h-full flex flex-col gap-3 p-1 box-border ">
             <div className="ml-2.5">
               <ConfigProvider
                 theme={{
@@ -371,7 +380,7 @@ const ProductDetailsComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="border-2 border-solid border-zinc-300 rounded p-4 box-border">
+            <div className="border-[2px] border-solid border-zinc-300 rounded p-4 box-border w-full h-full">
               <ConfigProvider
                 theme={{
                   components: {
@@ -400,11 +409,12 @@ const ProductDetailsComponent = () => {
                 />
               </ConfigProvider>
             </div>
-            <div className="flex justify-center items-center content-center font-baloo text-9xl ">
-              Sản Phẩm Khác
-            </div>
-            <div className="flex flex-col gap-4 ">
-              <div className="grid grid-cols-4 col-auto gap-x-20 ">
+
+            <div className="flex flex-col gap-4 w-full justify-center">
+              <div className="flex justify-center items-center content-center font-baloo text-9xl ">
+                Sản Phẩm Khác
+              </div>
+              <div className="grid grid-cols-4 col-auto ">
                 {category?.map((cate: any, index) => {
                   if (index < 4) {
                     return (
@@ -421,8 +431,11 @@ const ProductDetailsComponent = () => {
                   }
                 })}
               </div>
-              <div className="flex w-[1360px] justify-end items-end content-end border-box ml-10 ">
-                <button className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold ">
+              <div className="flex w-full justify-end items-end content-end border-box ">
+                <button
+                  className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
+                  onClick={() => navigateToPage(PATH_SHOP.products)}
+                >
                   <div className="flex flex-row justify-center items-center content-center ml-3">
                     Xem Thêm
                   </div>
@@ -436,7 +449,7 @@ const ProductDetailsComponent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
