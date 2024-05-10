@@ -1,3 +1,4 @@
+import { yellow } from "@mui/material/colors";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -20,6 +21,9 @@ const config: Config = {
           "600": "rgba(119, 119, 119, 0.47)",
           "700": "rgba(122, 122, 122, 0.47)",
           "800": "rgba(255, 255, 255, 0.47)",
+        },
+        green:{
+          "700":'#3BB77E'
         },
         primary: "#cb6f04",
         chocolate: "#cb6f04",

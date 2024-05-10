@@ -2,7 +2,7 @@ import React from "react";
 
 const DetailFrameComponent = () => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 w-full h-full">
       <div>
         Gấu Bông Len của chúng tôi được chế tác từ len cao cấp, mang lại cảm
         giác êm dịu và thoải mái khi sờ vào. Với sự chăm sóc tỉ mỉ trong từng
