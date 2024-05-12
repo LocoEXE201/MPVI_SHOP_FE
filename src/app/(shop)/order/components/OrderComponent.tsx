@@ -3,9 +3,8 @@ import useAppContext from "@/hooks/useAppContext";
 import React, { useState } from "react";
 import Loading from "@/components/Templates/Loading/Loading";
 import categoryApi from "@/api/warehouse/categoryApi";
-import { ClassNames } from "@emotion/react";
 import { formatPrice } from "@/utils/formatPrice";
-import "./cart.scss";
+import "./order.scss";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Checkbox } from "antd";
@@ -13,6 +12,9 @@ import Link from "next/link";
 import { PATH_SHOP } from "@/routes/paths";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { useRouter } from "next/navigation";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { purple } from "@mui/material/colors";
+import Pagination from "@mui/material/Pagination";
 
 interface DataType {
   key: React.Key;
@@ -24,7 +26,17 @@ interface DataType {
   superCategoryName: string;
 }
 
-const CartComponent = (prop: {}) => {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: purple[500],
+    },
+    secondary: {
+      main: "#f44336",
+    },
+  },
+});
+const OrderComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [category, setCategory] = React.useState<DataType[]>([]);
   const [quantity, setQuantity] = React.useState<number>(0);
@@ -73,89 +85,100 @@ const CartComponent = (prop: {}) => {
   return (
     <>
       <Loading loading={isLoading} />
-      <PageTitle mainTitle="Giỏ Hàng" subTitle="Trang Chủ - Giỏ Hàng" />
+      <PageTitle mainTitle="Đơn Hàng" subTitle="Trang Chủ - Đơn Hàng" />
       <div className="flex flex-col items-center content-center justify-center mt-2.5 max-h-max ">
         <div className="w-full min-h-max flex flex-col items-center content-center justify-center p-2 box-border gap-2">
-          <div className="font-baloo text-9xl">Giỏ Hàng</div>
+          <div className="font-baloo text-9xl">Đơn Hàng</div>
           <div className="border-[2px] border-solid border-zinc-300 w-[1296px] min-h-max rounded">
-            <div className="titles font-baloo text-lg bg-zinc-300 items-center h-[50px] p-3 box-border">
-              <div className="check"></div>
-              <div className="product-title">Sản Phẩm</div>
-              <div className="price">Giá Tiền</div>
-              <div className="quantity">Số Lượng</div>
+            <div className="titles font-baloo text-lg bg-zinc-300 items-center h-[50px] p-4 box-border">
+              <div className="product-title">Đơn Hàng</div>
               <div className="total">Tổng Tiền</div>
-              <div className="remove">Xóa</div>
+              <div className="payment">Tình Trạng Thanh Toán</div>
+              <div className="status">Trạng Thái</div>
+              <div className="detail">Chi Tiết</div>
             </div>
-            <div className="cart-items p-3 box-border">
-              {category?.map((cate) => (
-                <div className="cart-item" key={cate.categoryId}>
-                  <div className="cart-check">
-                    <Checkbox />
-                  </div>
-                  <Link href={`${PATH_SHOP.productDetails(cate.categoryId)}`}>
-                    <div className="cart-product">
-                      <img src={cate.image} alt={cate.categoryName} />
-                      <div>
-                        <div className="font-baloo-2 text-lg text-zinc-400 font-semibold">
-                          {cate.categoryName}
-                        </div>
-                      </div>
+            <div className="order-items p-4 box-border">
+              <div className="order-item">
+                <div className="order-product">
+                  <img
+                    src="/mock/image 8.png"
+                    alt="product image"
+                    className="object-contain rounded"
+                  />
+                  <div>
+                    <div className=" w-[200px] font-baloo-2 text-xl">
+                      Gấu bông len thủ công - Nhiều hình dáng
                     </div>
-                  </Link>
-                  <div className="cart-product-price font-baloo-2 font-semibold text-chocolate text-xl">
-                    {formatPrice(cate.priceIn * 1000)}₫
-                  </div>
-                  <div className="cart-product-quantity">
-                    <button
-                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
-                      onClick={() => addQuantity(quantity)}
-                    >
-                      +
-                    </button>
-                    <div className="flex items-center content-center text-chocolate text-xl">
-                      {quantity}
+                    <div className="font-baloo-2 text-lg text-zinc-400">
+                      +1 sản phẩm khác
                     </div>
-                    <button
-                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
-                      onClick={() => reduceQuantity(quantity)}
-                    >
-                      -
-                    </button>
-                  </div>
-                  <div className="cart-product-total font-baloo-2 font-semibold text-chocolate text-xl">
-                    {formatPrice(cate.priceIn * quantity * 1000)}₫
-                  </div>
-                  <div className="cart-product-remove">
-                    <button className="text-red-500">
-                      {" "}
-                      <DeleteIcon />
-                    </button>
                   </div>
                 </div>
-              ))}
+                <div className="order-product-total font-baloo-2 font-semibold text-chocolate text-xl">
+                  100.000₫
+                </div>
+                <div className="order-product-payment">
+                  <div className="font-baloo-2 text-xl text-zinc-400">
+                    Thanh toán khi nhận hàng
+                  </div>
+                </div>
+                <div className="order-product-status ">
+                  <div className="font-baloo-2 text-xl text-yellow-600">
+                    Đang vận chuyển
+                  </div>
+                </div>
+                <div className="order-product-detail">
+                  <button>
+                    <div>Xem chi tiết</div>
+                  </button>
+                </div>
+              </div>
+              <div className="order-item">
+                <div className="order-product">
+                  <img
+                    src="/mock/image 8.png"
+                    alt="product image"
+                    className="object-contain rounded"
+                  />
+                  <div>
+                    <div className=" w-[200px] font-baloo-2 text-xl">
+                      Gấu bông len thủ công - Nhiều hình dáng
+                    </div>
+                    <div className="font-baloo-2 text-lg text-zinc-400">
+                      +1 sản phẩm khác
+                    </div>
+                  </div>
+                </div>
+                <div className="order-product-total font-baloo-2 font-semibold text-chocolate text-xl">
+                  100.000₫
+                </div>
+                <div className="order-product-payment">
+                  <div className="font-baloo-2 text-xl text-green-700">
+                    Đã thanh toán
+                  </div>
+                </div>
+                <div className="order-product-status">
+                  <div className="font-baloo-2 text-xl text-green-700">
+                    Hoàn thành
+                  </div>
+                </div>
+                <div className="order-product-detail">
+                  <button>
+                    <div>Xem chi tiết</div>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="flex flex-row justify-between w-[1296px] box-border mt-1.5">
-            <div
-              className="flex items-center font-baloo-2 text-chocolate text-lg underline cursor-pointer"
-              onClick={() => navigateToPage(PATH_SHOP.products)}
-            >
-              Tiếp tục mua sắm
-            </div>
-            <div className="flex flex-row gap-8 w-2/4 justify-between items-center ">
-              <div className="font-baloo-2 text-black font-bold text-xl ml-20">
-                Tổng tiền sản phẩm
-              </div>
-              <div className=" font-baloo-2 text-chocolate font-bold text-2xl">
-                {formatPrice(225 * 1000)}₫
-              </div>
-              <button
-                className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
-                onClick={() => navigateToPage(PATH_SHOP.payment)}
-              >
-                Thanh Toán
-              </button>
-            </div>
+          <div className="flex flex-row justify-end w-[1296px] box-border mt-1.5 ">
+            <ThemeProvider theme={theme}>
+              <Pagination
+                count={3}
+                variant="outlined"
+                shape="rounded"
+                size="large"
+              />
+            </ThemeProvider>
           </div>
         </div>
         <div className="flex flex-col h-full mb-8 mt-5 gap-5">
@@ -199,4 +222,4 @@ const CartComponent = (prop: {}) => {
   );
 };
 
-export default CartComponent;
+export default OrderComponent;

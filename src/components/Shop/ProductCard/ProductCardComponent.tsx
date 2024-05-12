@@ -29,15 +29,15 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
   return (
     <>
       <Link href={`${PATH_SHOP.productDetails(categoryId)}`}>
-        <div className="flex flex-col gap-3 w-[300px] rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
-          <div className=" flex justify-center items-center content-center">
+        <div className="flex flex-col gap-3 w-[280px] rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
+          <div className="w-full flex justify-center items-center content-center">
             <img
               className="object-contain box-content transition ease-in-out duration-500 hover:scale-110 "
               src={image}
               alt="Fruit"
             ></img>
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 w-full">
             <div className="font-baloo-2 text-base text-zinc-300 font-semibold">
               {superCategoryName}
             </div>
@@ -54,7 +54,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
               <div className="text-sm text-zinc-400">({rate})</div>
             </div>
           </div>
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row justify-between items-center w-full">
             <div className="flex flex-row gap-2 items-center ">
               <div className="font-quicksand text-chocolate text-lg font-bold">
                 {formatPrice(priceIn * 1000)}₫

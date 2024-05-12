@@ -14,7 +14,7 @@ import "./index.scss";
 import categoryApi from "@/api/warehouse/categoryApi";
 import Loading from "@/components/Templates/Loading/Loading";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
-// Define custom theme
+
 const theme = createTheme({
   palette: {
     primary: {
