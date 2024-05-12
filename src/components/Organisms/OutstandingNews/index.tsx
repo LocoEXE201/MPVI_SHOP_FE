@@ -30,11 +30,11 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({}) => {
                     <div className="absolute top-[0rem] left-[0rem] tracking-[0.48px] text-[1rem] leading-[1.75rem] font-semibold flex items-center w-[5.194rem] h-[1.75rem]">
                       Đọc Thêm
                     </div>
-                    <img
+                    {/* <img
                       className="absolute top-[1.163rem] left-[5.588rem] w-[1.581rem] h-[0.063rem] overflow-hidden"
                       alt=""
                       src="/link-7.svg"
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -61,11 +61,11 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({}) => {
                     <div className="absolute top-[0rem] left-[0rem] tracking-[0.48px] text-[1rem] leading-[1.75rem] font-semibold flex items-center w-[5.194rem] h-[1.75rem]">
                       Đọc Thêm
                     </div>
-                    <img
+                    {/* <img
                       className="absolute top-[1.163rem] left-[5.588rem] w-[1.581rem] h-[0.063rem] overflow-hidden"
                       alt=""
                       src="/link-7.svg"
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -92,11 +92,11 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({}) => {
                     <div className="absolute top-[0rem] left-[0rem] tracking-[0.48px] text-[1rem] leading-[1.75rem] font-semibold flex items-center w-[5.194rem] h-[1.75rem]">
                       Đọc Thêm
                     </div>
-                    <img
+                    {/* <img
                       className="absolute top-[1.163rem] left-[5.588rem] w-[1.581rem] h-[0.063rem] overflow-hidden"
                       alt=""
                       src="/link-7.svg"
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

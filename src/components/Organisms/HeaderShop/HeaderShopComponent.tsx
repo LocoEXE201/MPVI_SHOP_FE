@@ -54,7 +54,7 @@ const HeaderShopComponent = (props: {}) => {
                   onClick={() => {
                     navigateToPage(PATH_SHOP.root);
                   }}
-                  className="cursor-pointer linkS_hover font-baloo text-primary text-[1.25rem]"
+                  className="cursor-pointer links_hover font-baloo text-primary text-[1.25rem]"
                 >
                   Love Connection
                 </p>

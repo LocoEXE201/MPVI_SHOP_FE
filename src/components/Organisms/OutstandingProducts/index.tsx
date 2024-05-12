@@ -91,11 +91,6 @@ const OutstandingProducts: NextPage = () => {
                 </div>{" "}
               </div>
               <div className="self-stretch rounded-xl flex flex-col items-start justify-start pt-[6.437rem] pb-[23.4rem] pr-[0.875rem] pl-[1.562rem] gap-[1.312rem] bg-[url('/mock/carousel.png')] bg-cover bg-no-repeat bg-[top] text-[3.125rem] text-white font-barlow-condensed mq900:pt-[4.188rem] mq900:pb-[15.188rem] mq900:box-border">
-                <img
-                  className="h-[40.375rem] relative rounded-xl object-cover hidden"
-                  alt=""
-                  src="/image-11@2x.png"
-                />
                 <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.062rem]">
                   <h1 className="m-0 flex-1 relative text-inherit tracking-[0.48px] leading-[1.5rem] font-normal font-inherit z-[1] mq450:text-[1.875rem] mq450:leading-[0.875rem] mq900:text-[2.5rem] mq900:leading-[1.188rem]">
                     Sản Phẩm
