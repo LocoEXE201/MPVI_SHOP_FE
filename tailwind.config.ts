@@ -23,7 +23,7 @@ const config: Config = {
           "800": "rgba(255, 255, 255, 0.47)",
         },
         green:{
-          "700":'#3BB77E'
+          "500":'#3BB77E'
         },
         primary: "#cb6f04",
         chocolate: "#cb6f04",

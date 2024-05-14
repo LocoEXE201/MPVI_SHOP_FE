@@ -6,28 +6,14 @@ import useAppContext from "@/hooks/useAppContext";
 import { Rate } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-const PaymentComponent = (prop: {}) => {
+const OrderDetailsComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [delivery, setDelivery] = useState("Normal");
-  const [method, setMethod] = useState("COD");
-
-  const onChange = (e: RadioChangeEvent) => {
-    e.preventDefault();
-    console.log("radio checked", e.target.value);
-    setDelivery(e.target.value);
-  };
-
-  const onChangePaymentMethod = (e: RadioChangeEvent) => {
-    e.preventDefault();
-    console.log("Payment Method:", e.target.value);
-    setMethod(e.target.value);
-  };
 
   return (
     <>
       <PageTitle
-        mainTitle="Thanh Toán"
-        subTitle="Trang Chủ - Giỏ Hàng - Thanh Toán"
+        mainTitle="Đơn Hàng"
+        subTitle="Trang Chủ - Đơn Hàng - Chi Tiết"
       />
       <div className="flex flex-col items-center content-center justify-center mt-5 mb-5 max-h-max">
         <div className="w-3/4">
@@ -45,97 +31,57 @@ const PaymentComponent = (prop: {}) => {
         </div>
 
         <div className="w-[83rem] max-h-max flex flex-row justify-center gap-9 ">
-          <div className="w-[420px] h-[508px] border-[2px] border-solid border-zinc-300 rounded flex flex-col justify-center content-center gap-3 pl-7 pr-3 py-5 ">
-            <div className="">
-              <div className="font-baloo-2 font-semibold text-xl">
-                Phương Thức Vận Chuyển
-              </div>
-              <div className="font-baloo-2 text-zinc-400 text-base">
-                Xin vui lòng lựa chọn phương thức giao hàng bạn muốn.
-              </div>
-              <div className="flex flex-col justify-between ">
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorBorder: "gray",
-                      colorPrimary: "#CB6F04",
-                    },
-                  }}
-                >
-                  <Radio.Group
-                    onChange={onChange}
-                    value={delivery}
-                    className="flex flex-row w-[370px]"
-                  >
-                    <Radio value={"Normal"} className="" checked>
-                      <div className="flex flex-col justify-center">
-                        <div className="font-baloo-2 text-lg font-semibold">
-                          Giao Hàng Thường
-                        </div>
-                        <div className="font-baloo-2 text-lg text-zinc-500">
-                          ₫10.000
-                        </div>
-                      </div>
-                    </Radio>
-                    <Radio value={"Fast"}>
-                      {" "}
-                      <div className="flex flex-col justify-center">
-                        <div className="font-baloo-2 text-lg font-semibold">
-                          Giao Hàng Nhanh
-                        </div>
-                        <div className="font-baloo-2 text-lg text-zinc-500">
-                          ₫35.000
-                        </div>
-                      </div>
-                    </Radio>
-                  </Radio.Group>
-                </ConfigProvider>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="font-baloo-2 font-semibold text-xl">
-                Thêm lưu ý cho đơn hàng (Nếu có)
+          <div className="w-[420px] h-[508px] border-[2px] border-solid border-zinc-300 rounded flex flex-col gap-1 box-border py-4 pt-6 ">
+            <div className="flex flex-col box-border pl-7 gap-5">
+              <div>
+                <div className="font-baloo-2 font-semibold text-xl">
+                  Trạng Thái Đơn Hàng
+                </div>
+                <div className="font-baloo-2 text-lg text-green-500">
+                  Hoàn thành
+                </div>
               </div>
               <div>
-                <textarea
-                  placeholder="Nhập lưu ý của bạn ở đây..."
-                  className="border-[1px] border-solid border-zinc-400 rounded w-[311px] h-[136px] p-2 text-zinc-500 hover:border-orange-500"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="font-baloo-2 font-semibold text-xl">
-                Phương Thức Thanh Toán
-              </div>
-              <div className="font-baloo-2 text-zinc-400 text-base">
-                Xin vui lòng lựa chọn phương thức thanh toán bạn muốn.
+                <div className="font-baloo-2 font-semibold text-xl">
+                  Lưu Ý Cho Đơn Hàng
+                </div>
+                <div className="font-baloo-2 text-lg text-zinc-400">
+                  Shop chú ý gói đồ kĩ giúp em nhé ạ.
+                </div>
               </div>
               <div>
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorBorder: "gray",
-                      colorPrimary: "#CB6F04",
-                    },
-                  }}
-                >
-                  <Radio.Group
-                    onChange={onChangePaymentMethod}
-                    value={method}
-                    className="flex flex-col gap-2"
-                  >
-                    <Radio value={"COD"} checked>
-                      <div className="font-baloo-2 text-lg text-zinc-500 font-medium">
-                        Thanh toán khi nhận hàng
-                      </div>
-                    </Radio>
-                    <Radio value={"VNPAY"}>
-                      <div className="font-baloo-2 text-lg text-zinc-500 font-medium">
-                        Ví VNPAY
-                      </div>
-                    </Radio>
-                  </Radio.Group>
-                </ConfigProvider>
+                <div className="font-baloo-2 font-semibold text-xl">
+                  Phương Thức Thanh Toán
+                </div>
+                <div className="font-baloo-2 text-lg text-zinc-400">
+                  Ví VNPAY
+                </div>
+              </div>
+              <div>
+                <div className="font-baloo-2 font-semibold text-xl">
+                  Trạng Thái Thanh Toán
+                </div>
+                <div className="font-baloo-2 text-lg text-green-500">
+                  Đã hoàn thành
+                </div>
+              </div>
+            </div>
+            <div className="my-5">
+              <hr className="border-[1px] border-zinc-500" />
+            </div>
+
+            <div className="flex flex-col pl-7 gap-2 font-baloo-2 text-lg text-zinc-500">
+              <div className="flex flex-row gap-1">
+                <div className="font-bold">Ngày đặt hàng:</div>
+                <div>28/04/2024</div>
+              </div>
+              <div className="flex flex-row gap-1">
+                <div className="font-bold">Ngày thanh toán:</div>
+                <div>28/04/2024</div>
+              </div>
+              <div className="flex flex-row gap-1">
+                <div className="font-bold">Ngày nhận hàng:</div>
+                <div>28/04/2024</div>
               </div>
             </div>
           </div>
@@ -237,4 +183,4 @@ const PaymentComponent = (prop: {}) => {
   );
 };
 
-export default PaymentComponent;
+export default OrderDetailsComponent;
