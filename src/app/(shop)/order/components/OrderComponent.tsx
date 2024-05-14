@@ -41,6 +41,7 @@ const OrderComponent = (prop: {}) => {
   const [category, setCategory] = React.useState<DataType[]>([]);
   const [quantity, setQuantity] = React.useState<number>(0);
   const router = useRouter();
+  const orderId = 1;
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -128,7 +129,11 @@ const OrderComponent = (prop: {}) => {
                   </div>
                 </div>
                 <div className="order-product-detail">
-                  <button>
+                  <button
+                    onClick={() =>
+                      navigateToPage(PATH_SHOP.orderDetails(orderId))
+                    }
+                  >
                     <div>Xem chi tiết</div>
                   </button>
                 </div>
@@ -153,17 +158,21 @@ const OrderComponent = (prop: {}) => {
                   100.000₫
                 </div>
                 <div className="order-product-payment">
-                  <div className="font-baloo-2 text-xl text-green-700">
+                  <div className="font-baloo-2 text-xl text-green-500">
                     Đã thanh toán
                   </div>
                 </div>
                 <div className="order-product-status">
-                  <div className="font-baloo-2 text-xl text-green-700">
+                  <div className="font-baloo-2 text-xl text-green-500">
                     Hoàn thành
                   </div>
                 </div>
                 <div className="order-product-detail">
-                  <button>
+                  <button
+                    onClick={() =>
+                      navigateToPage(PATH_SHOP.orderDetails(orderId))
+                    }
+                  >
                     <div>Xem chi tiết</div>
                   </button>
                 </div>

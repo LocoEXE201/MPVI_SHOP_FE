@@ -17,6 +17,9 @@ export const PATH_SHOP = {
   products: "/products",
   productDetails:(categoryId: number) => `/products/productDetails/${categoryId}`,
   cart:"/cart",
+  payment:"/payment",
   order:"/order",
-  payment:"/payment"
+  orderDetails: (orderId: number) => `/order/orderDetails/${orderId}`,
+  profile:"/profile"
+
 };
