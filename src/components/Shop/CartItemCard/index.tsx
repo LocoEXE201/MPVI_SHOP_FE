@@ -14,7 +14,6 @@ import { CheckboxChangeEvent } from "antd/es/checkbox";
 interface Props {
   cartItem: CartItem;
   onCheckboxChange: (categoryId: number, checked: boolean, quantity: number) => void;
-  // onquantityChange: (categoryId: number, quantity: number) => void;
   checked: boolean;
 }
 
@@ -22,7 +21,6 @@ const CartItemCard = ({
   cartItem,
   onCheckboxChange,
   checked,
-  // onquantityChange,
 }: Props) => {
   const dispatch = useDispatch();
 
@@ -34,9 +32,6 @@ const CartItemCard = ({
     );
   };
 
-  // const handlequantityChange = (quantity: number) => {
-  //   onquantityChange(cartItem.product.categoryId, quantity);
-  // };
 
   return (
     <div className="cart-item" key={cartItem.product.categoryId}>

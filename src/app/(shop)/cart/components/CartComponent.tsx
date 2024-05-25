@@ -111,7 +111,7 @@ const CartComponent = () => {
     return checked;
   };
 
-  console.log(checkedCategories());
+  // console.log(checkedCategories());
 
   const totalSelectedItems = () => {
     let total = 0;
@@ -126,7 +126,7 @@ const CartComponent = () => {
     }
   };
 
-  console.log(totalSelectedItems());
+  // console.log(totalSelectedItems());
 
   const paymentBtn = (cartItems: any) => {
     if (cartItems.length > 0 && selectedItems.length > 0) {

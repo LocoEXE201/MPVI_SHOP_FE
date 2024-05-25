@@ -5,10 +5,12 @@ import { ConfigProvider, Radio } from "antd";
 import useAppContext from "@/hooks/useAppContext";
 import { Rate } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useParams } from "next/navigation";
 
 const OrderDetailsComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-
+  const params = useParams();
+  const orderId = params.orderId;
   return (
     <>
       <PageTitle
