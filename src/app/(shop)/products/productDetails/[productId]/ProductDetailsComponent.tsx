@@ -1,5 +1,5 @@
 import PageTitle from "@/components/Molecules/PageTitle";
-import React from "react";
+import React, { useState } from "react";
 import { formatPrice } from "../../../../../utils/formatPrice";
 import { Checkbox, Col, ConfigProvider, Row, Space } from "antd";
 import Slider from "@mui/material/Slider";
@@ -16,6 +16,20 @@ import Loading from "@/components/Templates/Loading/Loading";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { useRouter } from "next/navigation";
+import { Product } from "../../../../../../interfaces";
+import { useAppSelector } from "@/store/store";
+import {
+  productQtySelector,
+  increment,
+  decrement,
+} from "@/store/features/cartSlice";
+import { useDispatch } from "react-redux";
+import QuantityButton from "@/components/Atoms/QuantityButton";
+import cartApi from "@/api/shop/cartApi";
+
+interface Props {
+  product: Product;
+}
 
 function valuetext(value: number) {
   return `đ ${value * 10000}`;
@@ -30,16 +44,21 @@ interface ProductCardProps {
   priceIn: number;
   rate: number;
   superCategoryName: string;
+  category: ProductCardProps;
 }
 
 const ProductDetailsComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const params = useParams();
   const categoryId = params.productId;
-  const [category, setCategory] = React.useState<ProductCardProps[] | null>();
+  const [category, setCategory] = React.useState<Product[]>([]);
   const [value2, setValue2] = React.useState<number[]>([37, 52]);
-  const [quantity, setQuantity] = React.useState<number>(0);
   const router = useRouter();
+
+  const loadUserInformation = () => {
+    const user = localStorage.getItem("USER_INFO");
+    return user ? JSON.parse(user) : {};
+  };
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -72,10 +91,6 @@ const ProductDetailsComponent = () => {
     }
   };
 
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -89,24 +104,11 @@ const ProductDetailsComponent = () => {
     },
   ];
 
-  const addQuantity = (quantity: any) => {
-    setQuantity(quantity + 1);
-  };
-
-  const reduceQuantity = (quantity: any) => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    } else {
-      setQuantity(0);
-    }
-  };
-
   const getAllCategory: any = async () => {
     try {
       enableLoading();
       const response = await categoryApi.getAllCategory();
       if (response.status === 200) {
-        // console.log(response.data);
         disableLoading();
         setCategory(response.data.result);
       } else {
@@ -123,11 +125,42 @@ const ProductDetailsComponent = () => {
     getAllCategory();
   }, []);
 
-  const categoryItem = category?.find(
+  const categoryItem: any = category?.find(
     (cate) => Number(cate.categoryId) === Number(categoryId)
   );
   const name = categoryItem?.categoryName;
-  // console.log(categoryItem);
+  const id = categoryItem?.categoryId;
+
+  const quantity = useAppSelector((state) =>
+    productQtySelector(state, Number(id))
+  );
+
+  const dispatch = useDispatch();
+
+  // const [cartItem, setCartItem] = useState({
+  //   cartHeader: {
+  //     // cartHeaderId: 0,
+  //     customerId: loadUserInformation().id,
+  //     total: categoryItem?.priceIn ?? 0,
+  //     notes: "string",
+  //   },
+  //   cartDetails: {
+  //     // cartDetailsId: 0,
+  //     // cartHeaderId: 0,
+  //     categoryId: id,
+  //     quantity: quantity,
+  //   },
+  // });
+
+  // const fetchCart = async (data: any) => {
+  //   try {
+  //     const response = await cartApi.cartUpsert(data);
+  //     console.log(response.data);
+  //     console.log(response.data.isSuccess);
+  //   } catch (error) {
+  //     console.log("No successfully");
+  //   }
+  // };
 
   return (
     <div>
@@ -347,25 +380,27 @@ const ProductDetailsComponent = () => {
                 <div className="flex flex-row gap-2 font-baloo-2 font-semibold text-lg">
                   <div>Số lượng:</div>
                   <div className="flex flex-row gap-3">
-                    <button
-                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
-                      onClick={() => addQuantity(quantity)}
-                    >
-                      +
-                    </button>
-                    <div className="flex items-center content-center text-chocolate text-xl">
-                      {quantity}
-                    </div>
-                    <button
-                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
-                      onClick={() => reduceQuantity(quantity)}
-                    >
-                      -
-                    </button>
+                    <QuantityButton
+                      onIncrease={(e: any) => {
+                        e.preventDefault();
+                        dispatch(increment(categoryItem));
+                      }}
+                      onDecrease={(e: any) => {
+                        e.preventDefault();
+                        dispatch(decrement(categoryItem));
+                      }}
+                      quantity={!quantity ? 0 : quantity}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-row gap-4">
-                  <button className="w-[152px] h-[40px] flex flex-row gap-1 bg-chocolate text-white text-base justify-center items-center content-center rounded">
+                  <button
+                    className="w-[152px] h-[40px] flex flex-row gap-1 bg-chocolate text-white text-base justify-center items-center content-center rounded"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(increment(categoryItem));
+                    }}
+                  >
                     <img
                       src="/Icons/cart.svg"
                       className="w-[20px] h-[20px] text-base "
@@ -374,6 +409,7 @@ const ProductDetailsComponent = () => {
                       Thêm Giỏ Hàng
                     </div>
                   </button>
+                  {/* <AddCartButtonDetails product={categoryItem} /> */}
                   <button className="w-[95px] h-[40px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate">
                     Mua Ngay
                   </button>
@@ -426,6 +462,7 @@ const ProductDetailsComponent = () => {
                         priceIn={cate.priceIn}
                         rate={cate.rate}
                         superCategoryName={cate.superCategory.superCategoryName}
+                        category={cate}
                       />
                     );
                   }

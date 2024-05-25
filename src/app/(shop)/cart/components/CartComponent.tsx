@@ -1,6 +1,6 @@
 import PageTitle from "@/components/Molecules/PageTitle";
 import useAppContext from "@/hooks/useAppContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "@/components/Templates/Loading/Loading";
 import categoryApi from "@/api/warehouse/categoryApi";
 import { ClassNames } from "@emotion/react";
@@ -13,6 +13,10 @@ import Link from "next/link";
 import { PATH_SHOP } from "@/routes/paths";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { useRouter } from "next/navigation";
+import { CartItem, Product } from "../../../../../interfaces";
+import { useAppSelector } from "@/store/store";
+import CartItemCard from "@/components/Shop/CartItemCard";
+import { loadCartItems, totalPriceSelector } from "@/store/features/cartSlice";
 
 interface DataType {
   key: React.Key;
@@ -24,11 +28,13 @@ interface DataType {
   superCategoryName: string;
 }
 
-const CartComponent = (prop: {}) => {
+const CartComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [category, setCategory] = React.useState<DataType[]>([]);
-  const [quantity, setQuantity] = React.useState<number>(0);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const router = useRouter();
+
+  const totalPrice = useAppSelector(totalPriceSelector);
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -59,17 +65,91 @@ const CartComponent = (prop: {}) => {
     getAllCategory();
   }, []);
 
-  const addQuantity = (quantity: any) => {
-    setQuantity(quantity + 1);
+  useEffect(() => {
+    localStorage.setItem("selectedCategories", JSON.stringify(selectedItems));
+  }, [selectedItems]);
+
+  useEffect(() => {
+    const savedSelectedItems = localStorage.getItem("selectedCategories");
+    if (savedSelectedItems) {
+      setSelectedItems(JSON.parse(savedSelectedItems));
+    }
+  }, []);
+
+  const handleCheckboxChange = (
+    productId: number,
+    checked: boolean,
+    quantity: number
+  ) => {
+    setSelectedItems((prevSelectedItems: any) => {
+      if (quantity > 0) {
+        if (checked) {
+          return [...prevSelectedItems, productId];
+        } else {
+          return prevSelectedItems.filter((id: any) => id !== productId);
+        }
+      }
+    });
   };
 
-  const reduceQuantity = (quantity: any) => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
+  console.log(selectedItems);
+
+
+  const checkedCategories = () => {
+    if (selectedItems.length === 0) {
+      return [];
+    }
+
+    const checked = selectedItems
+      .flatMap((selected: any) => {
+        return loadCartItems().find(
+          (items) => items.product.categoryId === selected
+        );
+      })
+      .filter((item) => item !== undefined); 
+
+    return checked;
+  };
+
+  // console.log(checkedCategories());
+
+  const totalSelectedItems = () => {
+    let total = 0;
+    if (checkedCategories().length > 0) {
+      return (total = checkedCategories().reduce(
+        (total: number, items: any) =>
+          (total += items?.product.priceIn * items?.quantity),
+        0
+      ));
     } else {
-      setQuantity(0);
+      return total;
     }
   };
+
+  // console.log(totalSelectedItems());
+
+  const paymentBtn = (cartItems: any) => {
+    if (cartItems.length > 0 && selectedItems.length > 0) {
+      return (
+        <button
+          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
+          onClick={() => navigateToPage(PATH_SHOP.payment)}
+        >
+          Thanh Toán
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-zinc-400 text-white font-baloo text-base rounded "
+          disabled
+        >
+          Thanh Toán
+        </button>
+      );
+    }
+  };
+
   return (
     <>
       <Loading loading={isLoading} />
@@ -82,56 +162,19 @@ const CartComponent = (prop: {}) => {
               <div className="check"></div>
               <div className="product-title">Sản Phẩm</div>
               <div className="price">Giá Tiền</div>
-              <div className="quantity">Số Lượng</div>
+              <div className="qty">Số Lượng</div>
               <div className="total">Tổng Tiền</div>
               <div className="remove">Xóa</div>
             </div>
             <div className="cart-items p-3 box-border">
-              {category?.map((cate) => (
-                <div className="cart-item" key={cate.categoryId}>
-                  <div className="cart-check">
-                    <Checkbox />
-                  </div>
-                  <Link href={`${PATH_SHOP.productDetails(cate.categoryId)}`}>
-                    <div className="cart-product">
-                      <img src={cate.image} alt={cate.categoryName} />
-                      <div>
-                        <div className="font-baloo-2 text-lg text-zinc-400 font-semibold">
-                          {cate.categoryName}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                  <div className="cart-product-price font-baloo-2 font-semibold text-chocolate text-xl">
-                    {formatPrice(cate.priceIn * 1000)}₫
-                  </div>
-                  <div className="cart-product-quantity">
-                    <button
-                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
-                      onClick={() => addQuantity(quantity)}
-                    >
-                      +
-                    </button>
-                    <div className="flex items-center content-center text-chocolate text-xl">
-                      {quantity}
-                    </div>
-                    <button
-                      className="w-[20px] h-[20px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-normal mt-1"
-                      onClick={() => reduceQuantity(quantity)}
-                    >
-                      -
-                    </button>
-                  </div>
-                  <div className="cart-product-total font-baloo-2 font-semibold text-chocolate text-xl">
-                    {formatPrice(cate.priceIn * quantity * 1000)}₫
-                  </div>
-                  <div className="cart-product-remove">
-                    <button className="text-red-500">
-                      {" "}
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                </div>
+              {loadCartItems().map((item) => (
+                <CartItemCard
+                  key={item.product.categoryId}
+                  cartItem={item}
+                  onCheckboxChange={handleCheckboxChange}
+                  // onqtyChange={handleqtyChange}
+                  checked={selectedItems.includes(item.product.categoryId)}
+                />
               ))}
             </div>
           </div>
@@ -147,14 +190,15 @@ const CartComponent = (prop: {}) => {
                 Tổng tiền sản phẩm
               </div>
               <div className=" font-baloo-2 text-chocolate font-bold text-2xl">
-                {formatPrice(225 * 1000)}₫
+                {formatPrice(totalSelectedItems() * 1000)}₫
               </div>
-              <button
+              {/* <button
                 className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
                 onClick={() => navigateToPage(PATH_SHOP.payment)}
               >
                 Thanh Toán
-              </button>
+              </button> */}
+              {paymentBtn(loadCartItems())}
             </div>
           </div>
         </div>
@@ -174,6 +218,7 @@ const CartComponent = (prop: {}) => {
                     priceIn={cate.priceIn}
                     rate={cate.rate}
                     superCategoryName={cate.superCategory.superCategoryName}
+                    category={cate}
                   />
                 );
               }
