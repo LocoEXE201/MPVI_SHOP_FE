@@ -1,6 +1,6 @@
 import PageTitle from "@/components/Molecules/PageTitle";
 import useAppContext from "@/hooks/useAppContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "@/components/Templates/Loading/Loading";
 import categoryApi from "@/api/warehouse/categoryApi";
 import { formatPrice } from "@/utils/formatPrice";
@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import Pagination from "@mui/material/Pagination";
+import shopApi from "@/api/shop/shopApi";
 
 interface DataType {
   key: React.Key;
@@ -39,9 +40,14 @@ const theme = createTheme({
 const OrderComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [category, setCategory] = React.useState<DataType[]>([]);
-  const [quantity, setQuantity] = React.useState<number>(0);
+  const [orders, setOrders] = useState([]);
   const router = useRouter();
   const orderId = 1;
+
+  const loadUserInformation = () => {
+    const user = localStorage.getItem("USER_INFO");
+    return user ? JSON.parse(user) : {};
+  };
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -72,17 +78,31 @@ const OrderComponent = (prop: {}) => {
     getAllCategory();
   }, []);
 
-  const addQuantity = (quantity: any) => {
-    setQuantity(quantity + 1);
-  };
-
-  const reduceQuantity = (quantity: any) => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    } else {
-      setQuantity(0);
+  const getOrderByCondition: any = async (id: any) => {
+    try {
+      enableLoading();
+      const response = await shopApi.getOrderByCondition(id);
+      console.log(response.data);
+      if (response.data.isSuccess === true) {
+        disableLoading();
+        setOrders(response.data.result.$values);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
     }
   };
+
+  useEffect(() => {
+    const user = loadUserInformation();
+    console.log(user.id);
+    if (user.id) {
+      getOrderByCondition(user.id);
+    }
+  }, []);
+
+  console.log(orders);
+
   return (
     <>
       <Loading loading={isLoading} />
@@ -206,6 +226,7 @@ const OrderComponent = (prop: {}) => {
                     priceIn={cate.priceIn}
                     rate={cate.rate}
                     superCategoryName={cate.superCategory.superCategoryName}
+                    category={cate}
                   />
                 );
               }

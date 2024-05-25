@@ -171,11 +171,11 @@ const OrderDetailsComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-end ">
+            {/* <div className="flex justify-end ">
               <button className="w-[130px] h-[40px] flex justify-center items-center content-center bg-chocolate text-lg text-white font-bold rounded">
                 Thanh Toán
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
