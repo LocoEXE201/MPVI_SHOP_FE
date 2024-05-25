@@ -4,12 +4,15 @@ import { RootState } from "../store";
 
 
  export const loadCartItems = (): CartItem[] => {
-    const data = localStorage.getItem("cartItems");
+    const data = typeof window !== "undefined" ? localStorage.getItem("cartItems") : null;
     return data ? JSON.parse(data) : [];
   };
   
   const saveCartItems = (cartItems: CartItem[]) => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    if(typeof window !== "undefined")
+    {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }
   };
 
 export interface CartState {
