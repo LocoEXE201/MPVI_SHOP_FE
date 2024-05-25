@@ -21,10 +21,6 @@ const OutstandingProducts: NextPage = () => {
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
 
   useEffect(() => {
-    console.log(axiosInstances.shop.defaults.headers.common.Authorization);
-
-    a.getCart("20be2f6c-f4e7-4076-a032-f5fca9f5132a");
-
     var categoriesList: CategoryDTO[] = [];
 
     categoryApi
