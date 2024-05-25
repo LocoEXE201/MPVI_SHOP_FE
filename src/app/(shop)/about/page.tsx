@@ -1,15 +1,31 @@
-import { Metadata } from "next";
-import AboutPageProvider from "./components/AboutPageProvider";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Loco. - Love Connection",
-  description: "This is Loco. About Page",
-};
+import { AppProvider } from "@/contexts/AppContext";
+import ShopLayout from "@/components/Templates/ShopLayout";
+import AboutPageComponent from "./components/AboutPageComponent";
+import { useEffect } from "react";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
+import { PATH_SHOP } from "@/routes/paths";
 
-export default function AboutPage() {
+const AboutPage = (props: {}) => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        LOCALSTORAGE_CONSTANTS.CURRENT_PAGE,
+        PATH_SHOP.about
+      );
+    }
+  }, []);
+
   return (
     <>
-      <AboutPageProvider />
+      <AppProvider>
+        <ShopLayout>
+          <AboutPageComponent />
+        </ShopLayout>
+      </AppProvider>
     </>
   );
-}
+};
+
+export default AboutPage;

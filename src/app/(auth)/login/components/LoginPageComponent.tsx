@@ -32,7 +32,7 @@ const LoginPageComponent = (props: {}) => {
   const handleForgetPassword = () => {
     Swal.fire({
       title: `Đặt lại mật khẩu`,
-      html: `Xin bạn vui lòng điền địa chỉ email của tài khoản bạn vào phần dưới đây.`,
+      html: `Xin bạn vui lòng điền địa chỉ email của tài khoản bạn đã đăng ký vào phần dưới đây.`,
       input: "email",
       inputAttributes: {
         autocapitalize: "off",

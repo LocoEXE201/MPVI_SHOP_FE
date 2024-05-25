@@ -7,10 +7,9 @@ const isValidToken = (accessToken: string): boolean => {
   }
 
   try {
-    const decoded: JwtPayload = jwtDecode(accessToken);
+    // const decoded: JwtPayload = jwtDecode(accessToken);
     const currentTime = Math.floor(Date.now() / 1000);
-
-    return decoded.exp !== undefined && decoded.exp > currentTime;
+    return parseFloat(accessToken) > currentTime;
   } catch (error) {
     console.log(error);
     return false;
@@ -19,7 +18,10 @@ const isValidToken = (accessToken: string): boolean => {
 
 const setSession = (accessToken: string | null) => {
   if (accessToken) {
-    localStorage.setItem('accessToken', accessToken);
+    const decoded: JwtPayload = jwtDecode(accessToken);
+    if(decoded.exp !== undefined) {
+        localStorage.setItem('accessToken', decoded.exp.toString());
+    }
     axiosInstances.shop.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     axiosInstances.warehouse.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {

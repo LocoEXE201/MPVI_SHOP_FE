@@ -109,7 +109,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         const accessToken = window.localStorage.getItem("accessToken");
         const userRaw = getUserInfo();
         if (accessToken && isValidToken(accessToken) && userRaw) {
-          setSession(accessToken);
+          // setSession(accessToken);
 
           const user = JSON.parse(userRaw);
 

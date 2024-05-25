@@ -85,7 +85,11 @@ const LoginForgotPasswordComponent: NextPage = () => {
 
   useEffect(() => {
     if (userEmail == "") {
-      var userEmailFormat = `${email.split("%40")[0]}@${email.split("%40")[1]}`;
+      var userEmailFormat = "";
+      userEmailFormat = email;
+      if (email.includes("%40")) {
+        userEmailFormat = `${email.split("%40")[0]}@${email.split("%40")[1]}`;
+      }
       setUserEmail(userEmailFormat);
     }
     if (userEmail != "") {
