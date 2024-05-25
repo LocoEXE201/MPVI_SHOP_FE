@@ -5,10 +5,12 @@ import { ConfigProvider, Radio } from "antd";
 import useAppContext from "@/hooks/useAppContext";
 import { Rate } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useParams } from "next/navigation";
 
 const OrderDetailsComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-
+  const params = useParams();
+  const orderId = params.orderId;
   return (
     <>
       <PageTitle
@@ -171,11 +173,11 @@ const OrderDetailsComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-end ">
+            {/* <div className="flex justify-end ">
               <button className="w-[130px] h-[40px] flex justify-center items-center content-center bg-chocolate text-lg text-white font-bold rounded">
                 Thanh Toán
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

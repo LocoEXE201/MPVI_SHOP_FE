@@ -1,11 +1,12 @@
-import axiosInstances from "@/config/axios"
+import axiosInstances from "@/config/axios";
 
-const requestWareHouse = axiosInstances.shop
+const requestShop = axiosInstances.shop;
+const ROOT_CART = "/cart"
 
-export const getCart = (id: string) => requestWareHouse.get(`/cart/GetCart/${id}`);
+const cartUpsert = (data:object) => requestShop.post(`${ROOT_CART}/CartUpsert`, data)
 
-const a = {
-    getCart
-};
+const cartApi = {
+    cartUpsert
+}
 
-export default a;
+export default cartApi

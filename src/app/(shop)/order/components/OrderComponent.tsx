@@ -1,6 +1,6 @@
 import PageTitle from "@/components/Molecules/PageTitle";
 import useAppContext from "@/hooks/useAppContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "@/components/Templates/Loading/Loading";
 import categoryApi from "@/api/warehouse/categoryApi";
 import { formatPrice } from "@/utils/formatPrice";
@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import Pagination from "@mui/material/Pagination";
+import shopApi from "@/api/shop/shopApi";
+import OrderItemCard from "@/components/Shop/OrderItemCard";
 
 interface DataType {
   key: React.Key;
@@ -24,6 +26,22 @@ interface DataType {
   priceIn: number;
   rate: number;
   superCategoryName: string;
+}
+
+interface Orders {
+  $id: string;
+  createdOn: string;
+  customerId: string;
+  notes: string;
+  orderId: number;
+  orderStatus: string;
+  paymentResponse: null;
+  paymentResponseId: number;
+  paymentStatus: null;
+  shpFOrderDetails: object;
+  soldBy: null;
+  strategyId: number;
+  total: number;
 }
 
 const theme = createTheme({
@@ -39,10 +57,15 @@ const theme = createTheme({
 const OrderComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [category, setCategory] = React.useState<DataType[]>([]);
-  const [quantity, setQuantity] = React.useState<number>(0);
-  const router = useRouter();
+  const [orders, setOrders] = React.useState<Orders[]>([]);
+ 
   const orderId = 1;
 
+  const loadUserInformation = () => {
+    const user = localStorage.getItem("USER_INFO");
+    return user ? JSON.parse(user) : {};
+  };
+  const router = useRouter();
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
       localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
@@ -72,17 +95,50 @@ const OrderComponent = (prop: {}) => {
     getAllCategory();
   }, []);
 
-  const addQuantity = (quantity: any) => {
-    setQuantity(quantity + 1);
-  };
-
-  const reduceQuantity = (quantity: any) => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    } else {
-      setQuantity(0);
+  const getOrderByCondition: any = async (id: any) => {
+    try {
+      enableLoading();
+      const response = await shopApi.getOrderByCondition(id);
+      if (response.data.isSuccess === true) {
+        disableLoading();
+        setOrders(response.data.result.$values);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
     }
   };
+
+  useEffect(() => {
+    const user = loadUserInformation();
+    if (user.id) {
+      getOrderByCondition(user.id);
+    }
+  }, []);
+
+  console.log(orders);
+
+  const checkedOrders = orders.map((order: any) => {
+    return {
+      total: order.total,
+      orders: order.shpFOrderDetails.$values,
+      orderStatus: order.orderStatus,
+      customerId: order.customerId,
+      orderId: order.orderId
+    };
+  });
+
+  // console.log(checkedOrders);
+
+  const filterCategories = checkedOrders.flatMap((orders) => {
+    return orders.orders.flatMap((ord: any) => {
+      return category.find((cate) => cate.categoryId === ord.categoryId);
+    });
+  });
+
+  const uniqueCategories = Array.from(new Set(filterCategories));
+  // console.log(uniqueCategories);
+
   return (
     <>
       <Loading loading={isLoading} />
@@ -99,84 +155,15 @@ const OrderComponent = (prop: {}) => {
               <div className="detail">Chi Tiết</div>
             </div>
             <div className="order-items p-4 box-border">
-              <div className="order-item">
-                <div className="order-product">
-                  <img
-                    src="/mock/image 8.png"
-                    alt="product image"
-                    className="object-contain rounded"
+              {checkedOrders.map((orders: any, index) => {
+                return (
+                  <OrderItemCard
+                    key={index}
+                    ordersList={orders}
+                    categories={uniqueCategories}
                   />
-                  <div>
-                    <div className=" w-[200px] font-baloo-2 text-xl">
-                      Gấu bông len thủ công - Nhiều hình dáng
-                    </div>
-                    <div className="font-baloo-2 text-lg text-zinc-400">
-                      +1 sản phẩm khác
-                    </div>
-                  </div>
-                </div>
-                <div className="order-product-total font-baloo-2 font-semibold text-chocolate text-xl">
-                  100.000₫
-                </div>
-                <div className="order-product-payment">
-                  <div className="font-baloo-2 text-xl text-zinc-400">
-                    Thanh toán khi nhận hàng
-                  </div>
-                </div>
-                <div className="order-product-status ">
-                  <div className="font-baloo-2 text-xl text-yellow-600">
-                    Đang vận chuyển
-                  </div>
-                </div>
-                <div className="order-product-detail">
-                  <button
-                    onClick={() =>
-                      navigateToPage(PATH_SHOP.orderDetails(orderId))
-                    }
-                  >
-                    <div>Xem chi tiết</div>
-                  </button>
-                </div>
-              </div>
-              <div className="order-item">
-                <div className="order-product">
-                  <img
-                    src="/mock/image 8.png"
-                    alt="product image"
-                    className="object-contain rounded"
-                  />
-                  <div>
-                    <div className=" w-[200px] font-baloo-2 text-xl">
-                      Gấu bông len thủ công - Nhiều hình dáng
-                    </div>
-                    <div className="font-baloo-2 text-lg text-zinc-400">
-                      +1 sản phẩm khác
-                    </div>
-                  </div>
-                </div>
-                <div className="order-product-total font-baloo-2 font-semibold text-chocolate text-xl">
-                  100.000₫
-                </div>
-                <div className="order-product-payment">
-                  <div className="font-baloo-2 text-xl text-green-500">
-                    Đã thanh toán
-                  </div>
-                </div>
-                <div className="order-product-status">
-                  <div className="font-baloo-2 text-xl text-green-500">
-                    Hoàn thành
-                  </div>
-                </div>
-                <div className="order-product-detail">
-                  <button
-                    onClick={() =>
-                      navigateToPage(PATH_SHOP.orderDetails(orderId))
-                    }
-                  >
-                    <div>Xem chi tiết</div>
-                  </button>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
           <div className="flex flex-row justify-end w-[1296px] box-border mt-1.5 ">
@@ -206,6 +193,7 @@ const OrderComponent = (prop: {}) => {
                     priceIn={cate.priceIn}
                     rate={cate.rate}
                     superCategoryName={cate.superCategory.superCategoryName}
+                    category={cate}
                   />
                 );
               }

@@ -16,6 +16,8 @@ import useAuth from "@/hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLayoutEffect, useState } from "react";
 import { getUserInfoId } from "@/utils/utils";
+import { useAppSelector } from "@/store/store";
+import { totalCartItemSelector } from "@/store/features/cartSlice";
 
 const HeaderShopComponent = (props: {}) => {
   const router = useRouter();
@@ -26,6 +28,8 @@ const HeaderShopComponent = (props: {}) => {
     }
     router.push(route);
   };
+
+  const totalItems = useAppSelector(totalCartItemSelector);
 
   const isActivePage = (route: string) => {
     if (typeof window === "undefined") {
@@ -335,7 +339,7 @@ const HeaderShopComponent = (props: {}) => {
                             : ""
                         }`}
                       >
-                        {`Giỏ Hàng (0)`}
+                        {`Giỏ Hàng (${totalItems})`}
                       </span>
                     </div>
                   </div>
