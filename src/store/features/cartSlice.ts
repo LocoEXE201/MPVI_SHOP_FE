@@ -51,7 +51,18 @@ export const cartSlice = createSlice({
             }
             saveCartItems(state.cartItems)
             }
-        }
+        },
+
+    clear: (state, action:PayloadAction<Product>) =>{
+      const item = state.cartItems.find((el) => el.product.categoryId === action.payload.categoryId);
+      if(item){
+        item.quantity = 0;
+        state.cartItems = state.cartItems.filter(
+          (el) => el.product.categoryId !== action.payload.categoryId
+      );
+      }
+      saveCartItems(state.cartItems)
+    }   
     },
 
 });
@@ -75,5 +86,5 @@ export const productQtySelector = createSelector(
 
 );
 
-export const {increment, decrement} = cartSlice.actions;
+export const {increment, decrement, clear} = cartSlice.actions;
 export default cartSlice.reducer

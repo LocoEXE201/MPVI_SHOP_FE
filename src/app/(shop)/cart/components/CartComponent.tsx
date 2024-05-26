@@ -92,7 +92,7 @@ const CartComponent = () => {
     });
   };
 
-  console.log(selectedItems);
+  // console.log(selectedItems);
 
 
   const checkedCategories = () => {

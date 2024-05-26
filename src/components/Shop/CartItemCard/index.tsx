@@ -8,20 +8,20 @@ import { formatPrice } from "@/utils/formatPrice";
 import { CartItem, Product } from "../../../../interfaces";
 import QuantityButton from "@/components/Atoms/QuantityButton";
 import { useDispatch } from "react-redux";
-import { decrement, increment } from "@/store/features/cartSlice";
+import { clear, decrement, increment } from "@/store/features/cartSlice";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 interface Props {
   cartItem: CartItem;
-  onCheckboxChange: (categoryId: number, checked: boolean, quantity: number) => void;
+  onCheckboxChange: (
+    categoryId: number,
+    checked: boolean,
+    quantity: number
+  ) => void;
   checked: boolean;
 }
 
-const CartItemCard = ({
-  cartItem,
-  onCheckboxChange,
-  checked,
-}: Props) => {
+const CartItemCard = ({ cartItem, onCheckboxChange, checked }: Props) => {
   const dispatch = useDispatch();
 
   const handleCheckboxChange = (e: CheckboxChangeEvent) => {
@@ -31,7 +31,6 @@ const CartItemCard = ({
       cartItem.quantity
     );
   };
-
 
   return (
     <div className="cart-item" key={cartItem.product.categoryId}>
@@ -87,8 +86,13 @@ const CartItemCard = ({
         {formatPrice(cartItem.product.priceIn * cartItem.quantity * 1000)}₫
       </div>
       <div className="cart-product-remove">
-        <button className="text-red-500">
-          {" "}
+        <button
+          className="text-red-500"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(clear(cartItem.product));
+          }}
+        >
           <DeleteIcon />
         </button>
       </div>

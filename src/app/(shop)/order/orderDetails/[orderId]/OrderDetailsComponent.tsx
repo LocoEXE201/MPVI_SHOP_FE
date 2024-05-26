@@ -1,18 +1,171 @@
 import PageTitle from "@/components/Molecules/PageTitle";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { RadioChangeEvent } from "antd";
 import { ConfigProvider, Radio } from "antd";
 import useAppContext from "@/hooks/useAppContext";
 import { Rate } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "next/navigation";
+import shopApi from "@/api/shop/shopApi";
+import categoryApi from "@/api/warehouse/categoryApi";
+import { formatPrice } from "@/utils/formatPrice";
+import Loading from "@/components/Templates/Loading/Loading";
+import { formatDate_DD_MM_YYYY } from "@/utils/formatDate";
+
+interface OrderItems {
+  $id: string;
+  categoryId: number;
+  order: {};
+  orderDetailId: number;
+  orderId: number;
+  price: number;
+  quantity: number;
+}
+
+interface shpFOrderDetails {
+  $id: number;
+  $values: OrderItems[];
+}
+
+interface Orders {
+  $id: string;
+  createdOn: string;
+  customerId: string;
+  notes: string;
+  orderId: number;
+  orderStatus: string;
+  paymentResponse: null;
+  paymentResponseId: number;
+  paymentStatus: null;
+  shpFOrderDetails: shpFOrderDetails;
+  soldBy: null;
+  strategyId: number;
+  total: number;
+}
+
+interface Category {
+  key: React.Key;
+  categoryId: number;
+  categoryName: string;
+  image: string;
+  priceIn: number;
+  rate: number;
+  superCategoryName: string;
+}
 
 const OrderDetailsComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const params = useParams();
   const orderId = params.orderId;
+  const [category, setCategory] = React.useState<Category[]>([]);
+  const [orders, setOrders] = React.useState<Orders[]>([]);
+
+  const loadUserInformation = () => {
+    const user = localStorage.getItem("USER_INFO");
+    return user ? JSON.parse(user) : {};
+  };
+
+  const getOrderByCondition: any = async (id: any) => {
+    try {
+      enableLoading();
+      const response = await shopApi.getOrderByCondition(id);
+      if (response.data.isSuccess === true) {
+        setOrders(response.data.result.$values);
+        disableLoading();
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const user = loadUserInformation();
+    if (user.id) {
+      getOrderByCondition(user.id);
+    }
+  }, []);
+
+  const getAllCategory: any = async () => {
+    try {
+      enableLoading();
+      const response = await categoryApi.getAllCategory();
+      if (response.status === 200) {
+        // console.log(response.data);
+        disableLoading();
+        setCategory(response.data.result);
+      } else {
+        console.log("Failed to fetch data. Status code:", response.status);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
+
+  console.log(orders);
+
+  const orderDetailsItems = orders.find(
+    (order) => Number(order.orderId) === Number(orderId)
+  );
+
+  const categoryItem = orderDetailsItems?.shpFOrderDetails.$values.map(
+    (item) => ({
+      product: category.find(
+        (cate) => Number(item.categoryId) === Number(cate.categoryId)
+      ),
+      quantity: item.quantity,
+    })
+  );
+
+  // console.log(categoryItem);
+
+  const orderStatus = (orderStatus: any) => {
+    switch (orderStatus) {
+      case "Pending":
+        return (
+          <div className="font-baloo-2 text-lg text-yellow-400">
+            Đang vận chuyển
+          </div>
+        );
+      case "Cancelled":
+        return <div className="font-baloo-2 text-lg text-red-500">Đã hủy</div>;
+      case "Payment_Successfully":
+        return (
+          <div className="font-baloo-2 text-lg text-green-500">
+            Đã thanh toán
+          </div>
+        );
+      case "Arrived":
+        return (
+          <div className="font-baloo-2 text-lg text-green-300">
+            Đã tới nơi vận chuyển
+          </div>
+        );
+      case "Completed":
+        return (
+          <div className="font-baloo-2 text-lg text-green-500">Hoàn thành</div>
+        );
+      case "Refund":
+        return (
+          <div className="font-baloo-2 text-lg text-zinc-500">Hoàn Tiền</div>
+        );
+      default:
+        return (
+          <div className="font-baloo-2 text-lg text-yellow-400">
+            Đang vận chuyển
+          </div>
+        );
+    }
+  };
   return (
     <>
+      <Loading loading={isLoading} />
       <PageTitle
         mainTitle="Đơn Hàng"
         subTitle="Trang Chủ - Đơn Hàng - Chi Tiết"
@@ -39,16 +192,16 @@ const OrderDetailsComponent = () => {
                 <div className="font-baloo-2 font-semibold text-xl">
                   Trạng Thái Đơn Hàng
                 </div>
-                <div className="font-baloo-2 text-lg text-green-500">
-                  Hoàn thành
-                </div>
+                <div>{orderStatus(orderDetailsItems?.orderStatus)}</div>
               </div>
               <div>
                 <div className="font-baloo-2 font-semibold text-xl">
                   Lưu Ý Cho Đơn Hàng
                 </div>
                 <div className="font-baloo-2 text-lg text-zinc-400">
-                  Shop chú ý gói đồ kĩ giúp em nhé ạ.
+                  {orderDetailsItems?.notes
+                    ? orderDetailsItems?.notes
+                    : "Không"}
                 </div>
               </div>
               <div>
@@ -63,9 +216,7 @@ const OrderDetailsComponent = () => {
                 <div className="font-baloo-2 font-semibold text-xl">
                   Trạng Thái Thanh Toán
                 </div>
-                <div className="font-baloo-2 text-lg text-green-500">
-                  Đã hoàn thành
-                </div>
+                <div>{orderStatus(orderDetailsItems?.paymentStatus)}</div>
               </div>
             </div>
             <div className="my-5">
@@ -75,15 +226,21 @@ const OrderDetailsComponent = () => {
             <div className="flex flex-col pl-7 gap-2 font-baloo-2 text-lg text-zinc-500">
               <div className="flex flex-row gap-1">
                 <div className="font-bold">Ngày đặt hàng:</div>
-                <div>28/04/2024</div>
+                <div>
+                  {formatDate_DD_MM_YYYY(
+                    orderDetailsItems?.createdOn
+                      ? orderDetailsItems?.createdOn
+                      : ""
+                  )}
+                </div>
               </div>
               <div className="flex flex-row gap-1">
                 <div className="font-bold">Ngày thanh toán:</div>
-                <div>28/04/2024</div>
+                <div> {formatDate_DD_MM_YYYY("")}</div>
               </div>
               <div className="flex flex-row gap-1">
                 <div className="font-bold">Ngày nhận hàng:</div>
-                <div>28/04/2024</div>
+                <div>{formatDate_DD_MM_YYYY("")}</div>
               </div>
             </div>
           </div>
@@ -92,84 +249,73 @@ const OrderDetailsComponent = () => {
               Chi Tiết Đơn Hàng
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex flex-row gap-3 w-full">
-                <img
-                  src="/mock/image 8.png"
-                  className="object-contain rounded"
-                />
+              {categoryItem?.map((cate: any) => {
+                return (
+                  <div className="flex flex-row gap-3 w-full">
+                    <img
+                      src={cate.product.image}
+                      className="object-contain rounded w-[100px]"
+                    />
 
-                <div className="w-full">
-                  <div className="font-baloo-2 text-lg">
-                    Gấu bông len thủ công
-                  </div>
-                  <Rate
-                    className="text-sm text-red-400"
-                    allowHalf
-                    disabled
-                    defaultValue={5}
-                  />
-                  <div className="flex flex-row items-center content-center justify-between ">
-                    <div className="flex flex-row items-center content-center gap-1.5">
-                      <div className="font-poppins text-lg text-chocolate font-semibold">
-                        ₫45.000
+                    <div className="w-full">
+                      <div className="font-baloo-2 text-lg">
+                        {cate.product.categoryName}
                       </div>
-                      <div className="font-poppins text-sm line-through text-zinc-400">
-                        ₫60.000
+                      <Rate
+                        className="text-sm text-red-400"
+                        allowHalf
+                        disabled
+                        defaultValue={cate.product.rate}
+                      />
+                      <div className="flex flex-row items-center content-center justify-between ">
+                        <div className="flex flex-row items-center content-center gap-1.5">
+                          <div className="font-poppins text-lg text-chocolate font-semibold">
+                            ₫{formatPrice(cate.product.priceIn * 1000)}
+                          </div>
+                          <div className="font-poppins text-sm line-through text-zinc-400">
+                            ₫60.000
+                          </div>
+                        </div>
+                        <div className="font-baloo-2 text-xl">
+                          x {cate.quantity}
+                        </div>
                       </div>
                     </div>
-                    <div className="font-baloo-2 text-xl">x 1</div>
                   </div>
-                </div>
-              </div>
-              <div className="flex flex-row gap-3 w-full">
-                <img
-                  src="/mock/image 8.png"
-                  className="object-contain rounded"
-                />
-
-                <div className="w-full">
-                  <div className="font-baloo-2 text-lg">
-                    Gấu bông len thủ công
-                  </div>
-                  <Rate
-                    className="text-sm text-red-400"
-                    allowHalf
-                    disabled
-                    defaultValue={5}
-                  />
-                  <div className="flex flex-row items-center content-center justify-between ">
-                    <div className="flex flex-row items-center content-center gap-1.5">
-                      <div className="font-poppins text-lg text-chocolate font-semibold">
-                        ₫45.000
-                      </div>
-                      <div className="font-poppins text-sm line-through text-zinc-400">
-                        ₫60.000
-                      </div>
-                    </div>
-                    <div className="font-baloo-2 text-xl">x 1</div>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div className="w-full flex flex-col gap-1">
               <div className="flex flex-row justify-between">
                 <div className="text-lg text-zinc-400 font-baloo-2">
                   Tổng Tiền Sản Phẩm
                 </div>
-                <div className="text-lg font-baloo-2"> ₫90.000</div>
+                <div className="text-lg font-baloo-2">
+                  ₫
+                  {formatPrice(
+                    orderDetailsItems?.total
+                      ? orderDetailsItems?.total * 1000
+                      : 0
+                  )}
+                </div>
               </div>
-              <div className="flex flex-row justify-between">
+              {/* <div className="flex flex-row justify-between">
                 <div className="text-lg text-zinc-400 font-baloo-2">
                   Phí Vận Chuyển
                 </div>
                 <div className="text-lg font-baloo-2">₫10.000</div>
-              </div>
+              </div> */}
               <div className="flex flex-row justify-between">
                 <div className="font-baloo-2 text-lg font-semibold">
                   Tổng Tiền Cần Thanh Toán
                 </div>
                 <div className="font-baloo-2 text-lg font-semibold">
-                  ₫100.000
+                  ₫
+                  {formatPrice(
+                    orderDetailsItems?.total
+                      ? orderDetailsItems?.total * 1000
+                      : 0
+                  )}
                 </div>
               </div>
             </div>
