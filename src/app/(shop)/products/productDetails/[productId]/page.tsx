@@ -10,6 +10,15 @@ import React, { useEffect } from "react";
 import ProductDetailsComponent from "./ProductDetailsComponent";
 
 const ProductDetailsProvider = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        LOCALSTORAGE_CONSTANTS.CURRENT_PAGE,
+        PATH_SHOP.products
+      );
+    }
+  }, []);
+
   return (
     <>
       <AppProvider>

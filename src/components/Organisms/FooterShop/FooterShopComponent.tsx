@@ -40,7 +40,6 @@ const FooterShopComponent = (props: {}) => {
                   <div className="self-stretch relative tracking-[0.48px] leading-[1.625rem] whitespace-nowrap mq450:text-[1.125rem] mq450:leading-[1.313rem]">
                     <a
                       className="links_hover self-stretch relative tracking-[0.48px] leading-[1.25rem] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
-                      href={`mailto:${CORE_INFORMATION.MAIL_CONSTANT}`}
                       target="_blank"
                     >
                       {CORE_INFORMATION.MAIL_CONSTANT}
@@ -62,7 +61,6 @@ const FooterShopComponent = (props: {}) => {
                   <div className="self-stretch relative tracking-[0.48px] leading-[1.25rem] mq450:text-[1.125rem] mq450:leading-[1rem]">
                     <a
                       className="links_hover self-stretch relative tracking-[0.48px] leading-[1.25rem] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
-                      href={`tel:${CORE_INFORMATION.PHONE_CONSTANT}`}
                       target="_blank"
                     >
                       {CORE_INFORMATION.PHONE_CONSTANT_DISPLAY}
@@ -169,13 +167,18 @@ const FooterShopComponent = (props: {}) => {
               </div>
               <div className="mt-2 flex flex-col items-start justify-start gap-[0.625rem] min-w-[4.688rem] max-w-[5.125rem]">
                 <div className="flex flex-row items-start justify-start gap-[0.25rem]">
-                  <Image
-                    className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
-                    alt="facebook_icon"
-                    src="/Icons/facebook_icon.svg"
-                    width={52}
-                    height={52}
-                  />
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61559942963991"
+                    target="_blank"
+                  >
+                    <Image
+                      className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
+                      alt="facebook_icon"
+                      src="/Icons/facebook_icon.svg"
+                      width={52}
+                      height={52}
+                    />
+                  </a>
                   <Image
                     className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
                     alt="insta_icon"

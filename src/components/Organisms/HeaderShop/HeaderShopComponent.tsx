@@ -141,7 +141,6 @@ const HeaderShopComponent = (props: {}) => {
                   <div className="relative tracking-[1px] font-medium whitespace-nowrap mq1350:hidden">
                     <a
                       className="links_hover self-stretch relative tracking-[1px] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
-                      href={`mailto:${CORE_INFORMATION.MAIL_CONSTANT}`}
                       target="_blank"
                     >
                       {CORE_INFORMATION.MAIL_CONSTANT}
@@ -160,7 +159,6 @@ const HeaderShopComponent = (props: {}) => {
                   <div className="relative tracking-[1px] font-medium whitespace-nowrap mq1350:hidden">
                     <a
                       className="links_hover self-stretch relative tracking-[1px] font-medium text-[inherit] [text-decoration:none] whitespace-nowrap z-[1]"
-                      href={`tel:${CORE_INFORMATION.PHONE_CONSTANT}`}
                       target="_blank"
                     >
                       {CORE_INFORMATION.PHONE_CONSTANT_DISPLAY}

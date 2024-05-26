@@ -29,7 +29,7 @@ export const ButtonAddCart: FC<btnAddCartProps> = ({
       onClick={() => {
         navigateToPage();
       }}
-      className="cursor-pointer [border:none] py-[0.5rem] px-[0.75rem] hover:bg-yellow-700 bg-chocolate rounded flex flex-row items-center justify-center box-border gap-[0.243rem]"
+      className="cursor-pointer [border:none] py-[0.5rem] px-[0.75rem] hover:bg-black hover:text-white bg-chocolate rounded flex flex-row items-center justify-center box-border gap-[0.243rem]"
     >
       <img
         className="h-[0.875rem] w-[0.875rem] relative overflow-hidden shrink-0 mr-1"
