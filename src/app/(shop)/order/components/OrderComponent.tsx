@@ -28,6 +28,8 @@ interface DataType {
   superCategoryName: string;
 }
 
+
+
 interface Orders {
   $id: string;
   createdOn: string;
@@ -58,8 +60,6 @@ const OrderComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [category, setCategory] = React.useState<DataType[]>([]);
   const [orders, setOrders] = React.useState<Orders[]>([]);
- 
-  const orderId = 1;
 
   const loadUserInformation = () => {
     const user = localStorage.getItem("USER_INFO");
@@ -116,7 +116,6 @@ const OrderComponent = (prop: {}) => {
     }
   }, []);
 
-  console.log(orders);
 
   const checkedOrders = orders.map((order: any) => {
     return {
