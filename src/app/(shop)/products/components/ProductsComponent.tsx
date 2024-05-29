@@ -196,8 +196,8 @@ const ProductsComponent = (prop: {}) => {
           <div>
             <Checkbox.Group style={{ width: "100%" }}>
               <Col className="flex flex-col gap-3">
-                {superCategory.map((supercategory: any) => (
-                  <Row>
+                {superCategory.map((supercategory: any, index: any) => (
+                  <Row key={index}>
                     <Checkbox
                       value={supercategory.superCategoryName}
                       onChange={(e: CheckboxChangeEvent) =>
