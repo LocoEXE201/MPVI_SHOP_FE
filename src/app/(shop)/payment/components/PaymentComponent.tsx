@@ -17,7 +17,10 @@ const PaymentComponent = (prop: {}) => {
   const [method, setMethod] = useState("ShipCod");
   const [note, setNote] = useState("");
   const loadSelectedItems = () => {
-    const data = localStorage.getItem("selectedCategories");
+    const data =
+      typeof window !== "undefined"
+        ? localStorage.getItem("selectedCategories")
+        : null;
     return data ? JSON.parse(data) : [];
   };
 

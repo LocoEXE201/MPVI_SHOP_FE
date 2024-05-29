@@ -14,7 +14,8 @@ interface User {
 
 const ProfileComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const acc: string | null = localStorage.getItem("USER_INFO");
+  const acc: string | null =
+    typeof window !== "undefined" ? localStorage.getItem("USER_INFO") : null;
   const user: User | null = acc ? JSON.parse(acc) : null;
 
   console.log(user);
