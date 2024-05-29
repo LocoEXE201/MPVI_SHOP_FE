@@ -295,8 +295,8 @@ const PaymentComponent = (prop: {}) => {
               Chi Tiết Đơn Hàng
             </div>
             <div className="flex flex-col gap-4">
-              {checkedCategories().map((cate: any) => (
-                <div className="flex flex-row gap-3 w-full">
+              {checkedCategories().map((cate: any, index: any) => (
+                <div className="flex flex-row gap-3 w-full" key={index}>
                   <img
                     src={cate.product.image}
                     className="object-contain rounded w-[100px]"
