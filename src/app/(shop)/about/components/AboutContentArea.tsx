@@ -25,8 +25,6 @@ const AboutContentArea = (props: {}) => {
     fetchImages();
   }, []);
 
-  console.log(imageList);
-
   if (!loadingImages) {
     return (
       <>
