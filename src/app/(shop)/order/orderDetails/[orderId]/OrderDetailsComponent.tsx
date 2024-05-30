@@ -125,33 +125,72 @@ const OrderDetailsComponent = () => {
 
   // console.log(categoryItem);
 
+  const paymentMethod = (method: string | undefined) => {
+    return method === "VNPay" ? (
+      <div className="font-baloo-2 text-xl text-zinc-400">Ví VNPAY</div>
+    ) : (
+      <div className="font-baloo-2 text-xl text-zinc-400">
+        Thanh toán khi nhận hàng
+      </div>
+    );
+  };
+
   const orderStatus = (orderStatus: any) => {
     switch (orderStatus) {
-      case "Pending":
+      case "VNPay_Pending":
         return (
           <div className="font-baloo-2 text-lg text-yellow-400">
             Đang vận chuyển
           </div>
         );
-      case "Cancelled":
+      case "VNPay_Cancelled":
         return <div className="font-baloo-2 text-lg text-red-500">Đã hủy</div>;
-      case "Payment_Successfully":
+      case "VNPay_Payment_Successfully":
         return (
           <div className="font-baloo-2 text-lg text-green-500">
             Đã thanh toán
           </div>
         );
-      case "Arrived":
+      case "VNPay_Arrived":
         return (
           <div className="font-baloo-2 text-lg text-green-300">
             Đã tới nơi vận chuyển
           </div>
         );
-      case "Completed":
+      case "VNPay_Completed":
         return (
           <div className="font-baloo-2 text-lg text-green-500">Hoàn thành</div>
         );
-      case "Refund":
+      case "VNPay_Refund":
+        return (
+          <div className="font-baloo-2 text-lg text-zinc-500">Hoàn Tiền</div>
+        );
+
+      case "Shipcod_Pending":
+        return (
+          <div className="font-baloo-2 text-lg text-yellow-400">
+            Đang vận chuyển
+          </div>
+        );
+      case "Shipcod_Cancelled":
+        return <div className="font-baloo-2 text-lg text-red-500">Đã hủy</div>;
+      case "Shipcod_Payment_Successfully":
+        return (
+          <div className="font-baloo-2 text-lg text-green-500">
+            Đã thanh toán
+          </div>
+        );
+      case "Shipcod_Arrived":
+        return (
+          <div className="font-baloo-2 text-lg text-green-300">
+            Đã tới nơi vận chuyển
+          </div>
+        );
+      case "Shipcod_Completed":
+        return (
+          <div className="font-baloo-2 text-lg text-green-500">Hoàn thành</div>
+        );
+      case "Shipcod_Refund":
         return (
           <div className="font-baloo-2 text-lg text-zinc-500">Hoàn Tiền</div>
         );
@@ -209,7 +248,7 @@ const OrderDetailsComponent = () => {
                   Phương Thức Thanh Toán
                 </div>
                 <div className="font-baloo-2 text-lg text-zinc-400">
-                  Ví VNPAY
+                  {paymentMethod(orderDetailsItems?.orderStatus.split("_")[0])}
                 </div>
               </div>
               <div>
