@@ -47,9 +47,10 @@ const News3Component = (props: {}) => {
             <h5 className="text-justify m-0 self-stretch relative text-inherit tracking-[0.48px] leading-[2.188rem] font-normal font-inherit">
               Đặc biệt, với những người khiếm thị bẩm sinh, tức chưa bao giờ
               biết đến màu sắc thì họ càng không có gì để so sánh. Nói một cách
-              đơn giản, họ không "nhìn" thấy gì, dù là khi mở mắt hay nhắm mắt.
-              Hãy thử hình dung, mắt người khiếm thị nhìn thấy giống như những
-              gì khuỷu tay của bạn nhìn thấy, tức là hoàn toàn không có gì cả.
+              đơn giản, họ không &quot;nhìn&quot; thấy gì, dù là khi mở mắt hay
+              nhắm mắt. Hãy thử hình dung, mắt người khiếm thị nhìn thấy giống
+              như những gì khuỷu tay của bạn nhìn thấy, tức là hoàn toàn không
+              có gì cả.
             </h5>
           </div>
         </div>

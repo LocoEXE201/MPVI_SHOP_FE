@@ -96,7 +96,7 @@ const AboutContentArea = (props: {}) => {
                   style={{ fontWeight: "bolder" }}
                   className="pt-[10px] inline-block border-t-[5px] border-t-yellow-600 text-[2.3rem] font-baloo text-yellow-600"
                 >
-                  "Trao Yêu Thương <br /> Tạo Giá Trị"
+                  &quot;Trao Yêu Thương <br /> Tạo Giá Trị&quot;
                 </h1>
                 <p className="text-justify font-baloo-2 text-[1.3rem]">
                   Mỗi một sản phẩm được mua từ những vị khách quý đều sẽ đóng

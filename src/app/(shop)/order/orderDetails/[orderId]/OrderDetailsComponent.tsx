@@ -288,9 +288,9 @@ const OrderDetailsComponent = () => {
               Chi Tiết Đơn Hàng
             </div>
             <div className="flex flex-col gap-4">
-              {categoryItem?.map((cate: any) => {
+              {categoryItem?.map((cate: any, index) => {
                 return (
-                  <div className="flex flex-row gap-3 w-full">
+                  <div className="flex flex-row gap-3 w-full" key={index}>
                     <img
                       src={cate.product.image}
                       className="object-contain rounded w-[100px]"

@@ -12,7 +12,9 @@ export default function GuestGuard({ children }: GuestGuardProps) {
   const router = useRouter();
 
   const navigateToPage = (route: string) => {
-    localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    }
     router.push(route);
   };
 
