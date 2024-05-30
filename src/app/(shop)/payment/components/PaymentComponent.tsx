@@ -10,17 +10,27 @@ import { loadCartItems } from "@/store/features/cartSlice";
 import { formatPrice } from "@/utils/formatPrice";
 import shopApi from "@/api/shop/shopApi";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
+import { PATH_SHOP } from "@/routes/paths";
+import Loading from "@/components/Templates/Loading/Loading";
 
 const PaymentComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [delivery, setDelivery] = useState("Normal");
   const [method, setMethod] = useState("ShipCod");
   const [note, setNote] = useState("");
+
+  const router = useRouter();
+  const navigateToPage = (route: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    }
+    router.push(route);
+  };
+
   const loadSelectedItems = () => {
-    const data =
-      typeof window !== "undefined"
-        ? localStorage.getItem("selectedCategories")
-        : null;
+    const data = localStorage.getItem("selectedCategories");
     return data ? JSON.parse(data) : [];
   };
 
@@ -30,20 +40,24 @@ const PaymentComponent = (prop: {}) => {
   };
 
   const checkedCategories = () => {
-    const checked = loadSelectedItems().map((selected: any) => {
-      return loadCartItems().find(
-        (items) => items.product.categoryId === selected
-      );
-    });
+    const checked = loadSelectedItems()
+      .map((selected: any) => {
+        return loadCartItems().find(
+          (items) => items.product.categoryId === selected
+        );
+      })
+      .filter((item: any) => item !== undefined);
 
     return checked;
   };
 
   const totalPrice = checkedCategories().reduce(
     (total: number, curr: any) =>
-      (total += curr.quantity * curr.product.priceIn),
+      (total += curr?.quantity * curr?.product.priceIn),
     0
   );
+
+  console.log(checkedCategories());
 
   const onChange = (e: RadioChangeEvent) => {
     e.preventDefault();
@@ -97,6 +111,7 @@ const PaymentComponent = (prop: {}) => {
 
   const fetchOrder = async (data: any, method: string) => {
     try {
+      enableLoading();
       const response = await shopApi.createOrder(method, data);
       console.log(response.data.result);
       Swal.fire({
@@ -109,6 +124,7 @@ const PaymentComponent = (prop: {}) => {
         toast: true,
         position: "top-end",
       });
+      disableLoading();
       return {
         $id: `${response.data.result.$id}`,
         createdOn: `${response.data.result.createdOn}`,
@@ -124,6 +140,7 @@ const PaymentComponent = (prop: {}) => {
         total: `${response.data.result.total * 1000}`,
       };
     } catch (error) {
+      enableLoading();
       Swal.fire({
         icon: "error",
         title: "There is something wrong. Try again!",
@@ -132,6 +149,7 @@ const PaymentComponent = (prop: {}) => {
         toast: true,
         position: "top-end",
       });
+      disableLoading();
     }
   };
 
@@ -173,11 +191,14 @@ const PaymentComponent = (prop: {}) => {
       if (method === "VnPay" && result) {
         await fetchPayment(result);
       }
+      localStorage.removeItem("cartItems");
+      navigateToPage(PATH_SHOP.order);
     }
   };
 
   return (
     <>
+      <Loading loading={isLoading} />
       <PageTitle
         mainTitle="Thanh Toán"
         subTitle="Trang Chủ - Giỏ Hàng - Thanh Toán"
@@ -297,41 +318,46 @@ const PaymentComponent = (prop: {}) => {
             <div className="font-baloo-2 text-xl font-semibold">
               Chi Tiết Đơn Hàng
             </div>
-            <div className="flex flex-col gap-4">
-              {checkedCategories().map((cate: any, index: any) => (
-                <div className="flex flex-row gap-3 w-full" key={index}>
-                  <img
-                    src={cate.product.image}
-                    className="object-contain rounded w-[100px]"
-                  />
-
-                  <div className="w-full">
-                    <div className="font-baloo-2 text-lg">
-                      {cate.product.categoryName}
-                    </div>
-                    <Rate
-                      className="text-sm text-red-400"
-                      allowHalf
-                      disabled
-                      defaultValue={cate.product.rate}
+            {checkedCategories().length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {checkedCategories().map((cate: any, index: number) => (
+                  <div className="flex flex-row gap-3 w-full" key={index}>
+                    <img
+                      src={cate?.product?.image}
+                      className="object-contain rounded w-[100px]"
                     />
-                    <div className="flex flex-row items-center content-center justify-between ">
-                      <div className="flex flex-row items-center content-center gap-1.5">
-                        <div className="font-poppins text-lg text-chocolate font-semibold">
-                          ₫{formatPrice(cate.product.priceIn * 1000)}
-                        </div>
-                        <div className="font-poppins text-sm line-through text-zinc-400">
-                          ₫60.000
-                        </div>
+
+                    <div className="w-full">
+                      <div className="font-baloo-2 text-lg">
+                        {cate?.product?.categoryName}
                       </div>
-                      <div className="font-baloo-2 text-xl">
-                        x {cate.quantity}
+                      <Rate
+                        className="text-sm text-red-400"
+                        allowHalf
+                        disabled
+                        defaultValue={cate?.product?.rate}
+                      />
+                      <div className="flex flex-row items-center content-center justify-between ">
+                        <div className="flex flex-row items-center content-center gap-1.5">
+                          <div className="font-poppins text-lg text-chocolate font-semibold">
+                            ₫{formatPrice(cate?.product?.priceIn * 1000)}
+                          </div>
+                          <div className="font-poppins text-sm line-through text-zinc-400">
+                            ₫60.000
+                          </div>
+                        </div>
+                        <div className="font-baloo-2 text-xl">
+                          x {cate?.quantity}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div>Không còn sản phẩm trong giỏ hàng</div>
+            )}
+
             <div className="w-full flex flex-col gap-1">
               <div className="flex flex-row justify-between">
                 <div className="text-lg text-zinc-400 font-baloo-2">

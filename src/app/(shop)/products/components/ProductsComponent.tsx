@@ -16,6 +16,7 @@ import Loading from "@/components/Templates/Loading/Loading";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
 import superCategoryApi from "@/api/warehouse/superCategoryApi";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { SuperCategoryDTO } from "@/models/warehouse/SuperCategoryDTO";
 
 const theme = createTheme({
   palette: {
@@ -34,12 +35,25 @@ function valuetext(value: number) {
 
 const minDistance = 10;
 
+interface ProductCardProps {
+  categoryId: number;
+  categoryName: string;
+  image: string;
+  priceIn: number;
+  rate: number;
+  superCategoryName: string;
+  category: ProductCardProps;
+}
+
 const ProductsComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [category, setCategory] = React.useState<string[]>([]);
-  const [superCategory, setSuperCategory] = React.useState<string[]>([]);
+  const [category, setCategory] = React.useState<ProductCardProps[]>([]);
+  const [superCategory, setSuperCategory] = React.useState<SuperCategoryDTO[]>(
+    []
+  );
   const [value2, setValue2] = React.useState<number[]>([10, 1000]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [filteredPrice, setFilteredPrice] = useState("All");
 
   const getAllCategory: any = async () => {
     try {
@@ -115,7 +129,7 @@ const ProductsComponent = (prop: {}) => {
   });
 
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+    setFilteredPrice(value);
   };
 
   const handleCheckboxChange = (superCategory: string, checked: boolean) => {
@@ -130,7 +144,7 @@ const ProductsComponent = (prop: {}) => {
 
   const selectedCategory = (
     selectedItems: string[],
-    filterCategory: string[]
+    filterCategory: ProductCardProps[]
   ) => {
     if (selectedItems.length > 0) {
       return selectedItems.flatMap((selected) => {
@@ -143,7 +157,20 @@ const ProductsComponent = (prop: {}) => {
     }
   };
 
-  const filterCategoryDisplay = (filterCategory: string[]) => {
+  const sortedAndFilteredCategory = selectedCategory(
+    selectedItems,
+    filterCategory
+  ).sort((a, b) => {
+    if (filteredPrice === "minToMax") {
+      return a.priceIn - b.priceIn;
+    } else if (filteredPrice === "maxToMin") {
+      return b.priceIn - a.priceIn;
+    } else {
+      return 0;
+    }
+  });
+
+  const filterCategoryDisplay = (filterCategory: ProductCardProps[]) => {
     if (filterCategory.length > 0) {
       return (
         <div className="flex flex-col justify-center items-center content-center gap-4 w-full p-3">
@@ -282,21 +309,18 @@ const ProductsComponent = (prop: {}) => {
             </div>
             <div>
               <Select
-                defaultValue="minToMax"
+                defaultValue="All"
                 style={{ width: 150 }}
                 onChange={handleChange}
                 options={[
+                  { value: "All", label: "Tất Cả Sản Phẩm" },
                   { value: "minToMax", label: "Giá Tăng Dần" },
                   { value: "maxToMin", label: "Giá Giảm Dần" },
-                  { value: "All", label: "Tất Cả Sản Phẩm" },
-                  { value: "disabled", label: "Disabled", disabled: true },
                 ]}
               />
             </div>
           </div>
-          {filterCategoryDisplay(
-            selectedCategory(selectedItems, filterCategory)
-          )}
+          {filterCategoryDisplay(sortedAndFilteredCategory)}
         </div>
       </div>
     </>

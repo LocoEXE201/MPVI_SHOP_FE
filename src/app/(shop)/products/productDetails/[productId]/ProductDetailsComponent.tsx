@@ -26,6 +26,7 @@ import {
 import { useDispatch } from "react-redux";
 import QuantityButton from "@/components/Atoms/QuantityButton";
 import cartApi from "@/api/shop/cartApi";
+import FeedbackFrame from "@/components/Shop/FeedbackFrame";
 
 interface Props {
   product: Product;
@@ -100,7 +101,7 @@ const ProductDetailsComponent = () => {
     {
       key: "2",
       label: "Đánh giá",
-      children: "Content of Tab Pane 2",
+      children: <FeedbackFrame />,
     },
   ];
 
@@ -416,7 +417,7 @@ const ProductDetailsComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="border-[2px] border-solid border-zinc-300 rounded p-4 box-border w-full h-full">
+            <div className="border-[2px] border-solid border-zinc-300 rounded p-4 box-border w-full h-full ">
               <ConfigProvider
                 theme={{
                   components: {
@@ -426,7 +427,7 @@ const ProductDetailsComponent = () => {
                       itemSelectedColor: "#CB6F04",
                       itemHoverColor: "#CB6F04",
                       titleFontSizeLG: 22,
-                      fontFamily: "Segoe UI Symbol",
+                      fontFamily: "Baloo",
                       fontWeightStrong: 800,
                     },
                   },

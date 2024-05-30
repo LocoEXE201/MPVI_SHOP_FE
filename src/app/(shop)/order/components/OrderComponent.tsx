@@ -28,8 +28,6 @@ interface DataType {
   superCategoryName: string;
 }
 
-
-
 interface Orders {
   $id: string;
   createdOn: string;
@@ -116,6 +114,7 @@ const OrderComponent = (prop: {}) => {
     }
   }, []);
 
+  console.log(orders);
 
   const checkedOrders = orders.map((order: any) => {
     return {
@@ -123,7 +122,7 @@ const OrderComponent = (prop: {}) => {
       orders: order.shpFOrderDetails.$values,
       orderStatus: order.orderStatus,
       customerId: order.customerId,
-      orderId: order.orderId
+      orderId: order.orderId,
     };
   });
 
@@ -138,6 +137,8 @@ const OrderComponent = (prop: {}) => {
   const uniqueCategories = Array.from(new Set(filterCategories));
   // console.log(uniqueCategories);
 
+  
+
   return (
     <>
       <Loading loading={isLoading} />
@@ -145,36 +146,44 @@ const OrderComponent = (prop: {}) => {
       <div className="flex flex-col items-center content-center justify-center mt-2.5 max-h-max ">
         <div className="w-full min-h-max flex flex-col items-center content-center justify-center p-2 box-border gap-2">
           <div className="font-baloo text-9xl">Đơn Hàng</div>
-          <div className="border-[2px] border-solid border-zinc-300 w-[1296px] min-h-max rounded">
-            <div className="titles font-baloo text-lg bg-zinc-300 items-center h-[50px] p-4 box-border">
-              <div className="product-title">Đơn Hàng</div>
-              <div className="total">Tổng Tiền</div>
-              <div className="payment">Tình Trạng Thanh Toán</div>
-              <div className="status">Trạng Thái</div>
-              <div className="detail">Chi Tiết</div>
-            </div>
-            <div className="order-items p-4 box-border">
-              {checkedOrders.map((orders: any, index) => {
-                return (
-                  <OrderItemCard
-                    key={index}
-                    ordersList={orders}
-                    categories={uniqueCategories}
+          {checkedOrders.length > 0 ? (
+            <>
+              <div className="border-[2px] border-solid border-zinc-300 w-[1296px] min-h-max rounded">
+                <div className="titles font-baloo text-lg bg-zinc-300 items-center h-[50px] p-4 box-border">
+                  <div className="product-title">Đơn Hàng</div>
+                  <div className="total">Tổng Tiền</div>
+                  <div className="payment">Tình Trạng Thanh Toán</div>
+                  <div className="status">Trạng Thái</div>
+                  <div className="detail">Chi Tiết</div>
+                </div>
+                <div className="order-items p-4 box-border">
+                  {checkedOrders.map((orders: any, index) => {
+                    return (
+                      <OrderItemCard
+                        key={index}
+                        ordersList={orders}
+                        categories={uniqueCategories}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex flex-row justify-end w-[1296px] box-border mt-1.5 ">
+                <ThemeProvider theme={theme}>
+                  <Pagination
+                    count={3}
+                    variant="outlined"
+                    shape="rounded"
+                    size="large"
                   />
-                );
-              })}
+                </ThemeProvider>
+              </div>
+            </>
+          ) : (
+            <div className="font-baloo-2 text-2xl ">
+              Hiện tại bạn chưa có đơn hàng. Vui lòng đặt hàng của bạn
             </div>
-          </div>
-          <div className="flex flex-row justify-end w-[1296px] box-border mt-1.5 ">
-            <ThemeProvider theme={theme}>
-              <Pagination
-                count={3}
-                variant="outlined"
-                shape="rounded"
-                size="large"
-              />
-            </ThemeProvider>
-          </div>
+          )}
         </div>
         <div className="flex flex-col h-full mb-8 mt-5 gap-5">
           <div className="flex justify-center items-center content-center font-baloo text-9xl ">
