@@ -179,7 +179,7 @@ const RegisterPageComponent = (props: {}) => {
                       rules={[
                         {
                           required: true,
-                          message: "Số điện thoại cannot be blank",
+                          message: "Số điện thoại không được để trống",
                         },
                         {
                           message: "Số điện thoại must be 10-11 numbers",
@@ -227,10 +227,6 @@ const RegisterPageComponent = (props: {}) => {
                           max: 20,
                           message: "Mật khẩu phải có độ dài từ 8 đến 20 kí tự",
                         },
-                        // {
-                        //   pattern: /[a-zA-Z]/,
-                        //   message: "Mật khẩu phải có ít nhất 1 kí tự chữ",
-                        // },
                         {
                           pattern: /[A-Z]/,
                           message:
@@ -325,36 +321,6 @@ const RegisterPageComponent = (props: {}) => {
                     </button>
                   </Form.Item>
                 </Form>
-                {/* <div className="text-silver-200 mq450:flex-wrap mq450:gap-[0px_17px] flex flex-row items-center justify-center gap-[0px_35px] self-stretch text-center text-xs">
-                  <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
-                    <div className="border-black relative box-border h-px self-stretch border-t-[2px] border-solid" />
-                  </div>
-                  <div className="font-baloo text-black text-[1.3rem] mq450:w-full mq450:h-3 relative flex w-3 items-center justify-center">
-                    Hoặc
-                  </div>
-                  <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
-                    <div className="border-black relative box-border h-px self-stretch border-t-[2px] border-solid" />
-                  </div>
-                </div>
-                <div
-                  onClick={() => {
-                    localStorage.setItem("GOOGLE_AUTH_USING", "true");
-                    handleGoogleSignUp();
-                  }}
-                  className="hover:bg-black hover:text-white text-black text-neutral-black mq450:gap-[0rem_2.313rem] mq450:pl-[1.25rem] mq450:pr-[1.25rem] mq450:box-border box-border flex w-full max-w-full cursor-pointer flex-row items-center justify-center gap-[0rem_1rem] self-stretch rounded-md bg-neutral-white px-[2.688rem] py-[10px] mt-3 text-center shadow-[0px_4px_10px_rgba(0,_0,_0,_0.25)]"
-                >
-                  <div className="cursor-pointer box-border flex flex-row items-center justify-center px-[0rem] pb-[0rem]">
-                    <img
-                      className="relative z-[1] h-[1.5rem] min-h-[1.5rem] w-[1.5rem] shrink-0 overflow-hidden"
-                      loading="lazy"
-                      alt=""
-                      src="/Icons/google_icon.svg"
-                    />
-                    <div className="relative z-[1] w-full self-stretch pl-5 font-medium font-baloo">
-                      Đăng Ký Với Google
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
