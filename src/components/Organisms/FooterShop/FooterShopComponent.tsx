@@ -136,37 +136,30 @@ const FooterShopComponent = (props: {}) => {
             </div>
             <div className="gap-[0.25rem] mq450:flex-wrap flex flex-col justify-between">
               <div className="self-stretch flex flex-row items-start justify-start ">
-                <Image
-                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
+                <img
+                  className="cursor-pointer relative rounded-8xs w-[6rem] h-[4rem] overflow-hidden"
                   alt=""
-                  src="/mock/group--6--18--link--1jpg@2x.png"
-                  width={134}
-                  height={60}
+                  src="/LandingPage/Carousel/carousel.png"
+                  style={{ objectFit: "fill" }}
                 />
-                <Image
-                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
+                <img
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
-                  src="/mock/group--7--18--link--2jpg@2x.png"
-                  width={134}
-                  height={60}
+                  src="/LandingPage/OutstandingNews/news1.jpg"
                 />
-                <Image
-                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
+                <img
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
-                  src="/mock/group--8--18--link--3jpg@2x.png"
-                  width={134}
-                  height={60}
+                  src="/LandingPage/OutstandingNews/news2.png"
                 />
-                <Image
-                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs max-w-[5.125rem] overflow-hidden object-cover min-w-[4.688rem]"
+                <img
+                  className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
-                  src="/mock/group--9--18--link--4jpg@2x.png"
-                  width={134}
-                  height={60}
+                  src="/LandingPage/OutstandingNews/news3.png"
                 />
               </div>
-              <div className="mt-2 flex flex-col items-start justify-start gap-[0.625rem] min-w-[4.688rem] max-w-[5.125rem]">
-                <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+              <div className="mt-2 flex flex-col items-start justify-start gap-[0.625rem] w-[5.125rem]">
+                <div className="flex flex-row items-start justify-start gap-[0.25rem] mt-2">
                   <a
                     href="https://www.facebook.com/profile.php?id=61559942963991"
                     target="_blank"

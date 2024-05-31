@@ -8,8 +8,7 @@ import { CategoryDTO } from "@/models/warehouse/CategoryDTO";
 import categoryApi from "@/api/warehouse/categoryApi";
 import { PATH_SHOP } from "@/routes/paths";
 import { useRouter } from "next/navigation";
-import a from "@/api/shop/cartApi";
-import axiosInstances from "@/config/axios";
+import "./index.scss";
 
 const OutstandingProducts: NextPage = () => {
   const [superCategories, setSuperCategories] = useState<SuperCategoryDTO[]>(
@@ -63,12 +62,12 @@ const OutstandingProducts: NextPage = () => {
   const router = useRouter();
 
   return (
-    <section className="self-stretch flex flex-row items-start justify-center pt-[0rem] pb-[1.662rem] pr-[1.25rem] pl-[1.562rem] box-border max-w-full text-left text-[2.188rem] text-chocolate font-baloo">
+    <section className="outstanding_products_area self-stretch flex flex-row items-start justify-center pt-[0rem] pb-[1.662rem] pr-[1.25rem] pl-[1.562rem] box-border max-w-full text-left text-[2.188rem] text-chocolate font-baloo">
       <div className="w-[81rem] flex flex-col items-start justify-start gap-[2.212rem] max-w-full mq900:gap-[1.125rem]">
         <div className="self-stretch flex flex-row items-start justify-center py-[0rem] pr-[1.25rem] pl-[1.875rem] box-border max-w-full">
-          <div className="w-[43.5rem] flex flex-col items-start justify-start gap-[1.312rem] max-w-full">
-            <div className="self-stretch flex flex-row items-start justify-center py-[0rem] pr-[1.875rem] pl-[1.25rem]">
-              <h2 className="m-0 w-[18.25rem] relative text-inherit tracking-[0.48px] leading-[1.313rem] font-normal font-inherit flex items-center shrink-0 mq450:text-[1.313rem] mq450:leading-[0.813rem] mq900:text-[1.75rem] mq900:leading-[1.063rem]">
+          <div className="w-[43.5rem] flex flex-col items-center justify-center gap-[1.312rem] max-w-full">
+            <div className="w-full self-stretch flex flex-row items-center justify-center">
+              <h2 className="w-full text-center m-0 relative text-inherit tracking-[0.48px] leading-[1.313rem] font-normal font-inherit items-center shrink-0 mq450:text-[1.313rem] mq450:leading-[0.813rem] mq900:text-[1.75rem] mq900:leading-[1.063rem]">
                 Sản Phẩm Nổi Bật
               </h2>
             </div>
@@ -84,12 +83,12 @@ const OutstandingProducts: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row items-start justify-center gap-[1.5rem] max-w-full text-[1.125rem] mq1350:flex-wrap">
-          <div className="max-w-[25rem] flex flex-col items-start justify-center pt-[0.937rem] px-[0rem] pb-[0rem] box-border">
-            <div className="self-stretch flex flex-col items-start justify-start gap-[1.625rem]">
-              <div className="self-stretch flex flex-col items-start justify-start gap-[0.312rem]">
+        <div className="w-full flex flex-row items-start justify-start gap-[1.5rem] max-w-full text-[1.125rem] mq1350:flex-wrap">
+          <div className="super_categories_1350_container flex flex-col items-start justify-center px-[0rem] pb-[0rem] box-border">
+            <div className="w-full self-stretch flex flex-col items-start justify-start gap-[1.625rem]">
+              <div className="w-full super_categories_1350 self-stretch flex flex-col items-start justify-start gap-[0.312rem]">
                 <div
-                  className={`self-stretch rounded-8xs bg-whitesmoke-100 ${filteredSuperCategory == null ? "hover:bg-black" : "hover:bg-yellow-300"} cursor-pointer flex flex-row items-end justify-between pt-[0.562rem] px-[0.937rem] pb-[0.437rem] gap-[1.25rem] border-[1px] border-solid border-gray-600`}
+                  className={`super_categories_1350_item self-stretch rounded-8xs bg-whitesmoke-100 ${filteredSuperCategory == null ? "hover:bg-black" : "hover:bg-yellow-300"} cursor-pointer flex flex-row items-end justify-between pt-[0.562rem] px-[0.937rem] pb-[0.437rem] gap-[1.25rem] border-[1px] border-solid border-gray-600`}
                   onClick={() => {
                     changeFilteredSuperCategory(null);
                   }}
@@ -115,7 +114,7 @@ const OutstandingProducts: NextPage = () => {
                         <>
                           <div
                             key={index}
-                            className={`self-stretch rounded-8xs bg-whitesmoke-100 ${filteredSuperCategory == superCategory.superCategoryId ? "hover:bg-black" : "hover:bg-yellow-300"} cursor-pointer flex flex-row items-end justify-between pt-[0.562rem] px-[0.937rem] pb-[0.437rem] gap-[1.25rem] border-[1px] border-solid border-gray-600`}
+                            className={`super_categories_1350_item self-stretch rounded-8xs bg-whitesmoke-100 ${filteredSuperCategory == superCategory.superCategoryId ? "hover:bg-black" : "hover:bg-yellow-300"} cursor-pointer flex flex-row items-end justify-between pt-[0.562rem] px-[0.937rem] pb-[0.437rem] gap-[1.25rem] border-[1px] border-solid border-gray-600`}
                             onClick={() => {
                               changeFilteredSuperCategory(
                                 superCategory.superCategoryId
@@ -143,7 +142,7 @@ const OutstandingProducts: NextPage = () => {
                   <></>
                 )}
               </div>
-              <div className="self-stretch rounded-xl flex flex-col items-start justify-start pt-[6.437rem] pb-[23.4rem] pr-[0.875rem] pl-[1.562rem] gap-[1.312rem] bg-[url('/mock/carousel.png')] bg-cover bg-no-repeat bg-[top] text-[3.125rem] text-white font-barlow-condensed mq900:pt-[4.188rem] mq900:pb-[15.188rem] mq900:box-border">
+              <div className="none_1350 self-stretch rounded-xl flex flex-col items-start justify-start pt-[6.437rem] pb-[23.4rem] pr-[0.875rem] pl-[1.562rem] gap-[1.312rem] bg-[url('/LandingPage/Carousel/carousel_mini.png')] bg-cover bg-no-repeat bg-[top] text-[3.125rem] text-white font-barlow-condensed mq900:pt-[4.188rem] mq900:pb-[15.188rem] mq900:box-border">
                 <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.062rem]">
                   <h1 className="m-0 flex-1 relative text-inherit tracking-[0.48px] leading-[1.5rem] font-normal font-inherit z-[1] mq450:text-[1.875rem] mq450:leading-[0.875rem] mq900:text-[2.5rem] mq900:leading-[1.188rem]">
                     Sản Phẩm

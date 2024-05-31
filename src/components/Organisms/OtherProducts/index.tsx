@@ -57,7 +57,10 @@ const OtherProducts: NextPage = () => {
                   <img
                     className="h-full w-full absolute !m-[0] rounded-8xs overflow-hidden shrink-0 object-cover"
                     alt=""
-                    src="/mock/OtherProducts/divcrimageinner-6@2x.png"
+                    src={
+                      category.image ??
+                      "/LandingPage/Carousel/carousel_mini.png"
+                    }
                   />
                   {category && category.rate > 4 ? (
                     <>
@@ -157,17 +160,12 @@ const OtherProducts: NextPage = () => {
                               {category.priceSold ? (
                                 <>
                                   <b className="relative leading-[1.5rem] inline-block min-w-[4.063rem] whitespace-nowrap">
-                                    ₫{formatPrice(100000)}
+                                    ₫{formatPrice(category.priceSold)}
                                   </b>
                                 </>
                               ) : (
                                 <></>
                               )}
-                              {/* <div className="flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.062rem] text-[0.875rem] text-darkgray-100">
-                                <b className="h-[1.125rem] relative [text-decoration:line-through] leading-[1.5rem] flex items-center shrink-0 min-w-[3.438rem] whitespace-nowrap">
-                                  ₫20.000
-                                </b>
-                              </div> */}
                             </div>
                           </div>
                           <button className="cursor-pointer [border:none] py-[0.3rem] pb-[0.075rem] pr-[0.75rem] pl-[0.937rem] bg-chocolate hover:bg-yellow-600 h-[2.25rem] rounded flex flex-row items-center justify-center box-border gap-[0.243rem] shrink-0 [debug_commit:1de1738]">

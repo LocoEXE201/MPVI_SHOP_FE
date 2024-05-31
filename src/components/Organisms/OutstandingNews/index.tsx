@@ -3,6 +3,7 @@ import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { PATH_SHOP } from "@/routes/paths";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
+import "./index.scss";
 
 interface OutstandingNewsProps {
   activeNews?: string;
@@ -17,26 +18,26 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
   };
 
   return (
-    <section className="self-stretch flex flex-row items-start justify-start pt-[0rem] pb-[1.187rem] pr-[0rem] pl-[0.062rem] box-border max-w-full text-left text-[2.188rem] text-chocolate font-baloo">
+    <section className="newPage_area self-stretch flex flex-row items-start justify-start pt-[0rem] pb-[1.187rem] pr-[0rem] pl-[0.062rem] box-border max-w-full text-left text-[2.188rem] text-chocolate font-baloo">
       <div className="flex-1 rounded-8xs bg-white box-border flex flex-col items-end justify-start pt-[2.437rem] px-[1rem] pb-[1.75rem] max-w-full border-[1px] border-solid border-white mq900:pt-[1.563rem] mq900:px-[4.813rem] mq900:pb-[1.25rem] mq900:box-border mq1350:pl-[9.625rem] mq1350:pr-[9.625rem] mq1350:box-border">
         <h2 className="m-0 relative text-inherit w-full text-center">
           {!activeNews ? "Tin Nổi Bật" : "Tin Tức Khác"}
         </h2>
         <div className="self-stretch flex flex-row items-center justify-center relative max-w-full">
-          <div className="overflow-hidden flex flex-row items-center justify-center gap-[1.5rem] max-w-full text-[0.875rem] text-black font-poppins">
+          <div className="news_item_container overflow-hidden flex flex-row items-center justify-center gap-[1.5rem] max-w-full text-[0.875rem] text-black font-poppins">
             {!activeNews || (activeNews && activeNews != "1") ? (
               <>
                 <div
                   onClick={() => {
                     navigateToPage(PATH_SHOP.newsDetail("1"));
                   }}
-                  className={`rounded-8xs cursor-pointer ${activeNews ? "max-w-[50%]" : "max-w-[30%]"} bg-white hover:bg-black hover:text-white box-border overflow-hidden flex flex-col items-start justify-start pt-[2rem] px-[0rem] pb-[0.006rem] gap-[1.1rem] border-[1px] border-solid border-whitesmoke-300`}
+                  className={`rounded-8xs news_item cursor-pointer ${activeNews ? "max-w-[50%]" : "max-w-[30%]"} bg-white hover:bg-black hover:text-white box-border overflow-hidden flex flex-col items-start justify-start pt-[2rem] px-[0rem] pb-[0.006rem] gap-[1.1rem] border-[1px] border-solid border-whitesmoke-300`}
                 >
                   <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[1.437rem] pl-[0.875rem] box-border max-w-full">
                     <div className="flex-1 flex flex-col items-start justify-start gap-[0.125rem] max-w-full">
                       <div className="flex flex-row items-start justify-start py-[0rem] px-[0.125rem]">
                         <div className="relative tracking-[0.48px] leading-[1.75rem] font-baloo-2 text-[1rem] inline-block min-w-[7.438rem]">
-                          Đăng bởi Admin
+                          Đăng bởi Loco.
                         </div>
                       </div>
                       <div className="self-stretch flex flex-row items-start justify-start pt-[0rem] px-[0rem] box-border max-w-full text-[1.125rem] font-baloo">
@@ -70,13 +71,13 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
                   onClick={() => {
                     navigateToPage(PATH_SHOP.newsDetail("2"));
                   }}
-                  className={`rounded-8xs cursor-pointer ${activeNews ? "max-w-[50%]" : "max-w-[30%]"} bg-white hover:bg-black hover:text-white box-border overflow-hidden flex flex-col items-start justify-start pt-[2rem] px-[0rem] pb-[0.006rem] gap-[1.1rem] border-[1px] border-solid border-whitesmoke-300`}
+                  className={`rounded-8xs news_item cursor-pointer ${activeNews ? "max-w-[50%]" : "max-w-[30%]"} bg-white hover:bg-black hover:text-white box-border overflow-hidden flex flex-col items-start justify-start pt-[2rem] px-[0rem] pb-[0.006rem] gap-[1.1rem] border-[1px] border-solid border-whitesmoke-300`}
                 >
                   <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[1.437rem] pl-[0.875rem] box-border max-w-full">
                     <div className="flex-1 flex flex-col items-start justify-start gap-[0.125rem] max-w-full">
                       <div className="flex flex-row items-start justify-start py-[0rem] px-[0.125rem]">
                         <div className="relative tracking-[0.48px] leading-[1.75rem] font-baloo-2 text-[1rem] inline-block min-w-[7.438rem]">
-                          Đăng bởi Admin
+                          Đăng bởi Loco.
                         </div>
                       </div>
                       <div className="self-stretch flex flex-row items-start justify-start pt-[0rem] px-[0rem] box-border max-w-full text-[1.125rem] font-baloo">
@@ -110,13 +111,13 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
                   onClick={() => {
                     navigateToPage(PATH_SHOP.newsDetail("3"));
                   }}
-                  className={`rounded-8xs cursor-pointer ${activeNews ? "max-w-[50%]" : "max-w-[30%]"} bg-white hover:bg-black hover:text-white box-border overflow-hidden flex flex-col items-start justify-start pt-[2rem] px-[0rem] pb-[0.006rem] gap-[1.1rem] border-[1px] border-solid border-whitesmoke-300`}
+                  className={`rounded-8xs news_item cursor-pointer ${activeNews ? "max-w-[50%]" : "max-w-[30%]"} bg-white hover:bg-black hover:text-white box-border overflow-hidden flex flex-col items-start justify-start pt-[2rem] px-[0rem] pb-[0.006rem] gap-[1.1rem] border-[1px] border-solid border-whitesmoke-300`}
                 >
                   <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[1.437rem] pl-[0.875rem] box-border max-w-full">
                     <div className="flex-1 flex flex-col items-start justify-start gap-[0.125rem] max-w-full">
                       <div className="flex flex-row items-start justify-start py-[0rem] px-[0.125rem]">
                         <div className="relative tracking-[0.48px] leading-[1.75rem] font-baloo-2 text-[1rem] inline-block min-w-[7.438rem]">
-                          Đăng bởi Admin
+                          Đăng bởi Loco.
                         </div>
                       </div>
                       <div className="self-stretch flex flex-row items-start justify-start pt-[0rem] px-[0rem] box-border max-w-full text-[1.125rem] font-baloo">

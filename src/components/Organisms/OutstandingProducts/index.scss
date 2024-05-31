@@ -1,0 +1,24 @@
+.outstanding_products_area {
+  @media only screen and (max-width: 1350px) {
+    .none_1350 {
+      display: none !important;
+    }
+    .super_categories_1350 {
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    .super_categories_1350_container {
+      width: 100% !important;
+    }
+  }
+
+  @media only screen and (max-width: 720px) {
+    .super_categories_1350 {
+      .super_categories_1350_item {
+        width: 40%;
+      }
+    }
+  }
+}
