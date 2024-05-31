@@ -7,8 +7,8 @@ const News3Component = (props: {}) => {
         <div className="w-[75.063rem] flex flex-col items-start justify-start gap-[0.5rem] max-w-full">
           <div className="w-[22.719rem] relative tracking-[0.48px] leading-[1.875rem] font-semibold flex items-center max-w-full">
             <span className="w-full font-baloo-2">
-              <span>Đăng bởi Admin</span>
-              <span className="text-gray-100"> / 03-12-2024</span>
+              <span>Đăng bởi Loco.</span>
+              <span className="text-gray-100"> / 31-05-2024</span>
             </span>
           </div>
           <b
