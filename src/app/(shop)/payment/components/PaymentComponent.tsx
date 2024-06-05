@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { PATH_SHOP } from "@/routes/paths";
 import Loading from "@/components/Templates/Loading/Loading";
+import CusInfoOfOrderModal from "@/components/Shop/CusInfoOfOrderModal";
 
 const PaymentComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
@@ -100,6 +101,9 @@ const PaymentComponent = (prop: {}) => {
     return {
       cartHeader: {
         customerId: loadUserInformation().id,
+        receiverName: "",
+        receiverAddress: "",
+        receiverPhoneNumber: "",
         total: totalPrice + shippingPrice(delivery),
         notes: note,
       },
@@ -392,6 +396,7 @@ const PaymentComponent = (prop: {}) => {
               >
                 Thanh Toán
               </button>
+              <CusInfoOfOrderModal />
             </div>
           </div>
         </div>

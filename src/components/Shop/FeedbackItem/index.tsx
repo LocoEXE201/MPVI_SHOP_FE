@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Rate } from "antd";
-import { LikeOutlined } from "@ant-design/icons";
+import { LikeOutlined, LikeFilled } from "@ant-design/icons";
+import { formatDate_DD_MM_YYYY } from "@/utils/formatDate";
 
-const FeedbackItem = () => {
+interface FeedbackItem {
+  customerName: string;
+  createOn: string;
+  detail: string;
+  image: string;
+  rating: number;
+}
+
+const FeedbackItem = ({
+  customerName,
+  createOn,
+  detail,
+  image,
+  rating,
+}: FeedbackItem) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const onLikedChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsLiked(!isLiked);
+  };
   return (
     <div className="flex flex-col gap-5 mt-3">
       <div className="flex flex-row gap-2 ">
@@ -15,26 +34,23 @@ const FeedbackItem = () => {
         </div>
         <div className="flex flex-col gap-4">
           <div>
-            <div>Vo Nguyen Trung Son</div>
+            <div>{customerName}</div>
             <div>
               <Rate
                 className="text-sm text-red-400"
                 allowHalf
                 disabled
-                defaultValue={5}
+                defaultValue={rating}
               />
             </div>
             <div className="flex flex-row gap-2 ">
-              <div>20-10-2023</div>
-              <div>|</div>
-              <div>Phân loại: Book</div>
+              <div>{formatDate_DD_MM_YYYY(createOn)}</div>
+              {/* <div>|</div>
+              <div>Phân loại: Book</div> */}
             </div>
           </div>
           <div className=" w-full flex flex-col gap-2">
-            <div className="w-8/12">
-              Máy khá gọn, thích hợp cho người thích gọn nhẹ dễ bỏ túi quần
-              jean. Máy nhỏ hơn Iphone XR, được cái cầm nắm chắc tay
-            </div>
+            <div className="w-8/12">{detail}</div>
             <div className="flex flex-row gap-2 items-center content-center ">
               <div className="w-[150px] h-[150px]">
                 <img
@@ -69,8 +85,19 @@ const FeedbackItem = () => {
               </div>
             </div>
             <div className="flex flex-row gap-2">
-              <button className="flex justify-start mt-0.5 ">
-                <LikeOutlined width={30} height={30} />
+              <button
+                className="flex justify-start mt-0.5 "
+                onClick={onLikedChange}
+              >
+                {isLiked ? (
+                  <LikeOutlined width={30} height={30} />
+                ) : (
+                  <LikeFilled
+                    width={30}
+                    height={30}
+                    style={{ color: "#cb6f04" }}
+                  />
+                )}
               </button>
               <div>325</div>
             </div>

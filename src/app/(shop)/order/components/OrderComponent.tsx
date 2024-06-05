@@ -63,6 +63,8 @@ const OrderComponent = (prop: {}) => {
     const user = localStorage.getItem("USER_INFO");
     return user ? JSON.parse(user) : {};
   };
+
+  console.log(loadUserInformation().id);
   const router = useRouter();
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -76,15 +78,16 @@ const OrderComponent = (prop: {}) => {
       enableLoading();
       const response = await categoryApi.getAllCategory();
       if (response.status === 200) {
-        // console.log(response.data);
-        disableLoading();
         setCategory(response.data.result);
+        disableLoading();
       } else {
         console.log("Failed to fetch data. Status code:", response.status);
         return [];
       }
     } catch (error) {
+      enableLoading();
       console.error("Error fetching data:", error);
+      disableLoading();
       return [];
     }
   };
@@ -92,17 +95,20 @@ const OrderComponent = (prop: {}) => {
   React.useEffect(() => {
     getAllCategory();
   }, []);
+  console.log(category);
 
   const getOrderByCondition: any = async (id: any) => {
     try {
       enableLoading();
       const response = await shopApi.getOrderByCondition(id);
       if (response.data.isSuccess === true) {
-        disableLoading();
         setOrders(response.data.result.$values);
       }
+      disableLoading();
     } catch (error) {
+      enableLoading();
       console.error("Error fetching data:", error);
+      disableLoading();
       return [];
     }
   };
@@ -126,7 +132,7 @@ const OrderComponent = (prop: {}) => {
     };
   });
 
-  // console.log(checkedOrders);
+  console.log(checkedOrders);
 
   const filterCategories = checkedOrders.flatMap((orders) => {
     return orders.orders.flatMap((ord: any) => {
@@ -136,8 +142,6 @@ const OrderComponent = (prop: {}) => {
 
   const uniqueCategories = Array.from(new Set(filterCategories));
   // console.log(uniqueCategories);
-
-  
 
   return (
     <>

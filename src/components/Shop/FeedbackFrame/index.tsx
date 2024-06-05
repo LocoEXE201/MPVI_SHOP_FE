@@ -1,36 +1,165 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Rate } from "antd";
 import { LikeOutlined } from "@ant-design/icons";
 import FeedbackItem from "../FeedbackItem";
+import shopApi from "@/api/shop/shopApi";
+import useAppContext from "@/hooks/useAppContext";
 
-const FeedbackFrame = () => {
-  const data = [1, 1, 1, 1];
-  const [filtered, setFiltered] = useState("");
-  const [isLiked, setIsLiked] = useState(false);
+interface Feedback {
+  $id: string;
+  feedbackId: string;
+  customerId: string;
+  customerName: string;
+  categoryId: number;
+  createdOn: string;
+  detail: string;
+  rating: number;
+  image: string;
+  orderDetailId: number;
+}
+
+interface Props {
+  categoryId: string | string[];
+}
+
+const FeedbackFrame = ({ categoryId }: Props) => {
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
+  const [filtered, setFiltered] = React.useState<string | number>("all");
+  
+  const [feedback, setFeedback] = React.useState<Feedback[]>([]);
 
   const handleClick = (e: any) => {
     e.preventDefault();
     setFiltered(e.target.value);
   };
 
-  const buttonClass = (value: string) =>
+ 
+
+  const getFeedbackAllById = async (categoryId: number) => {
+    try {
+      enableLoading();
+      const response = await shopApi.getFeedbackById(categoryId);
+      if (response.data.isSuccess) {
+        setFeedback(response.data.result.$values);
+        console.log(response.data.result.$values);
+      } else {
+        console.log("Failed to fetch data");
+        return [];
+      }
+      disableLoading();
+    } catch (error) {
+      enableLoading();
+      console.error("Error fetching data:", error);
+      disableLoading();
+      return [];
+    }
+  };
+
+  const getFeedbackByIdAndRate = async (
+    categoryId: number,
+    filtered: number
+  ) => {
+    try {
+      enableLoading();
+      const response = await shopApi.getFeedbackByIdAndRate(
+        categoryId,
+        filtered
+      );
+      if (response.data.isSuccess) {
+        setFeedback(response.data.result.$values);
+      } else {
+        console.log("Failed to fetch data");
+        return [];
+      }
+      disableLoading();
+    } catch (error) {
+      enableLoading();
+      console.error("Error fetching data:", error);
+      disableLoading();
+      return [];
+    }
+  };
+
+  const getFeedbackByIdAndRateAndImage = async (
+    categoryId: number,
+    filtered: number,
+    haveImage: boolean
+  ) => {
+    try {
+      enableLoading();
+      const response = await shopApi.getFeedbackByIdAndRateAndImage(
+        categoryId,
+        filtered,
+        haveImage
+      );
+      if (response.data.isSuccess) {
+        setFeedback(response.data.result.$values);
+      } else {
+        console.log("Failed to fetch data");
+        return [];
+      }
+      disableLoading();
+    } catch (error) {
+      enableLoading();
+      console.error("Error fetching data:", error);
+      disableLoading();
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      const categoryIdNumber = Array.isArray(categoryId)
+        ? Number(categoryId[0])
+        : Number(categoryId);
+
+      if (filtered === "all") {
+        await getFeedbackAllById(categoryIdNumber);
+      } else if (filtered === "comment") {
+        await getFeedbackByIdAndRateAndImage(categoryIdNumber, 0, false);
+      } else if (filtered === "imageVideo") {
+        await getFeedbackByIdAndRateAndImage(categoryIdNumber, 0, true);
+      } else {
+        await getFeedbackByIdAndRate(categoryIdNumber, Number(filtered));
+      }
+    };
+
+    if (categoryId) {
+      fetchFeedback();
+    }
+  }, [categoryId, filtered]);
+
+  const averageRating = () => {
+    let average = 0;
+    if (feedback.length > 0) {
+      return (average =
+        feedback.reduce((total, item) => total + item.rating, 0) /
+        feedback.length);
+    } else {
+      return (average = 0);
+    }
+  };
+
+  console.log(averageRating());
+
+  const buttonClass = (value: string | number) =>
     filtered === value
       ? "flex justify-center items-center content-center border-[1px] border-solid border-chocolate text-chocolate px-4 py-1 box-border rounded-sm"
       : "flex justify-center items-center content-center border-[1px] border-solid border-zinc-300 text-black px-4 py-1 box-border rounded-sm";
-
-  console.log(filtered);
 
   return (
     <div className="flex flex-col gap-3">
       <div className="w-full flex flex-row justify-around bg-orange-50 border-[2px] border-solid border-orange-100 px-3 py-6">
         <div className="w-3/12 flex flex-col justify-center items-center content-center">
-          <div className="text-6xl text-red-400 font-baloo ">4.9 / 5</div>
+          <div className="text-6xl text-red-400 font-baloo ">
+            {averageRating()} / 5
+          </div>
           <div>
             <Rate
               className="text-red-400"
               allowHalf
               disabled
-              defaultValue={5}
+              value={averageRating()}
             />
           </div>
         </div>
@@ -45,35 +174,35 @@ const FeedbackFrame = () => {
             </button>
             <button
               className={buttonClass("1")}
-              value={"1"}
+              value={1}
               onClick={handleClick}
             >
               1 Sao (100)
             </button>
             <button
               className={buttonClass("2")}
-              value={"2"}
+              value={2}
               onClick={handleClick}
             >
               2 Sao (100){" "}
             </button>
             <button
               className={buttonClass("3")}
-              value={"3"}
+              value={3}
               onClick={handleClick}
             >
               3 Sao (100)
             </button>
             <button
               className={buttonClass("4")}
-              value={"4"}
+              value={4}
               onClick={handleClick}
             >
               4 Sao (100)
             </button>
             <button
               className={buttonClass("5")}
-              value={"5"}
+              value={5}
               onClick={handleClick}
             >
               5 Sao (100)
@@ -96,12 +225,29 @@ const FeedbackFrame = () => {
         </div>
       </div>
       <div>
-        {data.map((item, index) => (
+        {feedback.length > 0 ? (
           <div>
-            <FeedbackItem />
-            {index !== data.length - 1 && <hr className="h-[2px] mt-5" />}
+            {feedback.map((item, index) => (
+              <div>
+                <FeedbackItem
+                  key={index}
+                  customerName={item.customerName}
+                  createOn={item.createdOn}
+                  detail={item.detail}
+                  image={item.image}
+                  rating={item.rating}
+                />
+                {index !== feedback.length - 1 && (
+                  <hr className="h-[2px] mt-5" />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        ) : (
+          <div className="flex justify-center items-center content-center text-xl font-baloo-2">
+            Không có đánh giá nào phù hợp
+          </div>
+        )}
       </div>
     </div>
   );

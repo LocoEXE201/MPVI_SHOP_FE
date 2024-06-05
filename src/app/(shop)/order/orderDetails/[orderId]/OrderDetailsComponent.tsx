@@ -11,6 +11,7 @@ import categoryApi from "@/api/warehouse/categoryApi";
 import { formatPrice } from "@/utils/formatPrice";
 import Loading from "@/components/Templates/Loading/Loading";
 import { formatDate_DD_MM_YYYY } from "@/utils/formatDate";
+import FeedbackModal from "@/components/Shop/FeedbackModal";
 
 interface OrderItems {
   $id: string;
@@ -92,8 +93,9 @@ const OrderDetailsComponent = () => {
       const response = await categoryApi.getAllCategory();
       if (response.status === 200) {
         // console.log(response.data);
-        disableLoading();
+
         setCategory(response.data.result);
+        disableLoading();
       } else {
         console.log("Failed to fetch data. Status code:", response.status);
         return [];
@@ -114,16 +116,19 @@ const OrderDetailsComponent = () => {
     (order) => Number(order.orderId) === Number(orderId)
   );
 
+  // console.log(orderDetailsItems);
+
   const categoryItem = orderDetailsItems?.shpFOrderDetails.$values.map(
     (item) => ({
       product: category.find(
         (cate) => Number(item.categoryId) === Number(cate.categoryId)
       ),
       quantity: item.quantity,
+      orderDetailId: item.orderDetailId,
     })
   );
 
-  // console.log(categoryItem);
+  console.log(categoryItem);
 
   const paymentMethod = (method: string | undefined) => {
     return method === "VNPay" ? (
@@ -224,8 +229,8 @@ const OrderDetailsComponent = () => {
           </button>
         </div>
 
-        <div className="w-[83rem] max-h-max flex flex-row justify-center gap-9 ">
-          <div className="w-[420px] h-[508px] border-[2px] border-solid border-zinc-300 rounded flex flex-col gap-1 box-border py-4 pt-6 ">
+        <div className="w-full max-h-max flex flex-row justify-center gap-9 mb-6">
+          <div className="w-4/12 h-full border-[2px] border-solid border-zinc-300 rounded flex flex-col gap-1 box-border py-4 pt-6 ">
             <div className="flex flex-col box-border pl-7 gap-5">
               <div>
                 <div className="font-baloo-2 font-semibold text-xl">
@@ -318,6 +323,20 @@ const OrderDetailsComponent = () => {
                         <div className="font-baloo-2 text-xl">
                           x {cate.quantity}
                         </div>
+                        {/* <button className="font-baloo-2 text-base text-orange-400 font-semibold border-[2px] border-solid border-orange-400 px-2 py-0.5 rounded">
+                          Đánh giá
+                        </button> */}
+
+                        {orderDetailsItems?.orderStatus === "VNPay_Completed" ||
+                        orderDetailsItems?.orderStatus ===
+                          "Shipcod_Completed" ? (
+                          <FeedbackModal
+                            categoryId={cate.product.categoryId}
+                            orderDetailId={cate.orderDetailId}
+                          />
+                        ) : (
+                          <div></div>
+                        )}
                       </div>
                     </div>
                   </div>
