@@ -96,7 +96,7 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
         </div>
       </section>
 
-      {/* <section className="carousel_area mb-[2rem] overflow-hidden font-baloo-2">
+      <section className="carousel_area mb-[2rem] overflow-hidden font-baloo-2">
         <div className="overflow-hidden pt-[5rem] pl-[10rem] carousel_image bg-[url('/LandingPage/Carousel/carousel.png')] min-h-[40rem] w-full">
           <div className="subTitle flex flex-row items-center text-[1.6rem]">
             <div className="inline-block font-poppins border-b-[2px] border-solid border-white">
@@ -107,7 +107,7 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
             </h3>
           </div>
         </div>
-      </section> */}
+      </section>
     </>
   );
 };
