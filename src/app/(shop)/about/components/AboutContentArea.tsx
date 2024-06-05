@@ -9,6 +9,10 @@ const AboutContentArea = (props: {}) => {
   const [loadingImages, setLoadingImages] = useState<boolean>(false);
 
   const fetchImages = async () => {
+    if (window.innerWidth <= 1350) {
+      setLoadingImages(true);
+    }
+
     setImageList((imageList) => [...imageList, ""]);
     for (var i = 1; i <= 1; i++) {
       const url = await getAboutPageImage(i.toString());
@@ -36,7 +40,7 @@ const AboutContentArea = (props: {}) => {
   return (
     <>
       <section className="mb-10">
-        <div className="relative w-full flex flex-row">
+        <div className="mq1350:hidden relative w-full flex flex-row">
           <img
             className="absolute w-full h-full object-cover object-center"
             src={imageList.find((x) => x.includes(`aboutPageImage_1`)) ?? ""}
@@ -163,6 +167,83 @@ const AboutContentArea = (props: {}) => {
             <div
               className={`w-full overflow-hidden border-[3px] border-opacity-65 border-double border-white relative h-[30%]`}
             ></div>
+          </div>
+        </div>
+
+        <div className="hidden mq1350:block bg-black">
+          <div className="w-full h-full z-20 py-5 px-10 text-white">
+            <h1
+              style={{ fontWeight: "bolder" }}
+              className="pt-[10px] inline-block text-[2.3rem] font-baloo border-y-[5px] border-y-yellow-600 mb-3 text-yellow-600"
+            >
+              Sứ Mệnh Của Chúng Tôi
+            </h1>
+            <p className="text-justify font-baloo-2 text-[1.3rem]">
+              Tại{" "}
+              <strong className="text-yellow-600">
+                Loco - Love Connection,
+              </strong>{" "}
+              chúng tôi tin rằng nghệ thuật và tình người có thể hợp nhất để tạo
+              ra sức mạnh tối đa. Sứ mệnh của chúng tôi là mang đến những món đồ
+              thủ công chất lượng từ sản phẩm len và nhiều thể loại khác đến cho
+              mọi người đồng thời tạo ra{" "}
+              <strong className="text-yellow-600">
+                một nguồn hỗ trợ quý báu cho những người khiếm khuyết khó khăn.
+              </strong>{" "}
+            </p>
+          </div>
+
+          <div className="w-full h-full z-20 py-5 px-10 text-black bg-white">
+            <h1
+              style={{ fontWeight: "bolder" }}
+              className="pt-[10px] inline-block text-[2.3rem] font-baloo border-y-[5px] border-y-yellow-600 mb-3 text-yellow-600"
+            >
+              &quot;Trao Yêu Thương - Tạo Giá Trị&quot;
+            </h1>
+            <p className="text-justify font-baloo-2 text-[1.3rem]">
+              Mỗi một sản phẩm được mua từ những vị khách quý đều sẽ đóng góp{" "}
+              <strong className="text-yellow-600">
+                một phần lợi nhuận vào những hoạt động hỗ trợ cộng đồng người
+                khiếm khuyết.
+              </strong>{" "}
+              Quỹ này có thể được sử dụng để giúp đỡ bằng nhiều cách như cung
+              cấp các nguồn lực, đào tạo nghề hay tạo điều kiện cho họ tham gia
+              vào xã hội một cách tích cực và tự chủ hơn.{" "}
+            </p>
+            <p className="mt-2 text-justify font-baloo-2 text-[1.3rem]">
+              Mỗi một sản phẩm bạn ủng hộ đều là những{" "}
+              <strong className="text-yellow-600">
+                tia nắng ấm áp soi đường
+              </strong>{" "}
+              cho những người khó khăn hơn chúng ta.
+            </p>
+          </div>
+
+          <div className="w-full h-full z-20 py-5 px-10 text-white">
+            <h1
+              style={{ fontWeight: "bolder" }}
+              className="pt-[10px] inline-block text-[2.3rem] font-baloo border-y-[5px] border-y-yellow-600 mb-3 text-yellow-600"
+            >
+              Khám Phá & Ủng Hộ
+            </h1>
+            <p className="text-justify font-baloo-2 text-[1.3rem]">
+              Hãy cùng chúng tôi trải nghiệm và khám phá những sản phẩm thủ công
+              tinh xảo, từ những món đồ bằng len đến những sản phẩm hữu ích
+              khác. <br /> Nếu bạn có bất kì thắc mắc nào cần giải đáp, xin bạn
+              vui lòng liên hệ với chúng tôi qua{" "}
+              <br className="mq450:block hidden" />
+              <strong className="text-yellow-600">
+                Email: {CORE_INFORMATION.MAIL_CONSTANT}
+              </strong>{" "}
+              <br className="mq450:block hidden" />
+              hoặc gọi đến <br className="mq450:block hidden" />
+              <strong className="text-yellow-600">
+                Số điện thoại:{" "}
+                <span className="ml-1">
+                  {CORE_INFORMATION.PHONE_CONSTANT_DISPLAY}
+                </span>
+              </strong>{" "}
+            </p>
           </div>
         </div>
       </section>

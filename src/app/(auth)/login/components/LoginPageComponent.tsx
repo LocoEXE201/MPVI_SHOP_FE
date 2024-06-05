@@ -169,7 +169,7 @@ const LoginPageComponent = (props: {}) => {
                   </div>
 
                   <Form.Item className="text-center">
-                    <div className="flex flex-row justify-between">
+                    <div className="mq450:flex-wrap flex flex-row justify-between">
                       <p
                         className="text-yellow-600 cursor-pointer text-end links_hover"
                         style={{ fontWeight: "bolder" }}
@@ -206,13 +206,13 @@ const LoginPageComponent = (props: {}) => {
                   </Form.Item>
                 </Form>
                 <div className="text-silver-200 mq450:flex-wrap mq450:gap-[0px_17px] flex flex-row items-center justify-center gap-[0px_35px] self-stretch text-center text-xs">
-                  <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
+                  <div className="mq450:mb-2 box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
                     <div className="border-black relative box-border h-px self-stretch border-t-[2px] border-solid" />
                   </div>
                   <div className="font-baloo text-black text-[1.3rem] mq450:w-full mq450:h-3 relative flex w-3 items-center justify-center">
                     Hoặc
                   </div>
-                  <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
+                  <div className="mq450:mt-2 box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
                     <div className="border-black relative box-border h-px self-stretch border-t-[2px] border-solid" />
                   </div>
                 </div>
