@@ -33,10 +33,7 @@ const DetailNewsComponent = (props: {}) => {
 
   return (
     <>
-      <PageTitle
-        mainTitle="Chi Tiết Tin Tức"
-        subTitle="Trang Chủ - Tin Tức - Chi Tiết"
-      />
+      <PageTitle mainTitle="Chi Tiết Tin Tức" subTitle="Tin Tức - Chi Tiết" />
       <section className="w-full relative bg-white flex flex-col items-end justify-start pt-[1.625rem] px-[0rem] pb-[0.018rem] box-border gap-[2.625rem] leading-[normal] tracking-[normal] mq900:gap-[1.313rem]">
         <div className="self-stretch flex flex-row items-start justify-center pt-[0rem] pr-[1.25rem] pl-[1.812rem] box-border max-w-full mq900:pb-[1.25rem] mq900:box-border mq1350:pb-[1.875rem] mq1350:box-border">
           <div className="w-[81.813rem] flex flex-col items-start justify-start gap-[2.381rem] max-w-full text-left text-[0.938rem] text-chocolate font-baloo mq900:gap-[1.188rem]">
