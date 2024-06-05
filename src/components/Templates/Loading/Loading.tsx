@@ -17,7 +17,7 @@ const Loading: NextPage<LoadingType> = ({ loading }) => {
         <span></span>
         <span></span>
       </div>
-      <div className="loader_text font-baloo-2">
+      <div className="loader_text font-baloo-2 w-full text-center px-[0.25rem]">
         Xin vui lòng đợi trong một vài giây...
       </div>
     </div>

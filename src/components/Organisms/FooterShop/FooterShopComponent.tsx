@@ -137,7 +137,7 @@ const FooterShopComponent = (props: {}) => {
             <div className="gap-[0.25rem] mq450:flex-wrap flex flex-col justify-between">
               <div className="self-stretch flex flex-row items-start justify-start ">
                 <img
-                  className="cursor-pointer relative rounded-8xs w-[6rem] h-[4rem] overflow-hidden"
+                  className="mq450:hidden cursor-pointer relative rounded-8xs w-[6rem] h-[4rem] overflow-hidden"
                   alt=""
                   src="/LandingPage/Carousel/carousel.png"
                   style={{ objectFit: "fill" }}
@@ -185,7 +185,7 @@ const FooterShopComponent = (props: {}) => {
           </div>
         </div>
         <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0.062rem] pl-[0.187rem] box-border max-w-full text-center text-gray-800 font-poppins">
-          <div className="flex-1 box-border flex flex-row items-center justify-center pt-[2.125rem] pb-[0.337rem] pr-[1.25rem] pl-[5.187rem] gap-[0.187rem] max-w-full border-t-[1px] border-solid border-white mq900:flex-wrap mq900:pl-[2.563rem] mq900:box-border">
+          <div className="flex-1 box-border flex flex-row items-center justify-center pt-[2.125rem] pb-[0.337rem] gap-[0.187rem] max-w-full border-t-[1px] border-solid border-white mq900:flex-wrap mq900:box-border">
             <div className="relative tracking-[0.48px] leading-[1.063rem] text-primary text-[1.2rem] mq450:leading-[0.813rem]">
               <span className="text-gray-800">
                 <span> &copy; 2024 </span>
@@ -193,7 +193,7 @@ const FooterShopComponent = (props: {}) => {
               <span className="font-semibold">
                 <span>Loco.</span>
               </span>
-              <span className="text-gray-800">
+              <span className="text-gray-800 mq450:inline-block mq450:mt-3">
                 <span style={{ transform: "translateY(15px)" }}> &#64; </span>
                 <span> All rights reserved.</span>
               </span>

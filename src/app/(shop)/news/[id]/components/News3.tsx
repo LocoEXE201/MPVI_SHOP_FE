@@ -20,7 +20,7 @@ const News3Component = (props: {}) => {
         </div>
         <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.125rem] box-border max-w-full">
           <img
-            className="h-[38.875rem] flex-1 relative max-w-full overflow-hidden object-cover"
+            className="mq1350:h-[25rem] mq900:h-[20rem] h-[30rem] flex-1 relative max-w-full overflow-hidden object-cover"
             loading="lazy"
             alt=""
             src="/LandingPage/OutstandingNews/news3.png"
