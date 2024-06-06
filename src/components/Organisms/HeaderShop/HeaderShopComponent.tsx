@@ -43,7 +43,7 @@ const HeaderShopComponent = (props: {}) => {
 
   return (
     <>
-      <header className="bg-white pt-[0.5rem] w-[117.563rem] flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.3rem] text-black font-baloo-2">
+      <header className="bg-white pt-[0.5rem] mq450:w-full w-[117.563rem] flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.3rem] text-black font-baloo-2">
         <div className="mq1350:hidden w-[78rem] flex flex-col items-start justify-start gap-[0rem] max-w-full">
           <div className="w-[83rem] py-[0.6rem] pb-[0.5rem] box-border flex flex-row items-center justify-between max-w-full text-[1.125rem] text-black border-b-[1px] border-solid border-whitesmoke-300 gap-[5rem]">
             <div className="w-[50rem] flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border max-w-full">
@@ -262,7 +262,7 @@ const HeaderShopComponent = (props: {}) => {
 
               {isAuthenticated ? (
                 <>
-                  <div className="flex flex-row items-center justify-end">
+                  <div className="cursor-pointer flex flex-row items-center justify-end">
                     <img
                       className=" w-[1.656rem] h-[1.2rem] z-[1]"
                       alt=""
@@ -377,7 +377,7 @@ const HeaderShopComponent = (props: {}) => {
           </div>
         </div>
 
-        <div className="mq1350:flex mq1725:hidden flex flex-row mq900:flex-col mb-3 px-[2rem] mq900:px-[0.5rem]">
+        <div className="mq1350:flex mq1725:hidden flex flex-row mq900:flex-col mb-3 px-[2rem] mq450:mb-1 mq900:px-[0.5rem]">
           <img
             className="mq900:hidden mq2000:hidden cursor-pointer h-[3.625rem] w-[7.625rem] relative object-cover z-[3]"
             loading="lazy"
@@ -388,7 +388,7 @@ const HeaderShopComponent = (props: {}) => {
             }}
           />
 
-          <div className="hidden mq900:flex mx-[1rem] self-stretch flex-row items-center justify-center max-w-full gap-[1.25rem]">
+          <div className="hidden mq900:flex mx-[1rem] mq450:mx-0 self-stretch flex-row items-center justify-center max-w-full gap-[1.25rem]">
             <img
               className="cursor-pointer h-[3.625rem] w-[7.625rem] relative object-cover z-[3]"
               loading="lazy"
@@ -399,7 +399,7 @@ const HeaderShopComponent = (props: {}) => {
               }}
             />
             <div
-              className="flex flex-col items-center justify-between pt-[0rem] px-[0rem] pb-[0.137rem] text-black"
+              className="mq450:hidden flex flex-col items-center justify-between pt-[0rem] px-[0rem] pb-[0.137rem] text-black"
               style={{ transform: "translateY(3px)" }}
             >
               <div className="flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.137rem]">
@@ -442,12 +442,12 @@ const HeaderShopComponent = (props: {}) => {
           </div>
 
           <div className=" mt-3 w-full flex flex-row items-center justify-center pb-[0rem] text-black">
-            <div className="px-[1rem] w-full flex flex-row items-center justify-center gap-[2rem] max-w-full">
+            <div className="mq450:flex-wrap mq450:gap-0 px-[1rem] w-full flex flex-row items-center justify-center gap-[2rem] max-w-full">
               <div
                 onClick={() => {
                   navigateToPage(PATH_SHOP.root);
                 }}
-                className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                className={`links_hover mq450:w-[50%] mq450:text-center relative font-medium inline-block whitespace-nowrap ${
                   typeof window !== "undefined" &&
                   (isActivePage(PATH_SHOP.root) ||
                   localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
@@ -464,7 +464,7 @@ const HeaderShopComponent = (props: {}) => {
                 onClick={() => {
                   navigateToPage(PATH_SHOP.about);
                 }}
-                className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                className={`links_hover mq450:w-[50%] mq450:text-center relative font-medium inline-block whitespace-nowrap ${
                   typeof window !== "undefined" && isActivePage(PATH_SHOP.about)
                     ? "active_current_link"
                     : ""
@@ -476,7 +476,7 @@ const HeaderShopComponent = (props: {}) => {
                 onClick={() => {
                   navigateToPage(PATH_SHOP.products);
                 }}
-                className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                className={`links_hover mq450:w-[50%] mq450:text-center relative font-medium inline-block whitespace-nowrap ${
                   typeof window !== "undefined" &&
                   isActivePage(PATH_SHOP.products)
                     ? "active_current_link"
@@ -489,7 +489,7 @@ const HeaderShopComponent = (props: {}) => {
                 onClick={() => {
                   navigateToPage(PATH_SHOP.news);
                 }}
-                className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                className={`links_hover mq450:w-[50%] mq450:text-center relative font-medium inline-block whitespace-nowrap ${
                   typeof window !== "undefined" && isActivePage(PATH_SHOP.news)
                     ? "active_current_link"
                     : ""
@@ -501,7 +501,7 @@ const HeaderShopComponent = (props: {}) => {
           </div>
 
           <div
-            className={`px-[0.5rem] mt-3 ${isAuthenticated ? "min-w-[28rem]" : ""} flex flex-row items-center justify-end mq900:justify-between pt-[0rem] pb-[0.137rem] text-black`}
+            className={`px-[0.5rem] mq450:w-full mq450:px-10 mq450:flex-wrap mq450:mt-1 mt-3 ${isAuthenticated ? "min-w-[28rem]" : ""} flex flex-row items-center justify-end mq900:justify-between pt-[0rem] pb-[0.137rem] text-black`}
           >
             {!isAuthenticated ? (
               <>
@@ -560,7 +560,7 @@ const HeaderShopComponent = (props: {}) => {
 
             {isAuthenticated ? (
               <>
-                <div className="mr-3 flex flex-row items-center justify-end">
+                <div className="mq450:mr-0 mr-3 mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center">
                   <img
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
@@ -584,7 +584,7 @@ const HeaderShopComponent = (props: {}) => {
                   </div>
                 </div>
 
-                <div className="mx-3 flex flex-row items-center justify-end">
+                <div className="mq450:mx-0 mx-3 mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center">
                   <img
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
@@ -608,7 +608,7 @@ const HeaderShopComponent = (props: {}) => {
                   </div>
                 </div>
 
-                <div className="mx-3 flex flex-row items-center justify-end">
+                <div className="mq450:mx-0 mx-3 mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center">
                   <img
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
@@ -633,7 +633,7 @@ const HeaderShopComponent = (props: {}) => {
                 </div>
 
                 <div
-                  className="ms-2 cursor-pointer flex flex-row items-center justify-end"
+                  className="mq450:ms-0 ms-2 cursor-pointer mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center"
                   onClick={() => {
                     Swal.fire({
                       title: "Bạn có chắc muốn đăng xuất?",
@@ -666,6 +666,19 @@ const HeaderShopComponent = (props: {}) => {
                     src="/Icons/logout_icon.svg"
                     style={{ transform: "scale(1.3) translateY(-2px)" }}
                   />
+                  <span
+                    onClick={() => {
+                      navigateToPage(PATH_SHOP.order);
+                    }}
+                    className={`mq450:block hidden links_hover tracking-[0.48px] leading-[1rem] font-medium ${
+                      typeof window !== "undefined" &&
+                      isActivePage(PATH_AUTH.login)
+                        ? "active_current_link"
+                        : ""
+                    }`}
+                  >
+                    Đăng Xuất
+                  </span>
                 </div>
               </>
             ) : (
