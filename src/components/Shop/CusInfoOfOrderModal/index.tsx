@@ -24,8 +24,21 @@ interface Ward {
   ward_name: string;
 }
 
+interface AddressList {
+  customer_id: number;
+  infors: [
+    {
+      id: number;
+      phone: string;
+      name: string;
+      address: string;
+    },
+  ];
+}
+
 const CusInfoOfOrderModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addressList, setAddressList] = React.useState<AddressList[]>([]);
 
   const loadUserInformation = () => {
     const user = localStorage.getItem("USER_INFO");
