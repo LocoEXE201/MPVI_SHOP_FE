@@ -180,6 +180,7 @@ const CartComponent = () => {
             ) : (
               <div className="flex flex justify-center items-center content-center font-baloo-2 text-2xl ">
                 Không có sản phẩm trong giỏ hàng của bạn
+     
               </div>
             )}
           </div>
