@@ -19,7 +19,7 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
 
   return (
     <section className="newPage_area self-stretch flex flex-row items-start justify-start pt-[0rem] pb-[1.187rem] pr-[0rem] pl-[0.062rem] box-border max-w-full text-left text-[2.188rem] text-chocolate font-baloo">
-      <div className="flex-1 rounded-8xs bg-white box-border flex flex-col items-end justify-start pt-[2.437rem] px-[1rem] pb-[1.75rem] max-w-full border-[1px] border-solid border-white mq900:pt-[1.563rem] mq900:px-[4.813rem] mq900:pb-[1.25rem] mq900:box-border mq1350:pl-[9.625rem] mq1350:pr-[9.625rem] mq1350:box-border">
+      <div className="flex-1 rounded-8xs bg-white box-border flex flex-col items-end justify-start pt-[2.437rem] px-[1.2rem] pb-[1.75rem] max-w-full border-[1px] border-solid border-white mq900:pt-[1.563rem] mq900:pb-[1.25rem] mq900:box-border mq1350:box-border">
         <h2 className="m-0 relative text-inherit w-full text-center">
           {!activeNews ? "Tin Nổi Bật" : "Tin Tức Khác"}
         </h2>
@@ -56,7 +56,7 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
                     </div>
                   </div>
                   <img
-                    className="self-stretch h-[22rem] relative max-w-full overflow-hidden shrink-0 object-cover"
+                    className="mq1350:h-[15rem] mq900:h-[15rem] self-stretch h-[22rem] relative max-w-full overflow-hidden shrink-0 object-cover"
                     alt=""
                     src="/LandingPage/OutstandingNews/news1.jpg"
                   />
@@ -96,7 +96,7 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
                     </div>
                   </div>
                   <img
-                    className="self-stretch h-[22rem] relative max-w-full overflow-hidden shrink-0 object-cover"
+                    className="mq1350:h-[15rem] mq900:h-[15rem] object-top self-stretch h-[22rem] relative max-w-full overflow-hidden shrink-0 object-cover"
                     alt=""
                     src="/LandingPage/OutstandingNews/news2.png"
                   />
@@ -136,9 +136,9 @@ export const OutstandingNews: FC<OutstandingNewsProps> = ({ activeNews }) => {
                     </div>
                   </div>
                   <img
-                    className="self-stretch h-[22rem] relative max-w-full overflow-hidden shrink-0 object-cover"
+                    className="mq1350:h-[15rem] mq900:h-[15rem] self-stretch h-[22rem] relative max-w-full overflow-hidden shrink-0 object-cover"
                     alt=""
-                    src="/LandingPage/OutstandingNews/news3.png"
+                    src="/LandingPage/OutstandingNews/news3.jpg"
                   />
                 </div>
               </>
