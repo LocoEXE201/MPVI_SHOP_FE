@@ -40,7 +40,9 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
                     src="/LandingPage/Carousel/star.svg"
                     style={{ transform: "translateY(3px)" }}
                   />
-                  <span>Đa dạng phong cách và các thể loại sản phẩm len.</span>
+                  <span className="text-[1.35rem] mq450:text-[1rem] mq450:leading-[1.313rem]">
+                    Đa dạng phong cách và các thể loại sản phẩm len.
+                  </span>
                 </li>
                 <li className="flex items-start gap-1 mt-[5px]">
                   <img
@@ -49,7 +51,7 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
                     src="/LandingPage/Carousel/star.svg"
                     style={{ transform: "translateY(3px)" }}
                   />
-                  <span>
+                  <span className="text-[1.35rem] mq450:text-[1rem] mq450:leading-[1.313rem]">
                     Chất liệu mềm mại, ấm áp mọi nơi và chống thấm nước.
                   </span>
                 </li>
@@ -72,7 +74,7 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
               <span className="text-white"> cần sự giúp đỡ.</span>
             </p>
           </div>
-          <div className="mt-5 flex gap-[10px]">
+          <div className="mt-5 flex flex-wrap gap-[10px]">
             <button
               onClick={() => {
                 router.push(PATH_SHOP.products);
