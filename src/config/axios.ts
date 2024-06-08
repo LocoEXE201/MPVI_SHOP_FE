@@ -29,9 +29,9 @@ export const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 
-const auth = `https://mpviauth.azurewebsites.net/api/`;
-const shop = `https://mpvishopapi.azurewebsites.net/api/`;
-const warehouse = `https://mpviwarehouse.azurewebsites.net/api/`;
+const auth = `http://14.225.211.1:8081/api/`;
+const shop = `http://14.225.211.1:8083/api/`;
+const warehouse = `http://14.225.211.1:8084/api/`;
 
 const request = axios.create({
   baseURL: auth,

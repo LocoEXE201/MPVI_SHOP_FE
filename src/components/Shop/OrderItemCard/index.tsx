@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { PATH_SHOP } from "@/routes/paths";
 import { formatPrice } from "@/utils/formatPrice";
+import FeedbackModal from "../FeedbackModal";
 
 interface Order {
   categoryId: number;
@@ -41,14 +42,9 @@ const OrderItemCard = ({ ordersList, categories }: OrderItemCard) => {
     router.push(route);
   };
 
-  //   console.log(ordersList?.orders[0]?.categoryId);
-
   const item = categories.find(
-    (cate) => cate.categoryId === ordersList?.orders[0]?.categoryId
+    (cate: any) => cate.categoryId === ordersList?.orders[0]?.categoryId
   );
-
-  // console.log(ordersList);
-  // console.log(item);
 
   const numberOfOtherProduct = () => {
     if (ordersList?.orders.length - 1 > 0) {

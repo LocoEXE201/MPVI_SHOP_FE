@@ -33,7 +33,6 @@ const ProfileComponent = () => {
     try {
       enableLoading();
       const response = await authApi.updateAccount(data);
-      console.log(response.data);
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess

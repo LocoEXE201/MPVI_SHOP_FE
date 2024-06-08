@@ -101,7 +101,7 @@ const ProductDetailsComponent = () => {
     {
       key: "2",
       label: "Đánh giá",
-      children: <FeedbackFrame />,
+      children: <FeedbackFrame categoryId={categoryId} />,
     },
   ];
 

@@ -94,7 +94,6 @@ const CartComponent = () => {
 
   // console.log(selectedItems);
 
-
   const checkedCategories = () => {
     if (selectedItems.length === 0) {
       return [];
@@ -106,7 +105,7 @@ const CartComponent = () => {
           (items) => items.product.categoryId === selected
         );
       })
-      .filter((item) => item !== undefined); 
+      .filter((item) => item !== undefined);
 
     return checked;
   };
@@ -166,17 +165,24 @@ const CartComponent = () => {
               <div className="total">Tổng Tiền</div>
               <div className="remove">Xóa</div>
             </div>
-            <div className="cart-items p-3 box-border">
-              {loadCartItems().map((item) => (
-                <CartItemCard
-                  key={item.product.categoryId}
-                  cartItem={item}
-                  onCheckboxChange={handleCheckboxChange}
-                  // onqtyChange={handleqtyChange}
-                  checked={selectedItems.includes(item.product.categoryId)}
-                />
-              ))}
-            </div>
+            {loadCartItems().length > 0 ? (
+              <div className="cart-items p-3 box-border">
+                {loadCartItems().map((item) => (
+                  <CartItemCard
+                    key={item.product.categoryId}
+                    cartItem={item}
+                    onCheckboxChange={handleCheckboxChange}
+                    // onqtyChange={handleqtyChange}
+                    checked={selectedItems.includes(item.product.categoryId)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex justify-center items-center content-center font-baloo-2 text-2xl ">
+                Không có sản phẩm trong giỏ hàng của bạn
+     
+              </div>
+            )}
           </div>
           <div className="flex flex-row justify-between w-[1296px] box-border mt-1.5">
             <div

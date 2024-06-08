@@ -14,12 +14,24 @@ import { useRouter } from "next/navigation";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import { PATH_SHOP } from "@/routes/paths";
 import Loading from "@/components/Templates/Loading/Loading";
+import CusInfoOfOrderModal from "@/components/Shop/CusInfoOfOrderModal";
+import customerApi from "@/api/shop/customerApi";
+
+interface Address {
+  id: number;
+  phone: string;
+  name: string;
+  address: string;
+}
 
 const PaymentComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [delivery, setDelivery] = useState("Normal");
   const [method, setMethod] = useState("ShipCod");
   const [note, setNote] = useState("");
+  const [receiverName, setReceiverName] = useState("");
+  const [receiverAddress, setReceiverAddress] = useState("");
+  const [receiverPhoneNumber, setReceiverPhoneNumber] = useState("");
 
   const router = useRouter();
   const navigateToPage = (route: string) => {
@@ -31,6 +43,7 @@ const PaymentComponent = (prop: {}) => {
 
   const loadSelectedItems = () => {
     const data = localStorage.getItem("selectedCategories");
+
     return data ? JSON.parse(data) : [];
   };
 
@@ -41,7 +54,7 @@ const PaymentComponent = (prop: {}) => {
 
   const checkedCategories = () => {
     const checked = loadSelectedItems()
-      .map((selected: any) => {
+      ?.map((selected: any) => {
         return loadCartItems().find(
           (items) => items.product.categoryId === selected
         );
@@ -56,8 +69,6 @@ const PaymentComponent = (prop: {}) => {
       (total += curr?.quantity * curr?.product.priceIn),
     0
   );
-
-  console.log(checkedCategories());
 
   const onChange = (e: RadioChangeEvent) => {
     e.preventDefault();
@@ -96,10 +107,62 @@ const PaymentComponent = (prop: {}) => {
 
   // console.log(paymentItems());
 
+  const fetchCreateAddress = async () => {
+    try {
+      enableLoading();
+      const response = await customerApi.createAddress({
+        customer_id: loadUserInformation().id,
+        infors: [
+          {
+            phone: receiverPhoneNumber,
+            name: receiverName,
+            address: receiverAddress,
+          },
+        ],
+      });
+      console.log(response.data);
+      Swal.fire({
+        icon: response.data.isSuccess ? "success" : "error",
+        title: response.data.isSuccess
+          ? "Your information is saved successfully"
+          : "Your information is not saved successfully. Try again!",
+        showConfirmButton: false,
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+      });
+      disableLoading();
+      return response.data.result.infor;
+    } catch (error) {
+      enableLoading();
+      Swal.fire({
+        icon: "error",
+        title: "There is something wrong. Try again!",
+        showConfirmButton: false,
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+      });
+      disableLoading();
+    }
+  };
+
+  const handleCreateNewAddress = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    const response = await fetchCreateAddress();
+    console.log(response.infor);
+    return response;
+  };
+
   const createOrder = () => {
     return {
       cartHeader: {
         customerId: loadUserInformation().id,
+        receiverName: receiverName,
+        receiverAddress: receiverAddress,
+        receiverPhoneNumber: receiverPhoneNumber,
         total: totalPrice + shippingPrice(delivery),
         notes: note,
       },
@@ -107,13 +170,17 @@ const PaymentComponent = (prop: {}) => {
     };
   };
 
+  console.log(createOrder());
+
   // console.log(paymentItems(checkedCategories()));
 
   const fetchOrder = async (data: any, method: string) => {
     try {
       enableLoading();
+      console.log("adbccbcbcbc");
       const response = await shopApi.createOrder(method, data);
-      console.log(response.data.result);
+      console.log("adbccbcbcbc");
+      console.log(response.data);
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess
@@ -186,8 +253,10 @@ const PaymentComponent = (prop: {}) => {
   const handleCreateOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const order = createOrder();
+    console.log(order);
     if (order.cartDetails?.length ? order.cartDetails?.length : 0 > 0) {
       const result = await fetchOrder(order, method);
+      console.log("abcd");
       if (method === "VnPay" && result) {
         await fetchPayment(result);
       }
@@ -386,12 +455,19 @@ const PaymentComponent = (prop: {}) => {
               </div>
             </div>
             <div className="flex justify-end ">
-              <button
+              {/* <button
                 className="w-[130px] h-[40px] flex justify-center items-center content-center bg-chocolate text-lg text-white font-bold rounded"
                 onClick={handleCreateOrder}
               >
                 Thanh Toán
-              </button>
+              </button> */}
+              <CusInfoOfOrderModal
+                setReceiverName={setReceiverName}
+                setReceiverAddress={setReceiverAddress}
+                setReceiverPhoneNumber={setReceiverPhoneNumber}
+                handleCreateOrder={handleCreateOrder}
+                handleCreateNewAddress={handleCreateNewAddress}
+              />
             </div>
           </div>
         </div>

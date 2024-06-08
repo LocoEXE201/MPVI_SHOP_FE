@@ -124,7 +124,7 @@ const ProductsComponent = (prop: {}) => {
     }
   };
 
-  const filterCategory = category.filter((cate: any) => {
+  const filterCategory = category?.filter((cate: any) => {
     return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
   });
 
@@ -146,9 +146,9 @@ const ProductsComponent = (prop: {}) => {
     selectedItems: string[],
     filterCategory: ProductCardProps[]
   ) => {
-    if (selectedItems.length > 0) {
-      return selectedItems.flatMap((selected) => {
-        return filterCategory.filter(
+    if (selectedItems?.length > 0) {
+      return selectedItems?.flatMap((selected) => {
+        return filterCategory?.filter(
           (cate: any) => cate.superCategory.superCategoryName === selected
         );
       });
@@ -160,7 +160,7 @@ const ProductsComponent = (prop: {}) => {
   const sortedAndFilteredCategory = selectedCategory(
     selectedItems,
     filterCategory
-  ).sort((a, b) => {
+  )?.sort((a, b) => {
     if (filteredPrice === "minToMax") {
       return a.priceIn - b.priceIn;
     } else if (filteredPrice === "maxToMin") {
@@ -171,11 +171,11 @@ const ProductsComponent = (prop: {}) => {
   });
 
   const filterCategoryDisplay = (filterCategory: ProductCardProps[]) => {
-    if (filterCategory.length > 0) {
+    if (filterCategory?.length > 0) {
       return (
         <div className="flex flex-col justify-center items-center content-center gap-4 w-full p-3">
           <div className="grid grid-cols-3 gap-x-20 gap-y-9">
-            {filterCategory.map((cate: any, index) => (
+            {filterCategory?.map((cate: any, index) => (
               <ProductCardComponent
                 key={index}
                 categoryId={cate.categoryId}
@@ -226,19 +226,19 @@ const ProductsComponent = (prop: {}) => {
                 {superCategory.map((supercategory: any, index: any) => (
                   <Row key={index}>
                     <Checkbox
-                      value={supercategory.superCategoryName}
+                      value={supercategory?.superCategoryName}
                       onChange={(e: CheckboxChangeEvent) =>
                         handleCheckboxChange(
-                          supercategory.superCategoryName,
+                          supercategory?.superCategoryName,
                           e.target.checked
                         )
                       }
                     >
                       <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
                         <div className="">
-                          {supercategory.superCategoryName}
+                          {supercategory?.superCategoryName}
                         </div>
-                        <div>[{supercategory.totalCategory}]</div>
+                        <div>[{supercategory?.totalCategory}]</div>
                       </div>
                     </Checkbox>
                   </Row>
@@ -301,7 +301,7 @@ const ProductsComponent = (prop: {}) => {
               </button>
             </div>
             <div className="w-[600px] font-baloo-2 text-gray-100 text-sm ">
-              Chúng tôi tìm thấy <span>{category.length}</span> sản phẩm bạn cần
+              Chúng tôi tìm thấy <span>{category?.length}</span> sản phẩm bạn cần
               tìm
             </div>
             <div className=" flex font-baloo text-gray-100 text-sm content-center mt-0.5 ">
