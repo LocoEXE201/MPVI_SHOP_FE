@@ -12,7 +12,7 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
   return (
     <>
       <section className="carousel_area mb-[2rem] overflow-hidden font-baloo-2">
-        <div className="overflow-hidden pt-[5rem] mq900:pb-[5rem] mq900:pl-[40px] mq900:pr-[40px] mq1350:pl-[100px] mq1350:pr-[100px] pl-[10rem] pr-[25rem] carousel_image mq900:bg-contain mq900:bg-[calc(55%)] mq1350:bg-[calc(50%)] bg-center bg-[url('/LandingPage/Carousel/carousel.png')] min-h-[40rem] w-full">
+        <div className="overflow-hidden pt-[3.5rem] pb-[3rem] mq450:pt-[2rem] mq450:pb-[2rem]  mq900:pl-[40px] mq900:pr-[40px] mq1350:pl-[100px] mq1350:pr-[100px] pl-[10rem] pr-[25rem] carousel_image mq900:bg-contain mq900:bg-[calc(55%)] mq1350:bg-[calc(50%)] bg-center bg-[url('/LandingPage/Carousel/carousel.png')] min-h-[35rem] mq450:min-h-0 w-full">
           <div className="subTitle flex flex-row items-center mq900:text-[1.3rem] mq450:text-[1rem] text-[1.6rem]">
             <div className="inline-block font-poppins border-b-[2px] border-solid border-white">
               <b className="text-white">100%</b>
@@ -21,7 +21,7 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
               Sản Phẩm Thủ Công
             </h3>
           </div>
-          <h1 className="mainTitle mt-2 mq450:text-[2rem] mq900:text-[2.5rem] mq1350:text-[3.2rem] text-[3.75rem] tracking-[0.48px] mq900:leading-[3rem] leading-[4.25rem] font-normal font-baloo-bhaijaan text-chocolate">
+          <h1 className="mainTitle mt-2 mq450:text-[2rem] mq900:text-[2.5rem] mq1350:text-[3.2rem] text-[3.75rem] tracking-[0.48px] mq900:leading-[3rem] mq450:leading-[2.5rem] leading-[4.25rem] font-normal font-baloo-bhaijaan text-chocolate">
             <div className="w-full">
               <p className="m-0">
                 &quot;Len Yêu&quot; <span className="mq900:hidden">-</span>
