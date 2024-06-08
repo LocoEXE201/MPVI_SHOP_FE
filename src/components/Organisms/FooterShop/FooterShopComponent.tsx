@@ -155,7 +155,7 @@ const FooterShopComponent = (props: {}) => {
                 <img
                   className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
-                  src="/LandingPage/OutstandingNews/news3.png"
+                  src="/LandingPage/OutstandingNews/news3.jpg"
                 />
               </div>
               <div className="mt-2 flex flex-col items-start justify-start gap-[0.625rem] w-[5.125rem]">
