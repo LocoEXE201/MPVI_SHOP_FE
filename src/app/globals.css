@@ -60,3 +60,19 @@ body {
   background: #824703;
   cursor: pointer;
 }
+
+.screenshot-overlay::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.screenshot-overlay{
+  display: none !important;
+}
