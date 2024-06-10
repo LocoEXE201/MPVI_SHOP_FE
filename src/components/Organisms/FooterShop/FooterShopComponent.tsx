@@ -161,8 +161,9 @@ const FooterShopComponent = (props: {}) => {
               <div className="mt-2 flex flex-col items-start justify-start gap-[0.625rem] w-[5.125rem]">
                 <div className="flex flex-row items-start justify-start gap-[0.25rem] mt-2">
                   <a
-                    href="https://www.facebook.com/profile.php?id=61559942963991"
+                    href={CORE_INFORMATION.FACEBOOK_LINK}
                     target="_blank"
+                    className="inline-block hover:scale-110 transition-all hover:opacity-80"
                   >
                     <Image
                       className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
@@ -172,13 +173,19 @@ const FooterShopComponent = (props: {}) => {
                       height={52}
                     />
                   </a>
-                  <Image
-                    className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
-                    alt="insta_icon"
-                    src="/Icons/insta_icon.svg"
-                    width={52}
-                    height={52}
-                  />
+                  <a
+                    href={CORE_INFORMATION.INSTAGRAM_LINK}
+                    target="_blank"
+                    className="inline-block hover:scale-110 transition-all hover:opacity-80"
+                  >
+                    <Image
+                      className="cursor-pointer h-[2.188rem] w-[2.188rem] relative rounded-8xs min-h-[2.188rem]"
+                      alt="insta_icon"
+                      src="/Icons/insta_icon.svg"
+                      width={52}
+                      height={52}
+                    />
+                  </a>
                 </div>
               </div>
             </div>

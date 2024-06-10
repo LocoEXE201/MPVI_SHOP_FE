@@ -5,12 +5,15 @@ import { AuthProvider } from "@/contexts/JWTContext";
 import { AuthContextProvider } from "@/contexts/AuthGoogleContext";
 import HeaderShop from "@/components/Organisms/HeaderShop";
 import FooterShop from "@/components/Organisms/FooterShop";
+import useProtectData from "@/hooks/useProtectData";
 
 export default function ShopLayoutComponent({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  useProtectData();
+
   return (
     <AppProvider>
       <AuthProvider>

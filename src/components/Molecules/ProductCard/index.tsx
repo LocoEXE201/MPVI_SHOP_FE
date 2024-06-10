@@ -103,7 +103,7 @@ export const ProductCard: FC<ProductCardProps> = ({
               )}
             </div>
           </div>
-          <div className="self-stretch relative tracking-[0.48px] leading-[1.5rem] font-medium text-gray-300">
+          <div className="mt-1 self-stretch relative tracking-[0.48px] leading-[1.5rem] font-medium text-gray-300">
             <p className="m-0">
               {productName && productName?.length >= 25
                 ? productName.substring(0, 25) + "..."
@@ -141,7 +141,7 @@ export const ProductCard: FC<ProductCardProps> = ({
               )}
             </div>
           </div>
-          <div className="self-stretch flex flex-row items-start justify-center py-[0rem] pr-[1.312rem] pl-[1.25rem]">
+          <div className="mt-[3px] self-stretch flex flex-row items-start justify-center py-[0rem] pr-[1.312rem] pl-[1.25rem]">
             <ButtonAddCart>Thêm</ButtonAddCart>
           </div>
         </div>
