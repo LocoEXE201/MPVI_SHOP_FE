@@ -25,15 +25,13 @@ interface Props {
 const FeedbackFrame = ({ categoryId }: Props) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [filtered, setFiltered] = React.useState<string | number>("all");
-  
+
   const [feedback, setFeedback] = React.useState<Feedback[]>([]);
 
   const handleClick = (e: any) => {
     e.preventDefault();
     setFiltered(e.target.value);
   };
-
- 
 
   const getFeedbackAllById = async (categoryId: number) => {
     try {
@@ -228,7 +226,7 @@ const FeedbackFrame = ({ categoryId }: Props) => {
         {feedback.length > 0 ? (
           <div>
             {feedback.map((item, index) => (
-              <div>
+              <div key={index}>
                 <FeedbackItem
                   key={index}
                   customerName={item.customerName}
