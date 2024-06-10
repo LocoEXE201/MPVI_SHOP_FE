@@ -68,8 +68,11 @@ const CusInfoOfOrderModal = ({
   const [isActive, setIsActive] = useState(0);
 
   const loadUserInformation = () => {
-    const user = localStorage.getItem("USER_INFO");
-    return user ? JSON.parse(user) : {};
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("USER_INFO");
+      return user ? JSON.parse(user) : {};
+    }
+    return {};
   };
 
   const showModal = () => {

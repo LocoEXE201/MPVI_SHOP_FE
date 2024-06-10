@@ -42,14 +42,19 @@ const PaymentComponent = (prop: {}) => {
   };
 
   const loadSelectedItems = () => {
-    const data = localStorage.getItem("selectedCategories");
-
-    return data ? JSON.parse(data) : [];
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("selectedCategories");
+      return data ? JSON.parse(data) : [];
+    }
+    return [];
   };
 
   const loadUserInformation = () => {
-    const user = localStorage.getItem("USER_INFO");
-    return user ? JSON.parse(user) : {};
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("USER_INFO");
+      return user ? JSON.parse(user) : {};
+    }
+    return {};
   };
 
   const checkedCategories = () => {
