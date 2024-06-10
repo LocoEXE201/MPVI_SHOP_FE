@@ -60,8 +60,11 @@ const OrderComponent = (prop: {}) => {
   const [orders, setOrders] = React.useState<Orders[]>([]);
 
   const loadUserInformation = () => {
-    const user = localStorage.getItem("USER_INFO");
-    return user ? JSON.parse(user) : {};
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("USER_INFO");
+      return user ? JSON.parse(user) : {};
+    }
+    return {};
   };
 
   console.log(loadUserInformation().id);

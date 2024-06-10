@@ -26,8 +26,11 @@ const AddAddressModal = ({ setAddressList, setIsActive }: Props) => {
   const [receiverPhoneNumber, setReceiverPhoneNumber] = useState("");
 
   const loadUserInformation = () => {
-    const user = localStorage.getItem("USER_INFO");
-    return user ? JSON.parse(user) : {};
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("USER_INFO");
+      return user ? JSON.parse(user) : {};
+    }
+    return {};
   };
 
   const showModal = () => {
