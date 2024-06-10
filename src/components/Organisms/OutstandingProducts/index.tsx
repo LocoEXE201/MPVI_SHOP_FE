@@ -168,7 +168,7 @@ const OutstandingProducts: NextPage = () => {
                       onClick={() => {
                         router.push(PATH_SHOP.products);
                       }}
-                      className="rounded-8xs cursor-pointer hover:bg-black hover:text-white bg-white flex flex-row items-start justify-start py-[0.312rem] px-[0.312rem] shrink-0 [debug_commit:1de1738] whitespace-nowrap"
+                      className="rounded-8xs cursor-pointer hover:bg-black hover:text-white bg-white flex flex-row items-start justify-start py-[0.312rem] px-[0.312rem] shrink-0 whitespace-nowrap"
                     >
                       <b className="relative tracking-[0.48px] leading-[1.313rem] inline-block whitespace-nowrap">
                         Khám Phá Ngay

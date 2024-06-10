@@ -64,7 +64,7 @@ const OtherProducts: NextPage = () => {
                   />
                   {category && category.rate > 4 ? (
                     <>
-                      <div className="rounded-tl-mini rounded-tr-none rounded-br-xl rounded-bl-none bg-hotpink flex flex-row items-start justify-start pt-[0.437rem] pb-[0.75rem] pr-[1.225rem] pl-[1.25rem] z-[1]">
+                      <div className="absolute top-0 left-0 rounded-tl-mini rounded-tr-none rounded-br-xl rounded-bl-none bg-hotpink flex flex-row items-start justify-start pt-[0.437rem] pb-[0.75rem] pr-[1.225rem] pl-[1.25rem] z-[1]">
                         <div className="relative leading-[0.75rem] inline-block min-w-[1.563rem]">
                           Hot
                         </div>
@@ -74,12 +74,19 @@ const OtherProducts: NextPage = () => {
                     <></>
                   )}
 
-                  {/* <div className="rounded-tl-mini rounded-tr-none rounded-br-xl rounded-bl-none bg-mediumseagreen flex flex-row items-start justify-start pt-[0.437rem] pb-[0.75rem] pr-[1.225rem] pl-[1.25rem] z-[1]">
-                    <div className="relative leading-[0.75rem] inline-block min-w-[1.563rem]">
-                      New
-                    </div>
-                  </div> */}
-                  {/* <div className="rounded-tl-mini rounded-tr-none rounded-br-xl rounded-bl-none bg-lightskyblue flex flex-row items-start justify-start pt-[0.437rem] pb-[0.75rem] pr-[1.231rem] pl-[1.25rem] z-[1]">
+                  {!category.rate || (category && category.rate <= 0) ? (
+                    <>
+                      <div className="absolute top-0 left-0  rounded-tl-mini rounded-tr-none rounded-br-xl rounded-bl-none bg-mediumseagreen flex flex-row items-start justify-start pt-[0.437rem] pb-[0.75rem] pr-[1.225rem] pl-[1.25rem] z-[1]">
+                        <div className="relative leading-[0.75rem] inline-block min-w-[1.563rem]">
+                          New
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {/* <div className="absolute top-0 left-0  rounded-tl-mini rounded-tr-none rounded-br-xl rounded-bl-none bg-lightskyblue flex flex-row items-start justify-start pt-[0.437rem] pb-[0.75rem] pr-[1.231rem] pl-[1.25rem] z-[1]">
                     <div className="relative leading-[0.75rem] inline-block min-w-[1.381rem]">
                       Sale
                     </div>
@@ -110,39 +117,39 @@ const OtherProducts: NextPage = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="w-[16.094rem] flex flex-col items-start justify-start gap-[0.681rem] text-center text-[0.688rem] text-darkgray-200 font-poppins">
-                      <div className="flex flex-row items-end justify-start gap-[0.4rem]">
+                    <div className="w-[16.094rem] flex flex-col items-start justify-start gap-[0.3rem] text-center text-[0.688rem] text-darkgray-200 font-poppins">
+                      <div className="flex flex-row items-end justify-start gap-[0.2rem]">
                         {category && category.rate > 0 ? (
                           <>
-                            <div className="flex flex-row items-start justify-start gap-[0.131rem] shrink-0 [debug_commit:1de1738]">
+                            <div className="flex flex-row items-center justify-center gap-[0.131rem] shrink-0 translate-y-[-1px]">
                               <img
                                 className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                                 alt=""
-                                src={`/Icons/${Math.ceil(category.rate) == 1 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                                src={`/Icons/${Math.ceil(category.rate) >= 1 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                               />
                               <img
                                 className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                                 alt=""
-                                src={`/Icons/${Math.ceil(category.rate) == 2 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                                src={`/Icons/${Math.ceil(category.rate) >= 2 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                               />
                               <img
                                 className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                                 alt=""
-                                src={`/Icons/${Math.ceil(category.rate) == 3 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                                src={`/Icons/${Math.ceil(category.rate) >= 3 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                               />
                               <img
                                 className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                                 alt=""
-                                src={`/Icons/${Math.ceil(category.rate) == 4 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                                src={`/Icons/${Math.ceil(category.rate) >= 4 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                               />
                               <img
                                 className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                                 alt=""
-                                src={`/Icons/${Math.ceil(category.rate) == 5 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                                src={`/Icons/${Math.ceil(category.rate) >= 5 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                               />
                             </div>
-                            <div className=" flex flex-col items-start justify-end pt-[0rem] px-[0rem] box-border">
-                              <div className="self-stretch relative tracking-[0.48px] leading-[0.625rem] inline-block min-w-[1.925rem] shrink-0 [debug_commit:1de1738]">
+                            <div className="translate-y-[1.5px] flex flex-col items-start justify-end pt-[0rem] px-[0rem] box-border">
+                              <div className="self-stretch relative inline-block shrink-0">
                                 ({category.rate})
                               </div>
                             </div>
@@ -156,7 +163,7 @@ const OtherProducts: NextPage = () => {
                       <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.093rem] text-left text-[1.125rem] text-chocolate font-quicksand">
                         <div className="flex-1 flex flex-row items-start justify-between gap-[1.25rem]">
                           <div className="flex flex-col items-start justify-start pt-[0.325rem] px-[0rem] pb-[0rem]">
-                            <div className="flex flex-row items-end justify-start gap-[0.062rem] shrink-0 [debug_commit:1de1738]">
+                            <div className="flex flex-row items-end justify-start gap-[0.062rem] shrink-0">
                               {category.priceSold ? (
                                 <>
                                   <b className="relative leading-[1.5rem] inline-block min-w-[4.063rem] whitespace-nowrap">
@@ -168,7 +175,7 @@ const OtherProducts: NextPage = () => {
                               )}
                             </div>
                           </div>
-                          <button className="cursor-pointer [border:none] py-[0.3rem] pb-[0.075rem] pr-[0.75rem] pl-[0.937rem] bg-chocolate hover:bg-yellow-600 h-[2.25rem] rounded flex flex-row items-center justify-center box-border gap-[0.243rem] shrink-0 [debug_commit:1de1738]">
+                          <button className="cursor-pointer [border:none] py-[0.3rem] pb-[0.075rem] pr-[0.75rem] pl-[0.937rem] bg-chocolate hover:bg-yellow-600 h-[2.25rem] rounded flex flex-row items-center justify-center box-border gap-[0.243rem] shrink-0">
                             <img
                               className="h-[0.875rem] w-[0.875rem] mr-1 relative overflow-hidden shrink-0"
                               alt=""
