@@ -59,39 +59,39 @@ export const ProductCard: FC<ProductCardProps> = ({
           <div className="max-w-[full] self-stretch relative text-[0.938rem] tracking-[0.48px] leading-[1.5rem] font-semibold">
             {productCategoryName}
           </div>
-          <div className="self-stretch flex flex-row items-start justify-start pt-[0rem] pr-[3.812rem] pl-[3.918rem] text-[0.688rem] text-darkgray-200 font-poppins">
-            <div className="flex-1 flex flex-row items-end justify-center gap-[0.337rem]">
+          <div className="w-full flex flex-row items-start justify-start pt-[0rem] text-[0.7rem] text-darkgray-200 font-poppins">
+            <div className="w-full flex flex-row items-center justify-center gap-[3px]">
               {productDTO && productDTO.rate > 0 ? (
                 <>
-                  <div className="mb-[0.35rem] flex-1 flex flex-row items-start justify-start gap-[0.131rem] shrink-0">
+                  <div className="flex flex-row items-center justify-center gap-[0.131rem] shrink-0">
                     <img
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
-                      src={`/Icons/${Math.ceil(productDTO.rate) == 1 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                      src={`/Icons/${Math.ceil(productDTO.rate) >= 1 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
                     <img
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
-                      src={`/Icons/${Math.ceil(productDTO.rate) == 2 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                      src={`/Icons/${Math.ceil(productDTO.rate) >= 2 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
                     <img
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
-                      src={`/Icons/${Math.ceil(productDTO.rate) == 3 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                      src={`/Icons/${Math.ceil(productDTO.rate) >= 3 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
                     <img
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
-                      src={`/Icons/${Math.ceil(productDTO.rate) == 4 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                      src={`/Icons/${Math.ceil(productDTO.rate) >= 4 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
                     <img
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
-                      src={`/Icons/${Math.ceil(productDTO.rate) == 5 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
+                      src={`/Icons/${Math.ceil(productDTO.rate) >= 5 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
                   </div>
-                  <div className="mb-[0.35rem] h-[0.938rem] w-[1.925rem] flex flex-col items-start justify-end pt-[0rem] px-[0rem] box-border">
-                    <div className="self-stretch relative tracking-[0.48px] leading-[0.625rem] inline-block min-w-[1.925rem] shrink-0 [debug_commit:1de1738]">
+                  <div className=" translate-y-[1.5px] flex flex-col items-start justify-end pt-[0rem] px-[0rem] box-border">
+                    <div className="self-stretch relative inline-block shrink-0">
                       ({productDTO.rate})
                     </div>
                   </div>
@@ -115,7 +115,7 @@ export const ProductCard: FC<ProductCardProps> = ({
             <div className="flex-1 flex flex-row items-center justify-center gap-[12px]">
               {productPrice && (!productDiscount || productDiscount <= 0) ? (
                 <>
-                  <b className="flex-1 relative tracking-[0.48px] leading-[1.438rem] shrink-0 [debug_commit:1de1738] whitespace-nowrap">
+                  <b className="flex-1 relative tracking-[0.48px] leading-[1.438rem] shrink-0 whitespace-nowrap">
                     ₫{formatPrice(productPrice)}
                   </b>
                 </>
@@ -124,14 +124,14 @@ export const ProductCard: FC<ProductCardProps> = ({
               )}
               {productPrice && productDiscount && productDiscount > 0 ? (
                 <>
-                  <b className="flex-1 relative tracking-[0.48px] leading-[1.438rem] shrink-0 [debug_commit:1de1738] whitespace-nowrap">
+                  <b className="flex-1 relative tracking-[0.48px] leading-[1.438rem] shrink-0 whitespace-nowrap">
                     ₫
                     {formatPrice(
                       (productPrice * (100 - productDiscount)) / 100
                     )}
                   </b>
                   <div className="flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border ml-[-0.5rem] text-[1rem] text-gray-100">
-                    <div className="self-stretch relative [text-decoration:line-through] tracking-[0.48px] leading-[1.438rem] inline-block min-w-[3.875rem] shrink-0 [debug_commit:1de1738] whitespace-nowrap">
+                    <div className="self-stretch relative [text-decoration:line-through] tracking-[0.48px] leading-[1.438rem] inline-block min-w-[3.875rem] shrink-0 whitespace-nowrap">
                       ₫{formatPrice(productPrice)}{" "}
                     </div>
                   </div>
