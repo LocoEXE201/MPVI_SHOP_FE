@@ -235,10 +235,11 @@ const CusInfoOfOrderModal = ({
         >
           {addressList.length > 0 ? (
             <div className="flex flex-col gap-2">
-              {addressList.map((address: any) => (
+              {addressList.map((address: any, index: any) => (
                 <div
                   className={`flex flex-col gap-1 border-[1px] border-solid border-zinc-500 p-2 rounded hover:border-[2px] hover:border-chocolate hover:bg-orange-100 ${isActive === address.id ? "bg-orange-100" : "bg-white"}`}
                   onClick={() => handleChoice(address)}
+                  key={index}
                 >
                   <div className="font-baloo-2 text-lg font-bold">
                     Người nhận: {"\t"}{" "}
