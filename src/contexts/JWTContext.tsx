@@ -329,7 +329,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       inputAttributes: {
         autocapitalize: "off",
       },
-      showCancelButton: true,
+      showCancelButton: false,
       confirmButtonText: "Xác nhận",
       confirmButtonColor: "#3085d6",
       cancelButtonText: "Hủy bỏ",
@@ -496,35 +496,36 @@ function AuthProvider({ children }: { children: ReactNode }) {
       .then((response) => {
         disableLoading();
         var res: ResponseDTO = response.data;
-        if (res.isSuccess && res.result.succeeded) {
+        if (res.isSuccess) {
           handleEnterVerifyCode(email, password);
         }
         if (!res.isSuccess) {
-          Swal.fire({
-            title: `Đã xảy ra lỗi gì đó`,
-            html: "Xin bạn vui lòng thử lại.",
-            icon: "info",
-            showCancelButton: false,
-            showConfirmButton: true,
-            confirmButtonText: "Xác nhận",
-            allowOutsideClick: false,
-            focusConfirm: true,
-            confirmButtonColor: "#3085d6",
-            showCloseButton: true,
-          });
-        }
-        if (res.isSuccess && !res.result.succeeded) {
-          Swal.fire({
-            title: `Email này đã được sử dụng để đăng ký tài khoản`,
-            icon: "info",
-            showCancelButton: false,
-            showConfirmButton: true,
-            confirmButtonText: "Tôi đã rõ",
-            allowOutsideClick: false,
-            focusConfirm: true,
-            confirmButtonColor: "#3085d6",
-            showCloseButton: true,
-          });
+          if (res.message && res.message.toLowerCase().includes("duplicate")) {
+            Swal.fire({
+              title: `Email này đã được sử dụng để đăng ký tài khoản`,
+              icon: "info",
+              showCancelButton: false,
+              showConfirmButton: true,
+              confirmButtonText: "Tôi đã rõ",
+              allowOutsideClick: false,
+              focusConfirm: true,
+              confirmButtonColor: "#3085d6",
+              showCloseButton: true,
+            });
+          } else {
+            Swal.fire({
+              title: `Đã xảy ra lỗi gì đó`,
+              html: "Xin bạn vui lòng thử lại.",
+              icon: "info",
+              showCancelButton: false,
+              showConfirmButton: true,
+              confirmButtonText: "Xác nhận",
+              allowOutsideClick: false,
+              focusConfirm: true,
+              confirmButtonColor: "#3085d6",
+              showCloseButton: true,
+            });
+          }
         }
       })
       .catch((err) => {
