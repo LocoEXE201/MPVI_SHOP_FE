@@ -19,7 +19,6 @@ const useProtectData = () => {
         e.preventDefault();
         document.body.hidden = true;
         document.body.classList.add("screenshot-overlay");
-        navigator.clipboard.writeText("");
       }
     };
 
