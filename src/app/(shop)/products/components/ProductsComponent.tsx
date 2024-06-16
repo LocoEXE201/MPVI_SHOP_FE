@@ -77,7 +77,7 @@ const ProductsComponent = (prop: {}) => {
     getAllCategory();
   }, []);
 
-  console.log(category);
+  // console.log(category);
 
   const getAllSuperCategory: any = async () => {
     try {
