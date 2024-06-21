@@ -1,9 +1,14 @@
 import React from "react";
 
-const DetailFrameComponent = () => {
+interface Description {
+  notes: string;
+}
+
+const DetailFrameComponent = ({ notes }: Description) => {
   return (
     <div className="flex flex-col gap-5 w-full h-full scroll-smooth">
-      <div>
+      <div>{notes}</div>
+      {/* <div>
         Gấu Bông Len của chúng tôi được chế tác từ len cao cấp, mang lại cảm
         giác êm dịu và thoải mái khi sờ vào. Với sự chăm sóc tỉ mỉ trong từng
         đường may, sản phẩm đảm bảo vững chắc và bền bỉ, giúp Gấu Bông Len trở
@@ -49,7 +54,7 @@ const DetailFrameComponent = () => {
             khăn ẩm khi cần thiết.
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

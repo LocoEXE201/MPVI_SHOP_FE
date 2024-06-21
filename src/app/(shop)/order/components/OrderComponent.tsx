@@ -24,6 +24,7 @@ interface DataType {
   categoryName: string;
   image: string;
   priceIn: number;
+  priceSold: number;
   rate: number;
   superCategoryName: string;
 }
@@ -206,6 +207,7 @@ const OrderComponent = (prop: {}) => {
                     categoryName={cate.categoryName}
                     image={cate.image}
                     priceIn={cate.priceIn}
+                    priceSold={cate.priceSold}
                     rate={cate.rate}
                     superCategoryName={cate.superCategory.superCategoryName}
                     category={cate}

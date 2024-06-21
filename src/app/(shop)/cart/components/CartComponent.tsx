@@ -24,6 +24,7 @@ interface DataType {
   categoryName: string;
   image: string;
   priceIn: number;
+  priceSold: number;
   rate: number;
   superCategoryName: string;
 }
@@ -180,7 +181,6 @@ const CartComponent = () => {
             ) : (
               <div className="flex flex justify-center items-center content-center font-baloo-2 text-2xl ">
                 Không có sản phẩm trong giỏ hàng của bạn
-     
               </div>
             )}
           </div>
@@ -222,6 +222,7 @@ const CartComponent = () => {
                     categoryName={cate.categoryName}
                     image={cate.image}
                     priceIn={cate.priceIn}
+                    priceSold={cate.prriceSold}
                     rate={cate.rate}
                     superCategoryName={cate.superCategory.superCategoryName}
                     category={cate}

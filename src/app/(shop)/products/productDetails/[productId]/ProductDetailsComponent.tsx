@@ -27,6 +27,9 @@ import { useDispatch } from "react-redux";
 import QuantityButton from "@/components/Atoms/QuantityButton";
 import cartApi from "@/api/shop/cartApi";
 import FeedbackFrame from "@/components/Shop/FeedbackFrame";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { SuperCategoryDTO } from "@/models/warehouse/SuperCategoryDTO";
+import superCategoryApi from "@/api/warehouse/superCategoryApi";
 
 interface Props {
   product: Product;
@@ -43,7 +46,9 @@ interface ProductCardProps {
   categoryName: string;
   image: string;
   priceIn: number;
+  priceSold: number;
   rate: number;
+  notes: string;
   superCategoryName: string;
   category: ProductCardProps;
 }
@@ -53,13 +58,15 @@ const ProductDetailsComponent = () => {
   const params = useParams();
   const categoryId = params.productId;
   const [category, setCategory] = React.useState<Product[]>([]);
-  const [value2, setValue2] = React.useState<number[]>([37, 52]);
+  const [superCategory, setSuperCategory] = React.useState<SuperCategoryDTO[]>(
+    []
+  );
+  const [value2, setValue2] = React.useState<number[]>([10, 1000]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [filteredPrice, setFilteredPrice] = useState("All");
+  const [totalFeedback, setTotalFeedback] = useState(0);
+  const [averageOfFeedback, setAverageOfFeedback] = useState(0);
   const router = useRouter();
-
-  const loadUserInformation = () => {
-    const user = localStorage.getItem("USER_INFO");
-    return user ? JSON.parse(user) : {};
-  };
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -67,6 +74,49 @@ const ProductDetailsComponent = () => {
     }
     router.push(route);
   };
+
+
+  const getAllCategory: any = async () => {
+    try {
+      enableLoading();
+      const response = await categoryApi.getAllCategory();
+      if (response.status === 200) {
+        disableLoading();
+        setCategory(response.data.result);
+      } else {
+        console.log("Failed to fetch data. Status code:", response.status);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
+
+  React.useEffect(() => {
+    getAllCategory();
+  }, []);
+
+  const getAllSuperCategory: any = async () => {
+    try {
+      enableLoading();
+      const response = await superCategoryApi.getAllSuperCategory();
+      if (response.status === 200) {
+        disableLoading();
+        setSuperCategory(response.data.result);
+      } else {
+        console.log("Failed to fetch data. Status code:", response.status);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
+
+  React.useEffect(() => {
+    getAllSuperCategory();
+  }, []);
 
   const handleChange2 = (
     event: Event,
@@ -92,39 +142,38 @@ const ProductDetailsComponent = () => {
     }
   };
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Mô tả ",
-      children: <DetailFrame />,
-    },
-    {
-      key: "2",
-      label: "Đánh giá",
-      children: <FeedbackFrame categoryId={categoryId} />,
-    },
-  ];
+  const filterCategory = category?.filter((cate: any) => {
+    return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
+  });
 
-  const getAllCategory: any = async () => {
-    try {
-      enableLoading();
-      const response = await categoryApi.getAllCategory();
-      if (response.status === 200) {
-        disableLoading();
-        setCategory(response.data.result);
-      } else {
-        console.log("Failed to fetch data. Status code:", response.status);
-        return [];
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      return [];
-    }
+  const handleChange = (value: string) => {
+    setFilteredPrice(value);
   };
 
-  React.useEffect(() => {
-    getAllCategory();
-  }, []);
+  const handleCheckboxChange = (superCategory: string, checked: boolean) => {
+    setSelectedItems((prevSelectedItems) => {
+      if (checked) {
+        return [...prevSelectedItems, superCategory];
+      } else {
+        return prevSelectedItems.filter((cate) => cate !== superCategory);
+      }
+    });
+  };
+
+  const selectedCategory = (
+    selectedItems: string[],
+    filterCategory: ProductCardProps[]
+  ) => {
+    if (selectedItems?.length > 0) {
+      return selectedItems?.flatMap((selected) => {
+        return filterCategory?.filter(
+          (cate: any) => cate.superCategory.superCategoryName === selected
+        );
+      });
+    } else {
+      return filterCategory;
+    }
+  };
 
   const categoryItem: any = category?.find(
     (cate) => Number(cate.categoryId) === Number(categoryId)
@@ -138,30 +187,27 @@ const ProductDetailsComponent = () => {
 
   const dispatch = useDispatch();
 
-  // const [cartItem, setCartItem] = useState({
-  //   cartHeader: {
-  //     // cartHeaderId: 0,
-  //     customerId: loadUserInformation().id,
-  //     total: categoryItem?.priceIn ?? 0,
-  //     notes: "string",
-  //   },
-  //   cartDetails: {
-  //     // cartDetailsId: 0,
-  //     // cartHeaderId: 0,
-  //     categoryId: id,
-  //     quantity: quantity,
-  //   },
-  // });
+  // console.log(totalFeedback);
 
-  // const fetchCart = async (data: any) => {
-  //   try {
-  //     const response = await cartApi.cartUpsert(data);
-  //     console.log(response.data);
-  //     console.log(response.data.isSuccess);
-  //   } catch (error) {
-  //     console.log("No successfully");
-  //   }
-  // };
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Mô tả ",
+      children: <DetailFrame notes={categoryItem?.notes} />,
+    },
+    {
+      key: "2",
+      label: "Đánh giá",
+      children: (
+        <FeedbackFrame
+          categoryId={categoryId}
+          setTotalFeedback={setTotalFeedback}
+          setAverageOfFeedback={setAverageOfFeedback}
+        />
+      ),
+    },
+  ];
+
 
   return (
     <div>
@@ -169,7 +215,7 @@ const ProductDetailsComponent = () => {
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
       <div className="flex items-center justify-center w-full">
         <div className="w-full max-h-max flex flex-row mt-2.5 mb-6">
-          <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded box-border">
+          <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
             <div>
               <div className="font-baloo text-lg">Danh Mục Sản Phẩm</div>
               <hr className="h-px bg-zinc-200 border-0" />
@@ -178,38 +224,29 @@ const ProductDetailsComponent = () => {
             <div>
               <Checkbox.Group style={{ width: "100%" }}>
                 <Col className="flex flex-col gap-3">
-                  <Row>
-                    <Checkbox value="A">
-                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
-                        <div className="">Sản Phẩm Len</div>
-                        <div>[12]</div>
-                      </div>
-                    </Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="B">
-                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
-                        <div>Văn Phòng Phẩm</div>
-                        <div>[13]</div>
-                      </div>
-                    </Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="C">
-                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
-                        <div>Khác</div>
-                        <div>[14]</div>
-                      </div>
-                    </Checkbox>
-                  </Row>
+                  {superCategory.map((supercategory: any, index: any) => (
+                    <Row key={index}>
+                      <Checkbox
+                        value={supercategory?.superCategoryName}
+                        onChange={(e: CheckboxChangeEvent) =>
+                          handleCheckboxChange(
+                            supercategory?.superCategoryName,
+                            e.target.checked
+                          )
+                        }
+                      >
+                        <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
+                          <div className="">
+                            {supercategory?.superCategoryName}
+                          </div>
+                          <div>[{supercategory?.totalCategory}]</div>
+                        </div>
+                      </Checkbox>
+                    </Row>
+                  ))}
                 </Col>
               </Checkbox.Group>
             </div>
-            {/* <ul>
-            <li>Sản phẩm len</li>
-            <li>Văn phòng phẩm </li>
-            <li>Khác</li>
-          </ul> */}
             <div className="flex flex-col gap-3">
               <div>
                 <div className="font-baloo text-lg">Lọc Theo Giá</div>
@@ -221,6 +258,8 @@ const ProductDetailsComponent = () => {
                 value={value2}
                 onChange={handleChange2}
                 //   valueLabelDisplay="auto"
+                min={0}
+                max={1000}
                 getAriaValueText={valuetext}
                 disableSwap
                 style={{ color: "#CB6F04" }}
@@ -229,8 +268,8 @@ const ProductDetailsComponent = () => {
                 <div className="font-baloo text-lg text-black font-normal ">
                   Giá:
                 </div>{" "}
-                đ {formatPrice(value2[0] * 10000)} - đ{" "}
-                {formatPrice(value2[1] * 10000)}
+                đ {formatPrice(value2[0] * 1000)} - đ{" "}
+                {formatPrice(value2[1] * 1000)}
               </div>
             </div>
 
@@ -288,32 +327,32 @@ const ProductDetailsComponent = () => {
                   <ul className="flex flex-row gap-4  ">
                     <li className="w-[85px] h-[85px]">
                       <img
-                        src="/mock/image 5.png"
-                        className="object-contain transition ease-in-out hover:scale-110"
+                        src={categoryItem?.image}
+                        className="object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
-                        src="/mock/image 9.png"
-                        className="object-contain transition ease-in-out hover:scale-110"
+                        src={categoryItem?.image}
+                        className="object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
-                        src="/mock/image 8.png"
-                        className="object-contain transition ease-in-out hover:scale-110"
+                        src={categoryItem?.image}
+                        className="object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
-                        src="/mock/image 10.png"
-                        className="object-contain transition ease-in-out hover:scale-110"
+                        src={categoryItem?.image}
+                        className="object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
-                        src="/mock/image 11.png"
-                        className="object-contain transition ease-in-out hover:scale-110"
+                        src={categoryItem?.image}
+                        className="object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                   </ul>
@@ -337,18 +376,18 @@ const ProductDetailsComponent = () => {
                     style={{ marginTop: "3px" }}
                   />
                   <div className="font-poppins text-base text-zinc-400">
-                    ( 75 Đánh giá )
+                    ( {totalFeedback} Đánh giá )
                   </div>
                 </div>
                 <div className="flex flex-row gap-2">
                   <div className="font-poppins text-2xl text-chocolate font-semibold">
-                    {formatPrice((categoryItem?.priceIn ?? 0) * 1000)}đ
+                    {formatPrice(categoryItem?.priceSold ?? 0)}đ
                   </div>
                   <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
-                    60.000đ
+                    {formatPrice(categoryItem?.priceIn ?? 0)}đ
                   </div>
                 </div>
-                <div className="flex flex-row gap-2 font-baloo-2 text-lg">
+                {/* <div className="flex flex-row gap-2 font-baloo-2 text-lg">
                   <div className="font-semibold">Phân loại:</div>
                   <ul className="flex flex-row justify-around gap-1">
                     <li>
@@ -377,7 +416,7 @@ const ProductDetailsComponent = () => {
                       </button>
                     </li>
                   </ul>
-                </div>
+                </div> */}
                 <div className="flex flex-row gap-2 font-baloo-2 font-semibold text-lg">
                   <div>Số lượng:</div>
                   <div className="flex flex-row gap-3">
@@ -461,6 +500,7 @@ const ProductDetailsComponent = () => {
                         categoryName={cate.categoryName}
                         image={cate.image}
                         priceIn={cate.priceIn}
+                        priceSold={cate.priceSold}
                         rate={cate.rate}
                         superCategoryName={cate.superCategory.superCategoryName}
                         category={cate}

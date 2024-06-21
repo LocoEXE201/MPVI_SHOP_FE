@@ -20,13 +20,29 @@ interface Feedback {
 
 interface Props {
   categoryId: string | string[];
+  setTotalFeedback: React.Dispatch<React.SetStateAction<number>>;
+  setAverageOfFeedback: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const FeedbackFrame = ({ categoryId }: Props) => {
+const FeedbackFrame = ({
+  categoryId,
+  setTotalFeedback,
+  setAverageOfFeedback,
+}: Props) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [filtered, setFiltered] = React.useState<string | number>("all");
-
   const [feedback, setFeedback] = React.useState<Feedback[]>([]);
+  const [averageFeedback, setAverageFeedback] = React.useState<Feedback[]>([]);
+  const [ratingCounts, setRatingCounts] = useState({
+    all: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    comment: 0,
+    imageVideo: 0,
+  });
 
   const handleClick = (e: any) => {
     e.preventDefault();
@@ -39,12 +55,14 @@ const FeedbackFrame = ({ categoryId }: Props) => {
       const response = await shopApi.getFeedbackById(categoryId);
       if (response.data.isSuccess) {
         setFeedback(response.data.result.$values);
-        console.log(response.data.result.$values);
+        setTotalFeedback(response.data.result.$values.length);
+        setAverageFeedback(response.data.result.$values);
       } else {
         console.log("Failed to fetch data");
         return [];
       }
       disableLoading();
+      return response.data.result.$values;
     } catch (error) {
       enableLoading();
       console.error("Error fetching data:", error);
@@ -70,6 +88,7 @@ const FeedbackFrame = ({ categoryId }: Props) => {
         return [];
       }
       disableLoading();
+      return response.data.result.$values;
     } catch (error) {
       enableLoading();
       console.error("Error fetching data:", error);
@@ -97,6 +116,7 @@ const FeedbackFrame = ({ categoryId }: Props) => {
         return [];
       }
       disableLoading();
+      return response.data.result.$values;
     } catch (error) {
       enableLoading();
       console.error("Error fetching data:", error);
@@ -127,18 +147,68 @@ const FeedbackFrame = ({ categoryId }: Props) => {
     }
   }, [categoryId, filtered]);
 
+  useEffect(() => {
+    const fetchRatingCounts = async () => {
+      const categoryIdNumber = Array.isArray(categoryId)
+        ? Number(categoryId[0])
+        : Number(categoryId);
+
+      const allFeedback = await getFeedbackAllById(categoryIdNumber);
+      const oneStarFeedback = await getFeedbackByIdAndRate(categoryIdNumber, 1);
+      const twoStarFeedback = await getFeedbackByIdAndRate(categoryIdNumber, 2);
+      const threeStarFeedback = await getFeedbackByIdAndRate(
+        categoryIdNumber,
+        3
+      );
+      const fourStarFeedback = await getFeedbackByIdAndRate(
+        categoryIdNumber,
+        4
+      );
+      const fiveStarFeedback = await getFeedbackByIdAndRate(
+        categoryIdNumber,
+        5
+      );
+      const commentFeedback = await getFeedbackByIdAndRateAndImage(
+        categoryIdNumber,
+        0,
+        false
+      );
+      const imageVideoFeedback = await getFeedbackByIdAndRateAndImage(
+        categoryIdNumber,
+        0,
+        true
+      );
+
+      setRatingCounts({
+        all: allFeedback.length,
+        1: oneStarFeedback.length,
+        2: twoStarFeedback.length,
+        3: threeStarFeedback.length,
+        4: fourStarFeedback.length,
+        5: fiveStarFeedback.length,
+        comment: commentFeedback.length,
+        imageVideo: imageVideoFeedback.length,
+      });
+    };
+
+    if (categoryId) {
+      fetchRatingCounts();
+    }
+  }, [categoryId]);
+
   const averageRating = () => {
-    let average = 0;
-    if (feedback.length > 0) {
-      return (average =
-        feedback.reduce((total, item) => total + item.rating, 0) /
-        feedback.length);
+    let average;
+    if (averageFeedback.length > 0) {
+      const result =
+        averageFeedback.reduce((total, item) => total + item.rating, 0) /
+        averageFeedback.length;
+      setAverageOfFeedback(result);
+      return (average = result);
     } else {
+      setAverageOfFeedback(0);
       return (average = 0);
     }
   };
-
-  console.log(averageRating());
 
   const buttonClass = (value: string | number) =>
     filtered === value
@@ -175,49 +245,49 @@ const FeedbackFrame = ({ categoryId }: Props) => {
               value={1}
               onClick={handleClick}
             >
-              1 Sao (100)
+              1 Sao ({ratingCounts[1]})
             </button>
             <button
               className={buttonClass("2")}
               value={2}
               onClick={handleClick}
             >
-              2 Sao (100){" "}
+              2 Sao ({ratingCounts[2]}){" "}
             </button>
             <button
               className={buttonClass("3")}
               value={3}
               onClick={handleClick}
             >
-              3 Sao (100)
+              3 Sao ({ratingCounts[3]})
             </button>
             <button
               className={buttonClass("4")}
               value={4}
               onClick={handleClick}
             >
-              4 Sao (100)
+              4 Sao ({ratingCounts[4]})
             </button>
             <button
               className={buttonClass("5")}
               value={5}
               onClick={handleClick}
             >
-              5 Sao (100)
+              5 Sao ({ratingCounts[5]})
             </button>
             <button
               className={buttonClass("comment")}
               value={"comment"}
               onClick={handleClick}
             >
-              Có Bình Luận (100)
+              Có Bình Luận ({ratingCounts.comment})
             </button>
             <button
               className={buttonClass("imageVideo")}
               value={"imageVideo"}
               onClick={handleClick}
             >
-              Có Hình Ảnh/Video (200)
+              Có Hình Ảnh/Video ({ratingCounts.imageVideo})
             </button>
           </ul>
         </div>
