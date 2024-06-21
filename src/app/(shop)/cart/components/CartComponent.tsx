@@ -118,7 +118,7 @@ const CartComponent = () => {
     if (checkedCategories().length > 0) {
       return (total = checkedCategories().reduce(
         (total: number, items: any) =>
-          (total += items?.product.priceIn * items?.quantity),
+          (total += items?.product.priceSold * items?.quantity),
         0
       ));
     } else {
@@ -196,7 +196,7 @@ const CartComponent = () => {
                 Tổng tiền sản phẩm
               </div>
               <div className=" font-baloo-2 text-chocolate font-bold text-2xl">
-                {formatPrice(totalSelectedItems() * 1000)}₫
+                {formatPrice(totalSelectedItems())}₫
               </div>
               {/* <button
                 className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"

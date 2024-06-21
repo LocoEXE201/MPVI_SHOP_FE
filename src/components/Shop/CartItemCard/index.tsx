@@ -51,7 +51,7 @@ const CartItemCard = ({ cartItem, onCheckboxChange, checked }: Props) => {
         </div>
       </Link>
       <div className="cart-product-price font-baloo-2 font-semibold text-chocolate text-xl">
-        {formatPrice(cartItem.product.priceIn * 1000)}₫
+        {formatPrice(cartItem.product.priceSold)}₫
       </div>
       <div className="cart-product-quantity">
         {/* <button
@@ -83,7 +83,7 @@ const CartItemCard = ({ cartItem, onCheckboxChange, checked }: Props) => {
         />
       </div>
       <div className="cart-product-total font-baloo-2 font-semibold text-chocolate text-xl">
-        {formatPrice(cartItem.product.priceIn * cartItem.quantity * 1000)}₫
+        {formatPrice(cartItem.product.priceSold * cartItem.quantity)}₫
       </div>
       <div className="cart-product-remove">
         <button

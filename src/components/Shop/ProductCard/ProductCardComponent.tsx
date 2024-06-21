@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Rate } from "antd";
 import Link from "next/link";
 import { PATH_SHOP } from "@/routes/paths";
 import { formatPrice } from "../../../utils/formatPrice";
 import "./index.scss";
 import AddCartButton from "@/components/Atoms/AddCartButton";
+import useAppContext from "@/hooks/useAppContext";
+import shopApi from "@/api/shop/shopApi";
 
 interface ProductCardProps {
   categoryId: number;
@@ -27,17 +29,44 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
   superCategoryName,
   category,
 }) => {
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
+  const [totalFeedback, setTotalFeedback] = React.useState(0);
+
+  const getFeedbackAllById = async (categoryId: number) => {
+    try {
+      // enableLoading();
+      const response = await shopApi.getFeedbackById(categoryId);
+      // console.log(response.data.result.$values.length);
+      if (response.data.isSuccess) {
+        setTotalFeedback(response.data.result.$values.length);
+      } else {
+        console.log("Failed to fetch data");
+        return [];
+      }
+      // disableLoading();
+      return response.data.result.$values;
+    } catch (error) {
+      // enableLoading();
+      console.error("Error fetching data:", error);
+      // disableLoading();
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getFeedbackAllById(Number(categoryId));
+  }, [categoryId]);
 
   return (
     <>
       <Link href={`${PATH_SHOP.productDetails(categoryId)}`}>
-        <div className="flex flex-col gap-3 w-[280px] rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
-          <div className="w-full flex justify-center items-center content-center">
+        <div className="flex flex-col gap-3 w-[280px]  rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
+          <div className="w-full h-full flex justify-center items-center content-center">
             <img
-              className="object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded"
+              className="w-full h-[282px] object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded"
               src={image}
               alt="Fruit"
-            ></img>
+            />
           </div>
           <div className="flex flex-col gap-1 w-full">
             <div className="font-baloo-2 text-base text-zinc-300 font-semibold">
@@ -51,9 +80,9 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
                 className="text-sm text-red-400"
                 allowHalf
                 disabled
-                defaultValue={rate}
+                value={rate}
               />
-              <div className="text-sm text-zinc-400">({rate})</div>
+              <div className="text-sm text-zinc-400">({totalFeedback})</div>
             </div>
           </div>
           <div className="flex flex-row justify-between items-center w-full">
@@ -66,13 +95,6 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
               </div>
             </div>
             <div>
-              {/* <button
-                className="w-[81.91px] h-[36px] flex flex-row bg-chocolate justify-center items-center gap-2 text-white font-bold rounded cursor-pointer hover:bg-orange-500"
-                onClick={handleChange}
-              >
-                <img src="/Icons/cart.svg" className="w-[16px] h-[16px]" />
-                <div className="font-lato text-sm ">Thêm</div>
-              </button> */}
               <AddCartButton product={category} />
             </div>
           </div>
