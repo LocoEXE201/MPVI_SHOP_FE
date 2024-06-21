@@ -46,6 +46,7 @@ interface ProductCardProps {
   categoryName: string;
   image: string;
   priceIn: number;
+  priceSold: number;
   rate: number;
   superCategoryName: string;
   category: ProductCardProps;
@@ -377,10 +378,10 @@ const ProductDetailsComponent = () => {
                 </div>
                 <div className="flex flex-row gap-2">
                   <div className="font-poppins text-2xl text-chocolate font-semibold">
-                    {formatPrice((categoryItem?.priceIn ?? 0) * 1000)}đ
+                    {formatPrice(categoryItem?.priceSold ?? 0)}đ
                   </div>
                   <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
-                    60.000đ
+                    {formatPrice(categoryItem?.priceIn ?? 0)}đ
                   </div>
                 </div>
                 {/* <div className="flex flex-row gap-2 font-baloo-2 text-lg">
@@ -496,6 +497,7 @@ const ProductDetailsComponent = () => {
                         categoryName={cate.categoryName}
                         image={cate.image}
                         priceIn={cate.priceIn}
+                        priceSold={cate.priceSold}
                         rate={cate.rate}
                         superCategoryName={cate.superCategory.superCategoryName}
                         category={cate}

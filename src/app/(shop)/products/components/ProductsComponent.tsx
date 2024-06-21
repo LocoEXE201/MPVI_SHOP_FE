@@ -40,6 +40,7 @@ interface ProductCardProps {
   categoryName: string;
   image: string;
   priceIn: number;
+  priceSold: number;
   rate: number;
   superCategoryName: string;
   category: ProductCardProps;
@@ -77,7 +78,7 @@ const ProductsComponent = (prop: {}) => {
     getAllCategory();
   }, []);
 
-  // console.log(category);
+  console.log(category);
 
   const getAllSuperCategory: any = async () => {
     try {
@@ -125,8 +126,13 @@ const ProductsComponent = (prop: {}) => {
   };
 
   const filterCategory = category?.filter((cate: any) => {
-    return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
+    console.log(cate.priceSold);
+    return (
+      value2[0] * 1000 <= cate.priceSold && cate.priceSold <= value2[1] * 1000
+    );
   });
+
+  console.log(filterCategory);
 
   const handleChange = (value: string) => {
     setFilteredPrice(value);
@@ -170,6 +176,10 @@ const ProductsComponent = (prop: {}) => {
     }
   });
 
+  // console.log(sortedAndFilteredCategory);
+
+  // console.log(selectedCategory(selectedItems, filterCategory));
+
   const filterCategoryDisplay = (filterCategory: ProductCardProps[]) => {
     if (filterCategory?.length > 0) {
       return (
@@ -182,6 +192,7 @@ const ProductsComponent = (prop: {}) => {
                 categoryName={cate.categoryName}
                 image={cate.image}
                 priceIn={cate.priceIn}
+                priceSold={cate.priceSold}
                 rate={cate.rate}
                 superCategoryName={cate.superCategory.superCategoryName}
                 category={cate}
@@ -301,8 +312,8 @@ const ProductsComponent = (prop: {}) => {
               </button>
             </div>
             <div className="w-[600px] font-baloo-2 text-gray-100 text-sm ">
-              Chúng tôi tìm thấy <span>{category?.length}</span> sản phẩm bạn cần
-              tìm
+              Chúng tôi tìm thấy <span>{category?.length}</span> sản phẩm bạn
+              cần tìm
             </div>
             <div className=" flex font-baloo text-gray-100 text-sm content-center mt-0.5 ">
               Sắp xếp

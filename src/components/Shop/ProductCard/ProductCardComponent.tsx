@@ -11,6 +11,7 @@ interface ProductCardProps {
   categoryName: string;
   image: string;
   priceIn: number;
+  priceSold: number;
   rate: number;
   superCategoryName: string;
   category: ProductCardProps;
@@ -21,18 +22,19 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
   categoryName,
   image,
   priceIn,
+  priceSold,
   rate,
   superCategoryName,
   category,
 }) => {
-
+  console.log(image);
   return (
     <>
       <Link href={`${PATH_SHOP.productDetails(categoryId)}`}>
         <div className="flex flex-col gap-3 w-[280px] rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
           <div className="w-full flex justify-center items-center content-center">
             <img
-              className="object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded "
+              className="object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded"
               src={image}
               alt="Fruit"
             ></img>
@@ -57,10 +59,10 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
           <div className="flex flex-row justify-between items-center w-full">
             <div className="flex flex-row gap-2 items-center ">
               <div className="font-quicksand text-chocolate text-lg font-bold">
-                {formatPrice(priceIn * 1000)}₫
+                {formatPrice(priceSold)}₫
               </div>
               <div className="font-quicksand text-zinc-400 text-xs font-bold line-through mt-0.5">
-                50.000₫
+                {formatPrice(priceIn)}₫
               </div>
             </div>
             <div>
