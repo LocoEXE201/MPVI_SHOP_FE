@@ -27,7 +27,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
   superCategoryName,
   category,
 }) => {
-  console.log(image);
+
   return (
     <>
       <Link href={`${PATH_SHOP.productDetails(categoryId)}`}>

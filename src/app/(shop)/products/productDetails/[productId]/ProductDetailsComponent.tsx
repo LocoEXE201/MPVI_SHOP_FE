@@ -48,6 +48,7 @@ interface ProductCardProps {
   priceIn: number;
   priceSold: number;
   rate: number;
+  notes: string;
   superCategoryName: string;
   category: ProductCardProps;
 }
@@ -74,24 +75,6 @@ const ProductDetailsComponent = () => {
     router.push(route);
   };
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Mô tả ",
-      children: <DetailFrame />,
-    },
-    {
-      key: "2",
-      label: "Đánh giá",
-      children: (
-        <FeedbackFrame
-          categoryId={categoryId}
-          setTotalFeedback={setTotalFeedback}
-          setAverageOfFeedback={setAverageOfFeedback}
-        />
-      ),
-    },
-  ];
 
   const getAllCategory: any = async () => {
     try {
@@ -204,7 +187,27 @@ const ProductDetailsComponent = () => {
 
   const dispatch = useDispatch();
 
-  console.log(totalFeedback);
+  // console.log(totalFeedback);
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Mô tả ",
+      children: <DetailFrame notes={categoryItem?.notes} />,
+    },
+    {
+      key: "2",
+      label: "Đánh giá",
+      children: (
+        <FeedbackFrame
+          categoryId={categoryId}
+          setTotalFeedback={setTotalFeedback}
+          setAverageOfFeedback={setAverageOfFeedback}
+        />
+      ),
+    },
+  ];
+
 
   return (
     <div>

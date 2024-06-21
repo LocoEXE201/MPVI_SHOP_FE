@@ -42,6 +42,7 @@ interface ProductCardProps {
   priceIn: number;
   priceSold: number;
   rate: number;
+  notes: string;
   superCategoryName: string;
   category: ProductCardProps;
 }

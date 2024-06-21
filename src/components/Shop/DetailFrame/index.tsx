@@ -1,10 +1,14 @@
 import React from "react";
 import DetailFrameComponent from "./DetailFrameComponent";
 
-const DetailFrame = () => {
+interface Description {
+  notes: string;
+}
+
+const DetailFrame = ({ notes }: Description) => {
   return (
     <>
-      <DetailFrameComponent />
+      <DetailFrameComponent notes={notes} />
     </>
   );
 };
