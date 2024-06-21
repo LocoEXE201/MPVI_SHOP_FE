@@ -53,9 +53,11 @@ const ProductsComponent = (prop: {}) => {
   const [superCategory, setSuperCategory] = React.useState<SuperCategoryDTO[]>(
     []
   );
-  const [value2, setValue2] = React.useState<number[]>([10, 1000]);
+  const [value2, setValue2] = React.useState<number[]>([0, 1000]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [filteredPrice, setFilteredPrice] = useState("All");
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 9;
 
   const getAllCategory: any = async () => {
     try {
@@ -127,13 +129,12 @@ const ProductsComponent = (prop: {}) => {
   };
 
   const filterCategory = category?.filter((cate: any) => {
-    console.log(cate.priceSold);
     return (
       value2[0] * 1000 <= cate.priceSold && cate.priceSold <= value2[1] * 1000
     );
   });
 
-  console.log(filterCategory);
+  // console.log(filterCategory);
 
   const handleChange = (value: string) => {
     setFilteredPrice(value);
@@ -169,17 +170,25 @@ const ProductsComponent = (prop: {}) => {
     filterCategory
   )?.sort((a, b) => {
     if (filteredPrice === "minToMax") {
-      return a.priceIn - b.priceIn;
+      return a.priceSold - b.priceSold;
     } else if (filteredPrice === "maxToMin") {
-      return b.priceIn - a.priceIn;
+      return b.priceSold - a.priceSold;
     } else {
       return 0;
     }
   });
 
-  // console.log(sortedAndFilteredCategory);
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
 
-  // console.log(selectedCategory(selectedItems, filterCategory));
+  const paginatedCategory = sortedAndFilteredCategory.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
 
   const filterCategoryDisplay = (filterCategory: ProductCardProps[]) => {
     if (filterCategory?.length > 0) {
@@ -203,7 +212,11 @@ const ProductsComponent = (prop: {}) => {
           <div className=" w-full flex justify-center items-center content-center my-px ">
             <ThemeProvider theme={theme}>
               <Pagination
-                count={3}
+                count={Math.ceil(
+                  sortedAndFilteredCategory.length / itemsPerPage
+                )}
+                page={page}
+                onChange={handlePageChange}
                 variant="outlined"
                 shape="rounded"
                 size="large"
@@ -332,7 +345,7 @@ const ProductsComponent = (prop: {}) => {
               />
             </div>
           </div>
-          {filterCategoryDisplay(sortedAndFilteredCategory)}
+          {filterCategoryDisplay(paginatedCategory)}
         </div>
       </div>
     </>

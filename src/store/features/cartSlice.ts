@@ -79,7 +79,7 @@ export const totalCartItemSelector = createSelector([cartItems], (cartItems)=>
 
 
 export const totalPriceSelector = createSelector([cartItems], (cartItems)=>
-cartItems.reduce((total:number, curr:CartItem)=> (total += curr.quantity * curr.product.priceIn), 0),
+cartItems.reduce((total:number, curr:CartItem)=> (total += curr.quantity * curr.product.priceSold), 0),
 );
 
 export const productQtySelector = createSelector(

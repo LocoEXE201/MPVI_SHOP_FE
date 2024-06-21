@@ -59,6 +59,8 @@ const OrderComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [category, setCategory] = React.useState<DataType[]>([]);
   const [orders, setOrders] = React.useState<Orders[]>([]);
+  const [page, setPage] = React.useState(1);
+  const itemsPerPage = 9;
 
   const loadUserInformation = () => {
     if (typeof window !== "undefined") {
@@ -124,7 +126,7 @@ const OrderComponent = (prop: {}) => {
     }
   }, []);
 
-  console.log(orders);
+  // console.log(orders);
 
   const checkedOrders = orders.map((order: any) => {
     return {
@@ -136,7 +138,7 @@ const OrderComponent = (prop: {}) => {
     };
   });
 
-  console.log(checkedOrders);
+  // console.log(checkedOrders);
 
   const filterCategories = checkedOrders.flatMap((orders) => {
     return orders.orders.flatMap((ord: any) => {
@@ -146,6 +148,18 @@ const OrderComponent = (prop: {}) => {
 
   const uniqueCategories = Array.from(new Set(filterCategories));
   // console.log(uniqueCategories);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
+  const paginatedOrders = checkedOrders.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
 
   return (
     <>
@@ -165,7 +179,7 @@ const OrderComponent = (prop: {}) => {
                   <div className="detail">Chi Tiết</div>
                 </div>
                 <div className="order-items p-4 box-border">
-                  {checkedOrders.map((orders: any, index) => {
+                  {paginatedOrders.map((orders: any, index) => {
                     return (
                       <OrderItemCard
                         key={index}
@@ -179,7 +193,9 @@ const OrderComponent = (prop: {}) => {
               <div className="flex flex-row justify-end w-[1296px] box-border mt-1.5 ">
                 <ThemeProvider theme={theme}>
                   <Pagination
-                    count={3}
+                    count={Math.ceil(checkedOrders.length / itemsPerPage)}
+                    onChange={handlePageChange}
+                    page={page}
                     variant="outlined"
                     shape="rounded"
                     size="large"

@@ -71,7 +71,7 @@ const PaymentComponent = (prop: {}) => {
 
   const totalPrice = checkedCategories().reduce(
     (total: number, curr: any) =>
-      (total += curr?.quantity * curr?.product.priceIn),
+      (total += curr?.quantity * curr?.product.priceSold),
     0
   );
 
@@ -104,7 +104,7 @@ const PaymentComponent = (prop: {}) => {
       const payment = checkedCategories().map((pm: any) => ({
         categoryId: pm.product.categoryId,
         quantity: pm.quantity,
-        price: pm.product.priceIn,
+        price: pm.product.priceSold,
       }));
       return (items = [...payment]);
     }
@@ -209,7 +209,7 @@ const PaymentComponent = (prop: {}) => {
         paymentStatus: `${response.data.result.paymentStatus}`,
         soldBy: `${response.data.result.soldBy}`,
         strategyId: `${response.data.result.strategyId}`,
-        total: `${response.data.result.total * 1000}`,
+        total: `${response.data.result.total}`,
       };
     } catch (error) {
       enableLoading();
@@ -414,10 +414,10 @@ const PaymentComponent = (prop: {}) => {
                       <div className="flex flex-row items-center content-center justify-between ">
                         <div className="flex flex-row items-center content-center gap-1.5">
                           <div className="font-poppins text-lg text-chocolate font-semibold">
-                            ₫{formatPrice(cate?.product?.priceIn * 1000)}
+                            ₫{formatPrice(cate?.product?.priceSold)}
                           </div>
                           <div className="font-poppins text-sm line-through text-zinc-400">
-                            ₫60.000
+                            ₫{formatPrice(cate?.product?.priceIn)}
                           </div>
                         </div>
                         <div className="font-baloo-2 text-xl">
@@ -439,7 +439,7 @@ const PaymentComponent = (prop: {}) => {
                 </div>
                 <div className="text-lg font-baloo-2">
                   {" "}
-                  ₫{formatPrice(totalPrice * 1000)}
+                  ₫{formatPrice(totalPrice)}
                 </div>
               </div>
               <div className="flex flex-row justify-between">
@@ -447,7 +447,7 @@ const PaymentComponent = (prop: {}) => {
                   Phí Vận Chuyển
                 </div>
                 <div className="text-lg font-baloo-2">
-                  ₫{formatPrice(shippingPrice(delivery) * 1000)}
+                  ₫{formatPrice(shippingPrice(delivery))}
                 </div>
               </div>
               <div className="flex flex-row justify-between">
@@ -455,7 +455,7 @@ const PaymentComponent = (prop: {}) => {
                   Tổng Tiền Cần Thanh Toán
                 </div>
                 <div className="font-baloo-2 text-lg font-semibold">
-                  đ{formatPrice((totalPrice + shippingPrice(delivery)) * 1000)}
+                  đ{formatPrice((totalPrice + shippingPrice(delivery)))}
                 </div>
               </div>
             </div>

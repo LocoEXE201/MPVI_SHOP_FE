@@ -3,6 +3,7 @@ export interface Product {
     categoryName: string;
     image: string;
     priceIn: number;
+    priceSold:number
     rate: number;
     superCategoryName: string;
 }

@@ -75,7 +75,6 @@ const ProductDetailsComponent = () => {
     router.push(route);
   };
 
-
   const getAllCategory: any = async () => {
     try {
       enableLoading();
@@ -208,7 +207,6 @@ const ProductDetailsComponent = () => {
     },
   ];
 
-
   return (
     <div>
       <Loading loading={isLoading} />
@@ -317,10 +315,10 @@ const ProductDetailsComponent = () => {
             </div>
             <div className="flex flex-row gap-4 items-center">
               <div className="flex flex-col w-[495px] h-[591px] items-center ">
-                <div className="flex w-[471px] h-[470px] justify-center items-center content-center border-[1px] border-zinc-400 border-solid rounded mb-1.5 ">
+                <div className="flex w-[400px] h-[400px] justify-center items-center content-center border-[1px] border-zinc-400 border-solid rounded mb-1.5 ">
                   <img
                     src={categoryItem?.image}
-                    className="object-contain transition ease-in-out duration-300 hover:scale-110"
+                    className=" w-full h-full object-contain transition ease-in-out duration-300 hover:scale-110"
                   />
                 </div>
                 <div>
@@ -328,31 +326,31 @@ const ProductDetailsComponent = () => {
                     <li className="w-[85px] h-[85px]">
                       <img
                         src={categoryItem?.image}
-                        className="object-contain transition ease-in-out hover:scale-110 rounded"
+                        className="w-full h-full object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
                         src={categoryItem?.image}
-                        className="object-contain transition ease-in-out hover:scale-110 rounded"
+                        className="w-full h-full object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
                         src={categoryItem?.image}
-                        className="object-contain transition ease-in-out hover:scale-110 rounded"
+                        className="w-full h-full object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
                         src={categoryItem?.image}
-                        className="object-contain transition ease-in-out hover:scale-110 rounded"
+                        className="w-full h-full object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                     <li className="w-[85px] h-[85px]">
                       <img
                         src={categoryItem?.image}
-                        className="object-contain transition ease-in-out hover:scale-110 rounded"
+                        className="w-full h-full object-contain transition ease-in-out hover:scale-110 rounded"
                       />
                     </li>
                   </ul>
