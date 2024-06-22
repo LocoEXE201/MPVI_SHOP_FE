@@ -13,20 +13,22 @@ interface User {
   name: string | undefined;
   email: string | undefined;
   phoneNumber: string | undefined;
+  role: [];
 }
 
 const ProfileComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
 
-  
   const acc: string | null =
     typeof window !== "undefined" ? localStorage.getItem("USER_INFO") : null;
   const user: User | null = acc ? JSON.parse(acc) : null;
 
   const [userInfo, setUserInfo] = useState({
-    name: user?.name,
     email: user?.email,
+    id: user?.id,
+    name: user?.name,
     phoneNumber: user?.phoneNumber,
+    role: user?.role,
   });
 
   const fetchUserUpdate = async (data: object) => {
@@ -36,19 +38,20 @@ const ProfileComponent = () => {
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess
-          ? "Update successfully"
-          : "Your infomation updation is not successful. Try again!",
+          ? "Cập nhập thông tin thành công"
+          : "Cập nhật không thành công. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
         position: "top-end",
       });
+      localStorage.setItem("USER_INFO", JSON.stringify(data));
       disableLoading();
     } catch (error) {
       enableLoading();
       Swal.fire({
         icon: "error",
-        title: "There is something wrong. Try again!",
+        title: "Đã xảy ra sự cố. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -79,6 +82,8 @@ const ProfileComponent = () => {
       await fetchUserUpdate(userInfo);
     }
   };
+
+  // console.log(userInfo);
 
   return (
     <>
