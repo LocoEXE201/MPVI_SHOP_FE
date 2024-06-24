@@ -83,9 +83,9 @@ const PaymentComponent = (prop: {}) => {
 
   const shippingPrice = (delivery: string) => {
     if (delivery === "Normal") {
-      return 10;
+      return 10000;
     } else {
-      return 35;
+      return 35000;
     }
   };
 
@@ -129,8 +129,8 @@ const PaymentComponent = (prop: {}) => {
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess
-          ? "Your information is saved successfully"
-          : "Your information is not saved successfully. Try again!",
+          ? "Thông tin của bạn đã được lưu."
+          : "Thông tin của bạn chưa được lưu. Thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -142,7 +142,7 @@ const PaymentComponent = (prop: {}) => {
       enableLoading();
       Swal.fire({
         icon: "error",
-        title: "There is something wrong. Try again!",
+        title: "Đã có sự cố xảy ra. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -182,15 +182,13 @@ const PaymentComponent = (prop: {}) => {
   const fetchOrder = async (data: any, method: string) => {
     try {
       enableLoading();
-      console.log("adbccbcbcbc");
       const response = await shopApi.createOrder(method, data);
-      console.log("adbccbcbcbc");
       console.log(response.data);
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess
-          ? "Your order is successful"
-          : "Your order is not successful. Try again!",
+          ? "Bạn đã đặt hàng thành công"
+          : "Đặt hàng không thành công. Thử lại nào!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -215,7 +213,7 @@ const PaymentComponent = (prop: {}) => {
       enableLoading();
       Swal.fire({
         icon: "error",
-        title: "There is something wrong. Try again!",
+        title: "Đã xảy ra sự cố khi đặt hàng. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -231,14 +229,14 @@ const PaymentComponent = (prop: {}) => {
       console.log(response.data);
       if (response.data.isSuccess === true) {
         Swal.fire({
-          title: "GO TO VNPAY",
+          title: "Chuyển qua VNPAY",
           icon: "success",
           showConfirmButton: false,
         });
         window.location.href = response.data.result;
       } else {
         Swal.fire({
-          title: "Your payment is in error. Try again!",
+          title: "Không thanh toán được bằng VNPAY. Vui lòng thử lại!",
           icon: "error",
           showConfirmButton: false,
         });
@@ -246,7 +244,7 @@ const PaymentComponent = (prop: {}) => {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Your payment is not successful. Try again!",
+        title: "Đã xảy ra sự cố. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -258,15 +256,17 @@ const PaymentComponent = (prop: {}) => {
   const handleCreateOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const order = createOrder();
-    console.log(order);
+    // console.log(order);
     if (order.cartDetails?.length ? order.cartDetails?.length : 0 > 0) {
       const result = await fetchOrder(order, method);
-      console.log("abcd");
+      // console.log("abcd");
       if (method === "VnPay" && result) {
         await fetchPayment(result);
       }
       localStorage.removeItem("cartItems");
-      navigateToPage(PATH_SHOP.order);
+      // navigateToPage(PATH_SHOP.order);
+      window.location.href = PATH_SHOP.order;
+      // window.location.reload(); // Remove this line
     }
   };
 
@@ -455,7 +455,7 @@ const PaymentComponent = (prop: {}) => {
                   Tổng Tiền Cần Thanh Toán
                 </div>
                 <div className="font-baloo-2 text-lg font-semibold">
-                  đ{formatPrice((totalPrice + shippingPrice(delivery)))}
+                  đ{formatPrice(totalPrice + shippingPrice(delivery))}
                 </div>
               </div>
             </div>

@@ -13,20 +13,22 @@ interface User {
   name: string | undefined;
   email: string | undefined;
   phoneNumber: string | undefined;
+  role: [];
 }
 
 const ProfileComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
 
-  
   const acc: string | null =
     typeof window !== "undefined" ? localStorage.getItem("USER_INFO") : null;
   const user: User | null = acc ? JSON.parse(acc) : null;
 
   const [userInfo, setUserInfo] = useState({
-    name: user?.name,
     email: user?.email,
+    id: user?.id,
+    name: user?.name,
     phoneNumber: user?.phoneNumber,
+    role: user?.role,
   });
 
   const fetchUserUpdate = async (data: object) => {
@@ -36,19 +38,20 @@ const ProfileComponent = () => {
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess
-          ? "Update successfully"
-          : "Your infomation updation is not successful. Try again!",
+          ? "Cập nhập thông tin thành công"
+          : "Cập nhật không thành công. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
         position: "top-end",
       });
+      localStorage.setItem("USER_INFO", JSON.stringify(data));
       disableLoading();
     } catch (error) {
       enableLoading();
       Swal.fire({
         icon: "error",
-        title: "There is something wrong. Try again!",
+        title: "Đã xảy ra sự cố. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -79,6 +82,10 @@ const ProfileComponent = () => {
       await fetchUserUpdate(userInfo);
     }
   };
+
+  // console.log(userInfo);
+  // console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <>
@@ -174,12 +181,18 @@ const ProfileComponent = () => {
           <div className="flex flex-row w-11/12 px-2.5">
             <div className="flex flex-row w-2/4 gap-2">
               <button
-                className="w-[110px] h-[44px] flex justify-center items-center content-center bg-chocolate  border-[1px] border-solid border-chocolate rounded text-white font-bold font-baloo-2 text-lg "
+                className="w-[110px] h-[44px] flex justify-center items-center content-center bg-chocolate  border-[1px] border-solid border-chocolate rounded text-white font-bold font-baloo-2 text-lg hover:bg-orange-500 "
                 onClick={handleButton}
               >
                 Cập Nhật
               </button>
-              <button className="w-[110px] h-[44px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-bold font-baloo-2 text-lg ">
+              <button
+                className="w-[110px] h-[44px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-bold font-baloo-2 text-lg hover:bg-orange-500 hover:text-white"
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  window.history.back();
+                }}
+              >
                 Quay Lại
               </button>
             </div>

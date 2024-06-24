@@ -85,6 +85,7 @@ const OrderComponent = (prop: {}) => {
       const response = await categoryApi.getAllCategory();
       if (response.status === 200) {
         setCategory(response.data.result);
+        // window.location.reload();
         disableLoading();
       } else {
         console.log("Failed to fetch data. Status code:", response.status);
@@ -101,7 +102,7 @@ const OrderComponent = (prop: {}) => {
   React.useEffect(() => {
     getAllCategory();
   }, []);
-  console.log(category);
+  // console.log(category);
 
   const getOrderByCondition: any = async (id: any) => {
     try {

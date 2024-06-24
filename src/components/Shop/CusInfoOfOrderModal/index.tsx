@@ -146,8 +146,8 @@ const CusInfoOfOrderModal = ({
       Swal.fire({
         icon: response.data.isSuccess ? "success" : "error",
         title: response.data.isSuccess
-          ? "Your information is deleted successfully"
-          : "Your information is not deleted successfully. Try again!",
+          ? "Thông tin của bạn đã được xóa thành công"
+          : "Xóa không thành công. Vui lòng thử lại!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
@@ -164,7 +164,7 @@ const CusInfoOfOrderModal = ({
       enableLoading();
       Swal.fire({
         icon: "error",
-        title: "There is something wrong. Try again!",
+        title: "Đã xảy ra sự cố. Vui lòng thử lại sau!",
         showConfirmButton: false,
         timer: 3000,
         toast: true,
