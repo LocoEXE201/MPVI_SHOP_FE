@@ -43,7 +43,7 @@ const OrderItemCard = ({ ordersList, categories }: OrderItemCard) => {
   };
 
   const item = categories.find(
-    (cate: any) => cate.categoryId === ordersList?.orders[0]?.categoryId
+    (cate: any) => cate?.categoryId === ordersList?.orders[0]?.categoryId
   );
 
   const numberOfOtherProduct = () => {
@@ -154,7 +154,7 @@ const OrderItemCard = ({ ordersList, categories }: OrderItemCard) => {
           </div>
         </div>
         <div className="order-product-total font-baloo-2 font-semibold text-chocolate text-xl">
-          {formatPrice(ordersList.total * 1000)}₫
+          {formatPrice(ordersList.total)}₫
         </div>
         <div className="order-product-payment">
           <div className="font-baloo-2 text-xl text-zinc-400">
