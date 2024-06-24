@@ -3,7 +3,6 @@ import useAppContext from "@/hooks/useAppContext";
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/Templates/Loading/Loading";
 import categoryApi from "@/api/warehouse/categoryApi";
-import { ClassNames } from "@emotion/react";
 import { formatPrice } from "@/utils/formatPrice";
 import "./cart.scss";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
@@ -31,7 +30,7 @@ interface DataType {
 
 const CartComponent = () => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [category, setCategory] = React.useState<DataType[]>([]);
+  const [category, setCategory] = useState<DataType[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const router = useRouter();
 
@@ -44,25 +43,22 @@ const CartComponent = () => {
     router.push(route);
   };
 
-  const getAllCategory: any = async () => {
+  const getAllCategory = async () => {
     try {
       enableLoading();
       const response = await categoryApi.getAllCategory();
       if (response.status === 200) {
-        // console.log(response.data);
         disableLoading();
         setCategory(response.data.result);
       } else {
         console.log("Failed to fetch data. Status code:", response.status);
-        return [];
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      return [];
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getAllCategory();
   }, []);
 
@@ -93,15 +89,13 @@ const CartComponent = () => {
     });
   };
 
-  // console.log(selectedItems);
-
   const checkedCategories = () => {
     if (selectedItems.length === 0) {
       return [];
     }
 
     const checked = selectedItems
-      .flatMap((selected: any) => {
+      .flatMap((selected) => {
         return loadCartItems().find(
           (items) => items.product.categoryId === selected
         );
@@ -111,13 +105,11 @@ const CartComponent = () => {
     return checked;
   };
 
-  // console.log(checkedCategories());
-
   const totalSelectedItems = () => {
     let total = 0;
     if (checkedCategories().length > 0) {
       return (total = checkedCategories().reduce(
-        (total: number, items: any) =>
+        (total, items) =>
           (total += items?.product.priceSold * items?.quantity),
         0
       ));
@@ -126,13 +118,11 @@ const CartComponent = () => {
     }
   };
 
-  // console.log(totalSelectedItems());
-
-  const paymentBtn = (cartItems: any) => {
+  const paymentBtn = (cartItems:any) => {
     if (cartItems.length > 0 && selectedItems.length > 0) {
       return (
         <button
-          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
+          className="w-[128px] h-[46px] flex items-center justify-center bg-chocolate text-white font-baloo text-base rounded"
           onClick={() => navigateToPage(PATH_SHOP.payment)}
         >
           Thanh Toán
@@ -141,7 +131,7 @@ const CartComponent = () => {
     } else {
       return (
         <button
-          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-zinc-400 text-white font-baloo text-base rounded "
+          className="w-[128px] h-[46px] flex items-center justify-center bg-zinc-400 text-white font-baloo text-base rounded "
           disabled
         >
           Thanh Toán
@@ -154,17 +144,17 @@ const CartComponent = () => {
     <>
       <Loading loading={isLoading} />
       <PageTitle mainTitle="Giỏ Hàng" subTitle="Trang Chủ - Giỏ Hàng" />
-      <div className="flex flex-col items-center content-center justify-center mt-2.5 max-h-max ">
-        <div className="w-full min-h-max flex flex-col items-center content-center justify-center p-2 box-border gap-2">
-          <div className="font-baloo text-9xl">Giỏ Hàng</div>
-          <div className="border-[2px] border-solid border-zinc-300 w-[1296px] min-h-max rounded">
-            <div className="titles font-baloo text-lg bg-zinc-300 items-center h-[50px] p-3 box-border">
-              <div className="check"></div>
-              <div className="product-title">Sản Phẩm</div>
-              <div className="price">Giá Tiền</div>
-              <div className="qty">Số Lượng</div>
-              <div className="total">Tổng Tiền</div>
-              <div className="remove">Xóa</div>
+      <div className="flex flex-col items-center justify-center mt-2.5 w-full max-h-max px-4">
+        <div className="w-full flex flex-col items-center justify-center p-2 box-border gap-2">
+          <div className="font-baloo text-3xl md:text-5xl">Giỏ Hàng</div>
+          <div className="border-[2px] border-solid border-zinc-300 w-full lg:w-[1296px] rounded">
+            <div className="titles font-baloo text-lg bg-zinc-300 flex items-center h-[50px] p-3 box-border">
+              <div className="check flex-1"></div>
+              <div className="product-title flex-3">Sản Phẩm</div>
+              <div className="price flex-1">Giá Tiền</div>
+              <div className="qty flex-1">Số Lượng</div>
+              <div className="total flex-1">Tổng Tiền</div>
+              <div className="remove flex-1">Xóa</div>
             </div>
             {loadCartItems().length > 0 ? (
               <div className="cart-items p-3 box-border">
@@ -173,47 +163,40 @@ const CartComponent = () => {
                     key={item.product.categoryId}
                     cartItem={item}
                     onCheckboxChange={handleCheckboxChange}
-                    // onqtyChange={handleqtyChange}
                     checked={selectedItems.includes(item.product.categoryId)}
                   />
                 ))}
               </div>
             ) : (
-              <div className="flex flex justify-center items-center content-center font-baloo-2 text-2xl ">
+              <div className="flex justify-center items-center font-baloo-2 text-2xl">
                 Không có sản phẩm trong giỏ hàng của bạn
               </div>
             )}
           </div>
-          <div className="flex flex-row justify-between w-[1296px] box-border mt-1.5">
+          <div className="flex flex-col md:flex-row justify-between w-full lg:w-[1296px] box-border mt-1.5">
             <div
               className="flex items-center font-baloo-2 text-chocolate text-lg underline cursor-pointer"
               onClick={() => navigateToPage(PATH_SHOP.products)}
             >
               Tiếp tục mua sắm
             </div>
-            <div className="flex flex-row gap-8 w-2/4 justify-between items-center ">
-              <div className="font-baloo-2 text-black font-bold text-xl ml-20">
+            <div className="flex flex-col md:flex-row gap-8 w-full md:w-2/4 justify-between items-center mt-4 md:mt-0">
+              <div className="font-baloo-2 text-black font-bold text-xl md:ml-20">
                 Tổng tiền sản phẩm
               </div>
-              <div className=" font-baloo-2 text-chocolate font-bold text-2xl">
+              <div className="font-baloo-2 text-chocolate font-bold text-2xl">
                 {formatPrice(totalSelectedItems())}₫
               </div>
-              {/* <button
-                className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
-                onClick={() => navigateToPage(PATH_SHOP.payment)}
-              >
-                Thanh Toán
-              </button> */}
               {paymentBtn(loadCartItems())}
             </div>
           </div>
         </div>
-        <div className="flex flex-col h-full mb-8 mt-5 gap-5">
-          <div className="flex justify-center items-center content-center font-baloo text-9xl ">
+        <div className="flex flex-col w-full h-full mb-8 mt-5 gap-5">
+          <div className="flex justify-center items-center font-baloo text-3xl md:text-5xl">
             Sản Phẩm Khác
           </div>
-          <div className="grid grid-cols-4 col-auto gap-x-14 ">
-            {category?.map((cate: any, index) => {
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-14">
+            {category?.map((cate:any, index) => {
               if (index < 4) {
                 return (
                   <ProductCardComponent
@@ -222,9 +205,9 @@ const CartComponent = () => {
                     categoryName={cate.categoryName}
                     image={cate.image}
                     priceIn={cate.priceIn}
-                    priceSold={cate.prriceSold}
+                    priceSold={cate.priceSold}
                     rate={cate.rate}
-                    superCategoryName={cate.superCategory.superCategoryName}
+                    superCategoryName={cate.superCategoryName}
                     category={cate}
                   />
                 );
@@ -233,15 +216,14 @@ const CartComponent = () => {
           </div>
           <div className="flex justify-end">
             <button
-              className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
+              className="flex justify-center items-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
               onClick={() => navigateToPage(PATH_SHOP.products)}
             >
-              <div className="flex flex-row justify-center items-center content-center ml-3 ">
-                Xem Thêm
-              </div>
+              <div className="ml-3">Xem Thêm</div>
               <img
                 src="/Icons/arrow.svg"
-                className="text-white w-[40px] h-[40px]"
+                className="w-[40px] h-[40px]"
+                alt="arrow"
               />
             </button>
           </div>

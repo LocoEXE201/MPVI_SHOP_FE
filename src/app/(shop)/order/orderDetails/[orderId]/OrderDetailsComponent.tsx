@@ -113,7 +113,7 @@ const OrderDetailsComponent = () => {
     getAllCategory();
   }, []);
 
-  console.log(orders);
+  // console.log(orders);
 
   const orderDetailsItems = orders.find(
     (order) => Number(order.orderId) === Number(orderId)
@@ -131,7 +131,7 @@ const OrderDetailsComponent = () => {
     })
   );
 
-  console.log(categoryItem);
+  // console.log(categoryItem);
 
   const paymentMethod = (method: string | undefined) => {
     return method === "VNPay" ? (
@@ -281,14 +281,14 @@ const OrderDetailsComponent = () => {
                   )}
                 </div>
               </div>
-              <div className="flex flex-row gap-1">
+              {/* <div className="flex flex-row gap-1">
                 <div className="font-bold">Ngày thanh toán:</div>
                 <div> {formatDate_DD_MM_YYYY("")}</div>
               </div>
               <div className="flex flex-row gap-1">
                 <div className="font-bold">Ngày nhận hàng:</div>
                 <div>{formatDate_DD_MM_YYYY("")}</div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex flex-col gap-3 w-[400px] max-h-max mt-5">
@@ -300,31 +300,31 @@ const OrderDetailsComponent = () => {
                 return (
                   <div className="flex flex-row gap-3 w-full" key={index}>
                     <img
-                      src={cate.product.image}
+                      src={cate?.product?.image}
                       className="object-contain rounded w-[100px]"
                     />
 
                     <div className="w-full">
                       <div className="font-baloo-2 text-lg">
-                        {cate.product.categoryName}
+                        {cate?.product?.categoryName}
                       </div>
                       <Rate
                         className="text-sm text-red-400"
                         allowHalf
                         disabled
-                        defaultValue={cate.product.rate}
+                        defaultValue={cate?.product?.rate}
                       />
                       <div className="flex flex-row items-center content-center justify-between ">
                         <div className="flex flex-row items-center content-center gap-1.5">
                           <div className="font-poppins text-lg text-chocolate font-semibold">
-                            ₫{formatPrice(cate.product.priceIn * 1000)}
+                            ₫{formatPrice(cate?.product?.priceSold)}
                           </div>
                           <div className="font-poppins text-sm line-through text-zinc-400">
-                            ₫60.000
+                            ₫{formatPrice(cate?.product?.priceIn)}
                           </div>
                         </div>
                         <div className="font-baloo-2 text-xl">
-                          x {cate.quantity}
+                          x {cate?.quantity}
                         </div>
                         {/* <button className="font-baloo-2 text-base text-orange-400 font-semibold border-[2px] border-solid border-orange-400 px-2 py-0.5 rounded">
                           Đánh giá
@@ -334,7 +334,7 @@ const OrderDetailsComponent = () => {
                         orderDetailsItems?.orderStatus ===
                           "Shipcod_Completed" ? (
                           <FeedbackModal
-                            categoryId={cate.product.categoryId}
+                            categoryId={cate?.product?.categoryId}
                             orderDetailId={cate.orderDetailId}
                           />
                         ) : (
@@ -354,9 +354,7 @@ const OrderDetailsComponent = () => {
                 <div className="text-lg font-baloo-2">
                   ₫
                   {formatPrice(
-                    orderDetailsItems?.total
-                      ? orderDetailsItems?.total * 1000
-                      : 0
+                    orderDetailsItems?.total ? orderDetailsItems?.total : 0
                   )}
                 </div>
               </div>
@@ -373,9 +371,7 @@ const OrderDetailsComponent = () => {
                 <div className="font-baloo-2 text-lg font-semibold">
                   ₫
                   {formatPrice(
-                    orderDetailsItems?.total
-                      ? orderDetailsItems?.total * 1000
-                      : 0
+                    orderDetailsItems?.total ? orderDetailsItems?.total : 0
                   )}
                 </div>
               </div>

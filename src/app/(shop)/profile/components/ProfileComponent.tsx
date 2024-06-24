@@ -87,8 +87,6 @@ const ProfileComponent = () => {
   // console.log(userInfo);
   // console.log(userInfo);
 
-
-
   return (
     <>
       <Loading loading={isLoading} />
@@ -183,12 +181,18 @@ const ProfileComponent = () => {
           <div className="flex flex-row w-11/12 px-2.5">
             <div className="flex flex-row w-2/4 gap-2">
               <button
-                className="w-[110px] h-[44px] flex justify-center items-center content-center bg-chocolate  border-[1px] border-solid border-chocolate rounded text-white font-bold font-baloo-2 text-lg "
+                className="w-[110px] h-[44px] flex justify-center items-center content-center bg-chocolate  border-[1px] border-solid border-chocolate rounded text-white font-bold font-baloo-2 text-lg hover:bg-orange-500 "
                 onClick={handleButton}
               >
                 Cập Nhật
               </button>
-              <button className="w-[110px] h-[44px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-bold font-baloo-2 text-lg ">
+              <button
+                className="w-[110px] h-[44px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate font-bold font-baloo-2 text-lg hover:bg-orange-500 hover:text-white"
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  window.history.back();
+                }}
+              >
                 Quay Lại
               </button>
             </div>

@@ -83,9 +83,9 @@ const PaymentComponent = (prop: {}) => {
 
   const shippingPrice = (delivery: string) => {
     if (delivery === "Normal") {
-      return 10;
+      return 10000;
     } else {
-      return 35;
+      return 35000;
     }
   };
 
@@ -256,15 +256,17 @@ const PaymentComponent = (prop: {}) => {
   const handleCreateOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const order = createOrder();
-    console.log(order);
+    // console.log(order);
     if (order.cartDetails?.length ? order.cartDetails?.length : 0 > 0) {
       const result = await fetchOrder(order, method);
-      console.log("abcd");
+      // console.log("abcd");
       if (method === "VnPay" && result) {
         await fetchPayment(result);
       }
       localStorage.removeItem("cartItems");
-      navigateToPage(PATH_SHOP.order);
+      // navigateToPage(PATH_SHOP.order);
+      window.location.href = PATH_SHOP.order;
+      // window.location.reload(); // Remove this line
     }
   };
 

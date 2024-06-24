@@ -65,7 +65,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
             <img
               className="w-full h-[282px] object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded"
               src={image}
-              alt="Fruit"
+              alt={categoryName}
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
