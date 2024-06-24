@@ -29,9 +29,9 @@ export const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 
-const auth = `http://14.225.211.1:8081/api/`;
-const shop = `http://14.225.211.1:8083/api/`;
-const warehouse = `http://14.225.211.1:8084/api/`;
+const auth = `https://loco.com.vn/authcontainer/api/`;
+const shop = `https://loco.com.vn/shopcontainer/api/`;
+const warehouse = `https://loco.com.vn/managementcontainer/api/`;
 
 const request = axios.create({
   baseURL: auth,

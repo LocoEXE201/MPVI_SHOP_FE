@@ -106,19 +106,14 @@ const CartComponent = () => {
   };
 
   const totalSelectedItems = () => {
-    let total = 0;
-    if (checkedCategories().length > 0) {
-      return (total = checkedCategories().reduce(
-        (total, items) =>
-          (total += items?.product.priceSold * items?.quantity),
-        0
-      ));
-    } else {
-      return total;
-    }
+    return checkedCategories().reduce((total, item) => {
+      const priceSold = item?.product?.priceSold ?? 0;
+      const quantity = item?.quantity ?? 0;
+      return total + priceSold * quantity;
+    }, 0);
   };
 
-  const paymentBtn = (cartItems:any) => {
+  const paymentBtn = (cartItems: any) => {
     if (cartItems.length > 0 && selectedItems.length > 0) {
       return (
         <button
@@ -196,7 +191,7 @@ const CartComponent = () => {
             Sản Phẩm Khác
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-14">
-            {category?.map((cate:any, index) => {
+            {category?.map((cate: any, index) => {
               if (index < 4) {
                 return (
                   <ProductCardComponent
