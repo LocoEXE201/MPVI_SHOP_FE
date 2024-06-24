@@ -110,7 +110,7 @@ const CartComponent = () => {
     if (checkedCategories().length > 0) {
       return (total = checkedCategories().reduce(
         (total, items) =>
-          (total += items?.product.priceSold * items?.quantity),
+          (total += (items?.product.priceSold ?? 0) * (items?.quantity ?? 0)),
         0
       ));
     } else {
@@ -118,7 +118,7 @@ const CartComponent = () => {
     }
   };
 
-  const paymentBtn = (cartItems:any) => {
+  const paymentBtn = (cartItems: any) => {
     if (cartItems.length > 0 && selectedItems.length > 0) {
       return (
         <button
@@ -196,7 +196,7 @@ const CartComponent = () => {
             Sản Phẩm Khác
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-14">
-            {category?.map((cate:any, index) => {
+            {category?.map((cate: any, index) => {
               if (index < 4) {
                 return (
                   <ProductCardComponent
