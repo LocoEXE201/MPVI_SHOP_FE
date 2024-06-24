@@ -106,16 +106,11 @@ const CartComponent = () => {
   };
 
   const totalSelectedItems = () => {
-    let total = 0;
-    if (checkedCategories().length > 0) {
-      return (total = checkedCategories().reduce(
-        (total, items) =>
-          (total += (items?.product.priceSold ?? 0) * (items?.quantity ?? 0)),
-        0
-      ));
-    } else {
-      return total;
-    }
+    return checkedCategories().reduce((total, item) => {
+      const priceSold = item?.product?.priceSold ?? 0;
+      const quantity = item?.quantity ?? 0;
+      return total + priceSold * quantity;
+    }, 0);
   };
 
   const paymentBtn = (cartItems: any) => {

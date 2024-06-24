@@ -31,7 +31,7 @@ export const parseParams = (params: any) => {
 
 const auth = `https://loco.com.vn/authcontainer/api/`;
 const shop = `https://loco.com.vn/shopcontainer/api/`;
-const warehouse = `https://loco.com.vn/managementcontainer//api/`;
+const warehouse = `https://loco.com.vn/managementcontainer/api/`;
 
 const request = axios.create({
   baseURL: auth,
