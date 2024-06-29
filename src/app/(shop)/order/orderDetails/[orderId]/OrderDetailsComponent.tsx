@@ -148,7 +148,7 @@ const OrderDetailsComponent = () => {
       case "VNPay_Pending":
         return (
           <div className="font-baloo-2 text-lg text-yellow-400">
-            Đang vận chuyển
+            Đang xử lí
           </div>
         );
       case "VNPay_Cancelled":
@@ -177,7 +177,7 @@ const OrderDetailsComponent = () => {
       case "Shipcod_Pending":
         return (
           <div className="font-baloo-2 text-lg text-yellow-400">
-            Đang vận chuyển
+            Đang xử lí
           </div>
         );
       case "Shipcod_Cancelled":
@@ -205,7 +205,7 @@ const OrderDetailsComponent = () => {
       default:
         return (
           <div className="font-baloo-2 text-lg text-yellow-400">
-            Đang vận chuyển
+            Đang xử lí
           </div>
         );
     }
@@ -319,9 +319,9 @@ const OrderDetailsComponent = () => {
                           <div className="font-poppins text-lg text-chocolate font-semibold">
                             ₫{formatPrice(cate?.product?.priceSold)}
                           </div>
-                          <div className="font-poppins text-sm line-through text-zinc-400">
+                          {/* <div className="font-poppins text-sm line-through text-zinc-400">
                             ₫{formatPrice(cate?.product?.priceIn)}
-                          </div>
+                          </div> */}
                         </div>
                         <div className="font-baloo-2 text-xl">
                           x {cate?.quantity}
