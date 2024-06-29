@@ -90,9 +90,9 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
               <div className="font-quicksand text-chocolate text-lg font-bold">
                 {formatPrice(priceSold)}₫
               </div>
-              <div className="font-quicksand text-zinc-400 text-xs font-bold line-through mt-0.5">
+              {/* <div className="font-quicksand text-zinc-400 text-xs font-bold line-through mt-0.5">
                 {formatPrice(priceIn)}₫
-              </div>
+              </div> */}
             </div>
             <div>
               <AddCartButton product={category} />

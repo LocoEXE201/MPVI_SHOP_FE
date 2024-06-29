@@ -416,9 +416,9 @@ const PaymentComponent = (prop: {}) => {
                           <div className="font-poppins text-lg text-chocolate font-semibold">
                             ₫{formatPrice(cate?.product?.priceSold)}
                           </div>
-                          <div className="font-poppins text-sm line-through text-zinc-400">
+                          {/* <div className="font-poppins text-sm line-through text-zinc-400">
                             ₫{formatPrice(cate?.product?.priceIn)}
-                          </div>
+                          </div> */}
                         </div>
                         <div className="font-baloo-2 text-xl">
                           x {cate?.quantity}
