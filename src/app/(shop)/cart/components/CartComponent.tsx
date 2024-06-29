@@ -16,6 +16,7 @@ import { CartItem, Product } from "../../../../../interfaces";
 import { useAppSelector } from "@/store/store";
 import CartItemCard from "@/components/Shop/CartItemCard";
 import { loadCartItems, totalPriceSelector } from "@/store/features/cartSlice";
+import useCategories from "@/api/warehouse/category";
 
 interface DataType {
   key: React.Key;
@@ -29,8 +30,12 @@ interface DataType {
 }
 
 const CartComponent = () => {
-  const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [category, setCategory] = useState<DataType[]>([]);
+  const {
+    getAllCategory,
+    category,
+    isLoading: categoryLoading,
+    error: categoryError,
+  } = useCategories();
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const router = useRouter();
 
@@ -43,20 +48,20 @@ const CartComponent = () => {
     router.push(route);
   };
 
-  const getAllCategory = async () => {
-    try {
-      enableLoading();
-      const response = await categoryApi.getAllCategory();
-      if (response.status === 200) {
-        disableLoading();
-        setCategory(response.data.result);
-      } else {
-        console.log("Failed to fetch data. Status code:", response.status);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const getAllCategory = async () => {
+  //   try {
+  //     enableLoading();
+  //     const response = await categoryApi.getAllCategory();
+  //     if (response.status === 200) {
+  //       disableLoading();
+  //       setCategory(response.data.result);
+  //     } else {
+  //       console.log("Failed to fetch data. Status code:", response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   useEffect(() => {
     getAllCategory();
@@ -137,7 +142,7 @@ const CartComponent = () => {
 
   return (
     <>
-      <Loading loading={isLoading} />
+      <Loading loading={categoryLoading} />
       <PageTitle mainTitle="Giỏ Hàng" subTitle="Trang Chủ - Giỏ Hàng" />
       <div className="flex flex-col items-center justify-center mt-2.5 w-full max-h-max px-4">
         <div className="w-full flex flex-col items-center justify-center p-2 box-border gap-2">
@@ -168,18 +173,18 @@ const CartComponent = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col md:flex-row justify-between w-full lg:w-[1296px] box-border mt-1.5">
+          <div className="flex flex-row justify-between w-[1296px] box-border mt-1.5">
             <div
               className="flex items-center font-baloo-2 text-chocolate text-lg underline cursor-pointer"
               onClick={() => navigateToPage(PATH_SHOP.products)}
             >
               Tiếp tục mua sắm
             </div>
-            <div className="flex flex-col md:flex-row gap-8 w-full md:w-2/4 justify-between items-center mt-4 md:mt-0">
-              <div className="font-baloo-2 text-black font-bold text-xl md:ml-20">
+            <div className="flex flex-row gap-8 w-2/4 justify-between items-center ">
+              <div className="font-baloo-2 text-black font-bold text-xl ml-20">
                 Tổng tiền sản phẩm
               </div>
-              <div className="font-baloo-2 text-chocolate font-bold text-2xl">
+              <div className=" font-baloo-2 text-chocolate font-bold text-2xl">
                 {formatPrice(totalSelectedItems())}₫
               </div>
               {paymentBtn(loadCartItems())}
@@ -187,10 +192,10 @@ const CartComponent = () => {
           </div>
         </div>
         <div className="flex flex-col w-full h-full mb-8 mt-5 gap-5">
-          <div className="flex justify-center items-center font-baloo text-3xl md:text-5xl">
+          <div className="w-full flex justify-center items-center font-baloo text-3xl ">
             Sản Phẩm Khác
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-14">
+          <div className="w-full flex flex-row justify-center items-center grid grid-cols-4 pl-6">
             {category?.map((cate: any, index) => {
               if (index < 4) {
                 return (

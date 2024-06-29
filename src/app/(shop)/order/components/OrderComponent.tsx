@@ -17,16 +17,18 @@ import { purple } from "@mui/material/colors";
 import Pagination from "@mui/material/Pagination";
 import shopApi from "@/api/shop/shopApi";
 import OrderItemCard from "@/components/Shop/OrderItemCard";
+import useCategories from "@/api/warehouse/category";
 
-interface DataType {
-  key: React.Key;
+interface ProductCardProps {
   categoryId: number;
   categoryName: string;
   image: string;
   priceIn: number;
   priceSold: number;
   rate: number;
+  notes: string;
   superCategoryName: string;
+  category: ProductCardProps;
 }
 
 interface Orders {
@@ -57,7 +59,14 @@ const theme = createTheme({
 });
 const OrderComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [category, setCategory] = React.useState<DataType[]>([]);
+  // const [category, setCategory] = React.useState<ProductCardProps[]>([]);
+
+  const {
+    getAllCategory,
+    category,
+    isLoading: categoryLoading,
+    error: categoryError,
+  } = useCategories();
   const [orders, setOrders] = React.useState<Orders[]>([]);
   const [page, setPage] = React.useState(1);
   const itemsPerPage = 9;
@@ -79,25 +88,25 @@ const OrderComponent = (prop: {}) => {
     router.push(route);
   };
 
-  const getAllCategory: any = async () => {
-    try {
-      enableLoading();
-      const response = await categoryApi.getAllCategory();
-      if (response.status === 200) {
-        setCategory(response.data.result);
-        // window.location.reload();
-        disableLoading();
-      } else {
-        console.log("Failed to fetch data. Status code:", response.status);
-        return [];
-      }
-    } catch (error) {
-      enableLoading();
-      console.error("Error fetching data:", error);
-      disableLoading();
-      return [];
-    }
-  };
+  // const getAllCategory: any = async () => {
+  //   try {
+  //     enableLoading();
+  //     const response = await categoryApi.getAllCategory();
+  //     if (response.status === 200) {
+  //       setCategory(response.data.result);
+  //       // window.location.reload();
+  //       disableLoading();
+  //     } else {
+  //       console.log("Failed to fetch data. Status code:", response.status);
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     enableLoading();
+  //     console.error("Error fetching data:", error);
+  //     disableLoading();
+  //     return [];
+  //   }
+  // };
 
   React.useEffect(() => {
     getAllCategory();
@@ -164,7 +173,7 @@ const OrderComponent = (prop: {}) => {
 
   return (
     <>
-      <Loading loading={isLoading} />
+      <Loading loading={isLoading || categoryLoading} />
       <PageTitle mainTitle="Đơn Hàng" subTitle="Trang Chủ - Đơn Hàng" />
       <div className="flex flex-col items-center content-center justify-center mt-2.5 max-h-max ">
         <div className="w-full min-h-max flex flex-col items-center content-center justify-center p-2 box-border gap-2">
@@ -180,7 +189,7 @@ const OrderComponent = (prop: {}) => {
                   <div className="detail">Chi Tiết</div>
                 </div>
                 <div className="order-items p-4 box-border">
-                  {paginatedOrders.map((orders: any, index) => {
+                  {paginatedOrders?.map((orders: any, index) => {
                     return (
                       <OrderItemCard
                         key={index}

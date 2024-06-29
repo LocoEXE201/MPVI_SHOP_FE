@@ -3,7 +3,6 @@ import useAppContext from "@/hooks/useAppContext";
 import React, { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import { Checkbox, Col, Row } from "antd";
-import type { GetProp } from "antd";
 import { Select, Space } from "antd";
 import { formatPrice } from "../../../../utils/formatPrice";
 import ProductCard from "@/components/Shop/ProductCard";
@@ -17,6 +16,8 @@ import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardCompo
 import superCategoryApi from "@/api/warehouse/superCategoryApi";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { SuperCategoryDTO } from "@/models/warehouse/SuperCategoryDTO";
+import useCategories from "@/api/warehouse/category";
+import useSuperCategory from "@/api/warehouse/superCategory";
 
 const theme = createTheme({
   palette: {
@@ -48,60 +49,75 @@ interface ProductCardProps {
 }
 
 const ProductsComponent = (prop: {}) => {
-  const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [category, setCategory] = React.useState<ProductCardProps[]>([]);
-  const [superCategory, setSuperCategory] = React.useState<SuperCategoryDTO[]>(
-    []
-  );
+  // const { isLoading, enableLoading, disableLoading } = useAppContext();
+  const {
+    getAllCategory,
+    category,
+    isLoading: categoryLoading,
+    error: categoryError,
+  } = useCategories();
+  const {
+    getAllSuperCategory,
+    superCategory,
+    isLoading: superCategoryLoading,
+    error: superCategoryError,
+  } = useSuperCategory();
+  // const [category, setCategory] = React.useState<ProductCardProps[]>([]);
+  // const [superCategory, setSuperCategory] = React.useState<SuperCategoryDTO[]>(
+  //   []
+  // );
   const [value2, setValue2] = React.useState<number[]>([0, 1000]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [filteredPrice, setFilteredPrice] = useState("All");
   const [page, setPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 12;
 
-  const getAllCategory: any = async () => {
-    try {
-      enableLoading();
-      const response = await categoryApi.getAllCategory();
-      if (response.status === 200) {
-        // console.log(response.data);
-        disableLoading();
-        setCategory(response.data.result);
-      } else {
-        console.log("Failed to fetch data. Status code:", response.status);
-        return [];
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      return [];
-    }
-  };
+  // const getAllCategory: any = async () => {
+  //   try {
+  //     enableLoading();
+  //     const response = await categoryApi.getAllCategory();
+  //     if (response.status === 200) {
+  //       disableLoading();
+  //       setCategory(response.data.result);
+  //     } else {
+  //       console.log("Failed to fetch data. Status code:", response.status);
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //     return [];
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getAllCategory();
-  }, []);
+  // React.useEffect(() => {
+  //   getAllCategory();
+  // }, []);
 
-  console.log(category);
+  // console.log(category);
 
-  const getAllSuperCategory: any = async () => {
-    try {
-      enableLoading();
-      const response = await superCategoryApi.getAllSuperCategory();
-      if (response.status === 200) {
-        disableLoading();
-        setSuperCategory(response.data.result);
-      } else {
-        console.log("Failed to fetch data. Status code:", response.status);
-        return [];
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      return [];
-    }
-  };
+  // const getAllSuperCategory: any = async () => {
+  //   try {
+  //     enableLoading();
+  //     const response = await superCategoryApi.getAllSuperCategory();
+  //     if (response.status === 200) {
+  //       disableLoading();
+  //       setSuperCategory(response.data.result);
+  //     } else {
+  //       console.log("Failed to fetch data. Status code:", response.status);
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //     return [];
+  //   }
+  // };
 
   React.useEffect(() => {
     getAllSuperCategory();
+  }, []);
+
+  React.useEffect(() => {
+    getAllCategory();
   }, []);
 
   const handleChange2 = (
@@ -193,8 +209,8 @@ const ProductsComponent = (prop: {}) => {
   const filterCategoryDisplay = (filterCategory: ProductCardProps[]) => {
     if (filterCategory?.length > 0) {
       return (
-        <div className="flex flex-col justify-center items-center content-center gap-4 w-full p-3">
-          <div className="grid grid-cols-3 gap-x-20 gap-y-9">
+        <div className="flex flex-col justify-center items-center content-center gap-4 w-full p-4">
+          <div className="w-full grid grid-cols-4 gap-x-40 gap-y-9">
             {filterCategory?.map((cate: any, index) => (
               <ProductCardComponent
                 key={index}
@@ -236,7 +252,7 @@ const ProductsComponent = (prop: {}) => {
 
   return (
     <>
-      <Loading loading={isLoading} />
+      <Loading loading={categoryLoading || superCategoryLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
       <div className="w-[83rem] flex flex-row items-start justify-center max-w-full gap-5 mt-2.5 pl-2">
         <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
@@ -246,30 +262,45 @@ const ProductsComponent = (prop: {}) => {
           </div>
 
           <div>
-            <Checkbox.Group style={{ width: "100%" }}>
-              <Col className="flex flex-col gap-3">
-                {superCategory.map((supercategory: any, index: any) => (
-                  <Row key={index}>
-                    <Checkbox
-                      value={supercategory?.superCategoryName}
-                      onChange={(e: CheckboxChangeEvent) =>
-                        handleCheckboxChange(
-                          supercategory?.superCategoryName,
-                          e.target.checked
-                        )
-                      }
-                    >
-                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
-                        <div className="">
-                          {supercategory?.superCategoryName}
+            {superCategory ? (
+              <Checkbox.Group style={{ width: "100%" }}>
+                <Col className="flex flex-col gap-3">
+                  {superCategory?.map((supercategory: any, index: any) => (
+                    <Row key={index}>
+                      <Checkbox
+                        value={supercategory?.superCategoryName}
+                        onChange={(e: CheckboxChangeEvent) =>
+                          handleCheckboxChange(
+                            supercategory?.superCategoryName,
+                            e.target.checked
+                          )
+                        }
+                      >
+                        <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
+                          <div className="">
+                            {supercategory?.superCategoryName}
+                          </div>
+                          <div>[{supercategory?.totalCategory}]</div>
                         </div>
-                        <div>[{supercategory?.totalCategory}]</div>
+                      </Checkbox>
+                    </Row>
+                  ))}
+                </Col>
+              </Checkbox.Group>
+            ) : (
+              <Checkbox.Group style={{ width: "100%" }}>
+                <Col className="flex flex-col gap-3">
+                  <Row>
+                    <Checkbox>
+                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
+                        <div className="">Another</div>
+                        <div>[0]</div>
                       </div>
                     </Checkbox>
                   </Row>
-                ))}
-              </Col>
-            </Checkbox.Group>
+                </Col>
+              </Checkbox.Group>
+            )}
           </div>
           <div className="flex flex-col gap-3">
             <div>
@@ -296,15 +327,9 @@ const ProductsComponent = (prop: {}) => {
               {formatPrice(value2[1] * 1000)}
             </div>
           </div>
-
-          <div>
-            <button className="w-[82px] h-[40px] bg-chocolate text-base text-white rounded">
-              Tìm Kiếm
-            </button>
-          </div>
         </div>
-        <div className="w-full h-full flex flex-col gap-3 ">
-          <div className="w-full h-[47px] flex flex-row gap-2 justify-evenly content-center items-center border-solid border-gray-300 bg-zinc-100 rounded shadow-lg  ">
+        <div className="w-full h-full flex flex-col gap-3 justify-center align-items-center">
+          <div className="w-full h-[47px] flex flex-row gap-2 justify-evenly content-center items-center border-solid border-gray-300 bg-zinc-100 rounded shadow-lg">
             <div className="flex flex-row gap-1 content-center p-2">
               <button className=" flex w-[30px] h-[30px] bg-chocolate rounded justify-center content-center items-center">
                 {" "}
