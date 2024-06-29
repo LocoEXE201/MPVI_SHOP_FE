@@ -29,7 +29,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
   superCategoryName,
   category,
 }) => {
-  const { isLoading, enableLoading, disableLoading } = useAppContext();
+  // const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [totalFeedback, setTotalFeedback] = React.useState(0);
 
   const getFeedbackAllById = async (categoryId: number) => {
@@ -63,7 +63,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
         <div className="flex flex-col gap-3 w-[280px]  rounded-2xl shadow-lg p-3 box-border transition ease-in-out duration-500 hover:scale-110 hover:bg-white hover:shadow-orange-200  ">
           <div className="w-full h-full flex justify-center items-center content-center">
             <img
-              className="w-full h-[282px] object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded"
+              className="w-full h-[282px] object-contain box-content transition ease-in-out duration-500 hover:scale-110 rounded pt-2"
               src={image}
               alt={categoryName}
             />

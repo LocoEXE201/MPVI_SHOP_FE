@@ -10,4 +10,5 @@ const categoryApi ={
     getAllCategory
 };
 
+
 export default categoryApi;
