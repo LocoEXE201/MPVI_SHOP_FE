@@ -246,30 +246,45 @@ const ProductsComponent = (prop: {}) => {
           </div>
 
           <div>
-            <Checkbox.Group style={{ width: "100%" }}>
-              <Col className="flex flex-col gap-3">
-                {superCategory.map((supercategory: any, index: any) => (
-                  <Row key={index}>
-                    <Checkbox
-                      value={supercategory?.superCategoryName}
-                      onChange={(e: CheckboxChangeEvent) =>
-                        handleCheckboxChange(
-                          supercategory?.superCategoryName,
-                          e.target.checked
-                        )
-                      }
-                    >
-                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
-                        <div className="">
-                          {supercategory?.superCategoryName}
+            {superCategory ? (
+              <Checkbox.Group style={{ width: "100%" }}>
+                <Col className="flex flex-col gap-3">
+                  {superCategory?.map((supercategory: any, index: any) => (
+                    <Row key={index}>
+                      <Checkbox
+                        value={supercategory?.superCategoryName}
+                        onChange={(e: CheckboxChangeEvent) =>
+                          handleCheckboxChange(
+                            supercategory?.superCategoryName,
+                            e.target.checked
+                          )
+                        }
+                      >
+                        <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
+                          <div className="">
+                            {supercategory?.superCategoryName}
+                          </div>
+                          <div>[{supercategory?.totalCategory}]</div>
                         </div>
-                        <div>[{supercategory?.totalCategory}]</div>
+                      </Checkbox>
+                    </Row>
+                  ))}
+                </Col>
+              </Checkbox.Group>
+            ) : (
+              <Checkbox.Group style={{ width: "100%" }}>
+                <Col className="flex flex-col gap-3">
+                  <Row>
+                    <Checkbox>
+                      <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
+                        <div className="">Another</div>
+                        <div>[0]</div>
                       </div>
                     </Checkbox>
                   </Row>
-                ))}
-              </Col>
-            </Checkbox.Group>
+                </Col>
+              </Checkbox.Group>
+            )}
           </div>
           <div className="flex flex-col gap-3">
             <div>
