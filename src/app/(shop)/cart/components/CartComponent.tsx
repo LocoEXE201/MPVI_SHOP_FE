@@ -39,7 +39,7 @@ const CartComponent = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const router = useRouter();
 
-  const totalPrice = useAppSelector(totalPriceSelector);
+  // const totalPrice = useAppSelector(totalPriceSelector);
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -191,11 +191,11 @@ const CartComponent = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full h-full mb-8 mt-5 gap-5">
-          <div className="w-full flex justify-center items-center font-baloo text-3xl ">
+        <div className="flex flex-col h-full mb-8 mt-5 gap-5">
+          <div className="flex justify-center items-center content-center font-baloo text-9xl ">
             Sản Phẩm Khác
           </div>
-          <div className="w-full flex flex-row justify-center items-center grid grid-cols-4 pl-6">
+          <div className="grid grid-cols-4 col-auto gap-x-14 ">
             {category?.map((cate: any, index) => {
               if (index < 4) {
                 return (
@@ -207,7 +207,7 @@ const CartComponent = () => {
                     priceIn={cate.priceIn}
                     priceSold={cate.priceSold}
                     rate={cate.rate}
-                    superCategoryName={cate.superCategoryName}
+                    superCategoryName={cate.superCategory.superCategoryName}
                     category={cate}
                   />
                 );
@@ -216,14 +216,15 @@ const CartComponent = () => {
           </div>
           <div className="flex justify-end">
             <button
-              className="flex justify-center items-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
+              className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
               onClick={() => navigateToPage(PATH_SHOP.products)}
             >
-              <div className="ml-3">Xem Thêm</div>
+              <div className="flex flex-row justify-center items-center content-center ml-3 ">
+                Xem Thêm
+              </div>
               <img
                 src="/Icons/arrow.svg"
-                className="w-[40px] h-[40px]"
-                alt="arrow"
+                className="text-white w-[40px] h-[40px]"
               />
             </button>
           </div>
