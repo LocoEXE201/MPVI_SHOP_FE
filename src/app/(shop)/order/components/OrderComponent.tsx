@@ -79,7 +79,7 @@ const OrderComponent = (prop: {}) => {
     return {};
   };
 
-  console.log(loadUserInformation().id);
+  // console.log(loadUserInformation().id);
   const router = useRouter();
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -157,7 +157,7 @@ const OrderComponent = (prop: {}) => {
   });
 
   const uniqueCategories = Array.from(new Set(filterCategories));
-  // console.log(uniqueCategories);
+
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,

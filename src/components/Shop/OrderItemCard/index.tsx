@@ -172,7 +172,7 @@ const OrderItemCard = ({ ordersList, categories }: OrderItemCard) => {
               navigateToPage(PATH_SHOP.orderDetails(ordersList.orderId))
             }
           >
-            <div>Xem chi tiết</div>
+            <div className="">Xem chi tiết</div>
           </button>
         </div>
       </div>
