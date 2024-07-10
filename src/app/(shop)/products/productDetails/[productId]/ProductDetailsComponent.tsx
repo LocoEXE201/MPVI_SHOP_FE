@@ -361,8 +361,8 @@ const ProductDetailsComponent = () => {
                   {categoryItem?.categoryName}
                 </div>
                 <div className="font-baloo-2 text-base text-zinc-400">
-                  Gấu bông được làm thủ công từ sợi lên tự nhiên và mềm mại. Có
-                  nhiều hình dáng dễ thương và xinh xắn.
+                  Sản phẩm làm bằng len thân thiện với người sử dụng và góp phần
+                  ủng hộ người khiếm thị.
                 </div>
                 <hr className="h-px bg-zinc-300 border-0" />
                 <div className="flex gap-3">
@@ -381,9 +381,9 @@ const ProductDetailsComponent = () => {
                   <div className="font-poppins text-2xl text-chocolate font-semibold">
                     {formatPrice(categoryItem?.priceSold ?? 0)}đ
                   </div>
-                  <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
+                  {/* <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
                     {formatPrice(categoryItem?.priceIn ?? 0)}đ
-                  </div>
+                  </div> */}
                 </div>
                 {/* <div className="flex flex-row gap-2 font-baloo-2 text-lg">
                   <div className="font-semibold">Phân loại:</div>
