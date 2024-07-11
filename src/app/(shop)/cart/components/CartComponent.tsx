@@ -3,6 +3,7 @@ import useAppContext from "@/hooks/useAppContext";
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/Templates/Loading/Loading";
 import categoryApi from "@/api/warehouse/categoryApi";
+import { ClassNames } from "@emotion/react";
 import { formatPrice } from "@/utils/formatPrice";
 import "./cart.scss";
 import ProductCardComponent from "@/components/Shop/ProductCard/ProductCardComponent";
@@ -16,7 +17,6 @@ import { CartItem, Product } from "../../../../../interfaces";
 import { useAppSelector } from "@/store/store";
 import CartItemCard from "@/components/Shop/CartItemCard";
 import { loadCartItems, totalPriceSelector } from "@/store/features/cartSlice";
-import useCategories from "@/api/warehouse/category";
 
 interface DataType {
   key: React.Key;
@@ -30,16 +30,12 @@ interface DataType {
 }
 
 const CartComponent = () => {
-  const {
-    getAllCategory,
-    category,
-    isLoading: categoryLoading,
-    error: categoryError,
-  } = useCategories();
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
+  const [category, setCategory] = React.useState<DataType[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const router = useRouter();
 
-  // const totalPrice = useAppSelector(totalPriceSelector);
+  const totalPrice = useAppSelector(totalPriceSelector);
 
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
@@ -48,22 +44,25 @@ const CartComponent = () => {
     router.push(route);
   };
 
-  // const getAllCategory = async () => {
-  //   try {
-  //     enableLoading();
-  //     const response = await categoryApi.getAllCategory();
-  //     if (response.status === 200) {
-  //       disableLoading();
-  //       setCategory(response.data.result);
-  //     } else {
-  //       console.log("Failed to fetch data. Status code:", response.status);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+  const getAllCategory: any = async () => {
+    try {
+      enableLoading();
+      const response = await categoryApi.getAllCategory();
+      if (response.status === 200) {
+        // console.log(response.data);
+        disableLoading();
+        setCategory(response.data.result);
+      } else {
+        console.log("Failed to fetch data. Status code:", response.status);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
 
-  useEffect(() => {
+  React.useEffect(() => {
     getAllCategory();
   }, []);
 
@@ -94,13 +93,15 @@ const CartComponent = () => {
     });
   };
 
+  // console.log(selectedItems);
+
   const checkedCategories = () => {
     if (selectedItems.length === 0) {
       return [];
     }
 
     const checked = selectedItems
-      .flatMap((selected) => {
+      .flatMap((selected: any) => {
         return loadCartItems().find(
           (items) => items.product.categoryId === selected
         );
@@ -110,19 +111,28 @@ const CartComponent = () => {
     return checked;
   };
 
+  // console.log(checkedCategories());
+
   const totalSelectedItems = () => {
-    return checkedCategories().reduce((total, item) => {
-      const priceSold = item?.product?.priceSold ?? 0;
-      const quantity = item?.quantity ?? 0;
-      return total + priceSold * quantity;
-    }, 0);
+    let total = 0;
+    if (checkedCategories().length > 0) {
+      return (total = checkedCategories().reduce(
+        (total: number, items: any) =>
+          (total += items?.product.priceSold * items?.quantity),
+        0
+      ));
+    } else {
+      return total;
+    }
   };
+
+  // console.log(totalSelectedItems());
 
   const paymentBtn = (cartItems: any) => {
     if (cartItems.length > 0 && selectedItems.length > 0) {
       return (
         <button
-          className="w-[128px] h-[46px] flex items-center justify-center bg-chocolate text-white font-baloo text-base rounded"
+          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
           onClick={() => navigateToPage(PATH_SHOP.payment)}
         >
           Thanh Toán
@@ -131,7 +141,7 @@ const CartComponent = () => {
     } else {
       return (
         <button
-          className="w-[128px] h-[46px] flex items-center justify-center bg-zinc-400 text-white font-baloo text-base rounded "
+          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-zinc-400 text-white font-baloo text-base rounded "
           disabled
         >
           Thanh Toán
@@ -142,19 +152,19 @@ const CartComponent = () => {
 
   return (
     <>
-      <Loading loading={categoryLoading} />
+      <Loading loading={isLoading} />
       <PageTitle mainTitle="Giỏ Hàng" subTitle="Trang Chủ - Giỏ Hàng" />
-      <div className="flex flex-col items-center justify-center mt-2.5 w-full max-h-max px-4">
-        <div className="w-full flex flex-col items-center justify-center p-2 box-border gap-2">
-          <div className="font-baloo text-3xl md:text-5xl">Giỏ Hàng</div>
-          <div className="border-[2px] border-solid border-zinc-300 w-full lg:w-[1296px] rounded">
-            <div className="titles font-baloo text-lg bg-zinc-300 flex items-center h-[50px] p-3 box-border">
-              <div className="check flex-1"></div>
-              <div className="product-title flex-3">Sản Phẩm</div>
-              <div className="price flex-1">Giá Tiền</div>
-              <div className="qty flex-1">Số Lượng</div>
-              <div className="total flex-1">Tổng Tiền</div>
-              <div className="remove flex-1">Xóa</div>
+      <div className="flex flex-col items-center content-center justify-center mt-2.5 max-h-max ">
+        <div className="w-full min-h-max flex flex-col items-center content-center justify-center p-2 box-border gap-2">
+          <div className="font-baloo text-9xl">Giỏ Hàng</div>
+          <div className="border-[2px] border-solid border-zinc-300 w-[1296px] min-h-max rounded">
+            <div className="titles font-baloo text-lg bg-zinc-300 items-center h-[50px] p-3 box-border">
+              <div className="check"></div>
+              <div className="product-title">Sản Phẩm</div>
+              <div className="price">Giá Tiền</div>
+              <div className="qty">Số Lượng</div>
+              <div className="total">Tổng Tiền</div>
+              <div className="remove">Xóa</div>
             </div>
             {loadCartItems().length > 0 ? (
               <div className="cart-items p-3 box-border">
@@ -163,12 +173,13 @@ const CartComponent = () => {
                     key={item.product.categoryId}
                     cartItem={item}
                     onCheckboxChange={handleCheckboxChange}
+                    // onqtyChange={handleqtyChange}
                     checked={selectedItems.includes(item.product.categoryId)}
                   />
                 ))}
               </div>
             ) : (
-              <div className="flex justify-center items-center font-baloo-2 text-2xl">
+              <div className="flex flex justify-center items-center content-center font-baloo-2 text-2xl ">
                 Không có sản phẩm trong giỏ hàng của bạn
               </div>
             )}
@@ -187,6 +198,12 @@ const CartComponent = () => {
               <div className=" font-baloo-2 text-chocolate font-bold text-2xl">
                 {formatPrice(totalSelectedItems())}₫
               </div>
+              {/* <button
+                className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
+                onClick={() => navigateToPage(PATH_SHOP.payment)}
+              >
+                Thanh Toán
+              </button> */}
               {paymentBtn(loadCartItems())}
             </div>
           </div>

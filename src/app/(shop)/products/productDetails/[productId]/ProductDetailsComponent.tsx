@@ -212,7 +212,7 @@ const ProductDetailsComponent = () => {
       <Loading loading={isLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
       <div className="flex items-center justify-center w-full">
-        <div className="w-full max-h-max flex flex-row mt-2.5 mb-6">
+        <div className="w-full h-full mt-2.5 mb-6 flex flex-row sm:flex-col md:flex-col lg:flex-col xl:flex-row">
           <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
             <div>
               <div className="font-baloo text-lg">Danh Mục Sản Phẩm</div>
@@ -381,9 +381,9 @@ const ProductDetailsComponent = () => {
                   <div className="font-poppins text-2xl text-chocolate font-semibold">
                     {formatPrice(categoryItem?.priceSold ?? 0)}đ
                   </div>
-                  {/* <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
+                  <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
                     {formatPrice(categoryItem?.priceIn ?? 0)}đ
-                  </div> */}
+                  </div>
                 </div>
                 {/* <div className="flex flex-row gap-2 font-baloo-2 text-lg">
                   <div className="font-semibold">Phân loại:</div>
