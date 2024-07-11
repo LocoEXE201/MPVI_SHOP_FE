@@ -104,7 +104,7 @@ const CusInfoOfOrderModal = ({
       const response =
         await customerApi.getCustomerInfoByCustomerID(customerID);
       if (response.status === 200) {
-        // console.log(response.data);
+        console.log(response.data);
         setAddressList(response.data.result.infors.$values);
         setIsActive(response.data.result.infors.$values[0].id);
         setReceiverName(response.data.result.infors.$values[0].name);

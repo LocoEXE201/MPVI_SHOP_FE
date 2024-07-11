@@ -26,8 +26,8 @@ interface Address {
 
 const PaymentComponent = (prop: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
-  const [delivery, setDelivery] = useState("Normal");
-  const [method, setMethod] = useState("ShipCod");
+  const [delivery, setDelivery] = useState("");
+  const [method, setMethod] = useState("");
   const [note, setNote] = useState("");
   const [receiverName, setReceiverName] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
@@ -157,7 +157,7 @@ const PaymentComponent = (prop: {}) => {
   ) => {
     e.preventDefault();
     const response = await fetchCreateAddress();
-    console.log(response.infor);
+    // console.log(response.infor);
     return response;
   };
 
@@ -233,6 +233,7 @@ const PaymentComponent = (prop: {}) => {
           icon: "success",
           showConfirmButton: false,
         });
+        console.log(response.data.result);
         window.location.href = response.data.result;
       } else {
         Swal.fire({
@@ -262,10 +263,13 @@ const PaymentComponent = (prop: {}) => {
       // console.log("abcd");
       if (method === "VnPay" && result) {
         await fetchPayment(result);
+      } else {
+         navigateToPage(PATH_SHOP.order);
+        // window.location.href = PATH_SHOP.order;
       }
       localStorage.removeItem("cartItems");
       // navigateToPage(PATH_SHOP.order);
-      window.location.href = PATH_SHOP.order;
+
       // window.location.reload(); // Remove this line
     }
   };
