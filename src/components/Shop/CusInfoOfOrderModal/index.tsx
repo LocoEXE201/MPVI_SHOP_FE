@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, ConfigProvider, Tabs } from "antd";
+import { Button, Modal, ConfigProvider } from "antd";
 import "./customer.scss";
 import { TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -40,11 +40,11 @@ interface AddressList {
 }
 
 interface Address {
-  $id: number;
-  id: number;
-  phone: string;
-  name: string;
+  $id: string;
   address: string;
+  id: number;
+  name: string;
+  phone: string;
 }
 
 interface Props {
@@ -133,8 +133,6 @@ const CusInfoOfOrderModal = ({
     getAllAddress(loadUserInformation().id);
   }, []);
 
-  console.log(addressList);
-
   const fetchDeleteAddress = async (addressId: any) => {
     try {
       enableLoading();
@@ -200,6 +198,8 @@ const CusInfoOfOrderModal = ({
     getAllAddress(loadUserInformation().id);
   }, []);
 
+  console.log(addressList.length);
+
   return (
     <>
       <Button
@@ -226,8 +226,9 @@ const CusInfoOfOrderModal = ({
               handleCreateOrder(e);
             } else {
               const res = await handleCreateNewAddress(e);
+              console.log("hihihihi");
               console.log(res);
-              setAddressList(JSON.parse(res));
+              setAddressList(Array.isArray(res) ? res : [res]);
               setIsModalOpen(false);
             }
           }}
@@ -275,90 +276,6 @@ const CusInfoOfOrderModal = ({
             </div>
           ) : (
             <div className="w-full flex flex-col gap-3">
-              {/* <div>
-                <FormControl style={{ width: "250px", fontSize: "20px" }}>
-                  <InputLabel id="demo-simple-select-label">
-                    Province
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={provinceId}
-                    label="Province"
-                    onChange={handleProvinceChange}
-                  >
-                    <MenuItem value={0} disabled>
-                      Select Province
-                    </MenuItem>
-                    {provinces.map((province: any) => {
-                      return (
-                        <MenuItem value={province.province_id}>
-                          {province.province_name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl style={{ width: "250px", fontSize: "20px" }}>
-                  <InputLabel id="demo-simple-select-label">
-                    District
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={districtId}
-                    label="District"
-                    onChange={handleDistrictChange}
-                  >
-                    <MenuItem value={0} disabled>
-                      Select District
-                    </MenuItem>
-                    {districts.map((district: any) => {
-                      return (
-                        <MenuItem value={district?.district_id}>
-                          {district?.district_name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl style={{ width: "250px", fontSize: "20px" }}>
-                  <InputLabel id="demo-simple-select-label">Ward</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={wardId}
-                    label="Ward"
-                    onChange={handleWardChange}
-                  >
-                    <MenuItem value={0} disabled>
-                      Select Ward
-                    </MenuItem>
-                    {wards.map((ward: any) => {
-                      return (
-                        <MenuItem value={ward.ward_id}>
-                          {ward.ward_name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-              </div>
-              <div>
-                <TextField
-                  id="outlined-basic"
-                  label="Number Address"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "250px", fontSize: "20px" }}
-                  name="numberAddress"
-                  onChange={handleNumberAddressChange}
-                />
-              </div> */}
               <div className="flex flex-row w-full flex flex-row justify-evenly">
                 <div className="w-5/12">
                   <div className="font-baloo-2 text-lg text-neutral-700">
