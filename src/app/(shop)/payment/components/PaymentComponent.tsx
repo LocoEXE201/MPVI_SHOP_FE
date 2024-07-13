@@ -18,10 +18,11 @@ import CusInfoOfOrderModal from "@/components/Shop/CusInfoOfOrderModal";
 import customerApi from "@/api/shop/customerApi";
 
 interface Address {
-  id: number;
-  phone: string;
-  name: string;
+  $id: string;
   address: string;
+  id: number;
+  name: string;
+  phone: string;
 }
 
 const PaymentComponent = (prop: {}) => {
@@ -156,8 +157,8 @@ const PaymentComponent = (prop: {}) => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    const response = await fetchCreateAddress();
-    // console.log(response.infor);
+    const response = await fetchAddAddress();
+    // console.log(response);
     return response;
   };
 
@@ -175,7 +176,49 @@ const PaymentComponent = (prop: {}) => {
     };
   };
 
-  console.log(createOrder());
+  // console.log(createOrder());
+
+  const fetchAddAddress = async () => {
+    try {
+      enableLoading();
+      const response = await customerApi.addNewAddress(
+        {
+          phone: receiverPhoneNumber,
+          name: receiverName,
+          address: receiverAddress,
+        },
+        loadUserInformation().id
+      );
+
+      Swal.fire({
+        icon: response.data.isSuccess ? "success" : "error",
+        title: response.data.isSuccess
+          ? "Your information is added successfully"
+          : "Your information is not added successfully. Try again!",
+        showConfirmButton: false,
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+      });
+
+      if (response.data.isSuccess) {
+        // console.log(response.data.result.$values[0]);
+      }
+      disableLoading();
+      return response.data.result.$values[0];
+    } catch (error) {
+      enableLoading();
+      Swal.fire({
+        icon: "error",
+        title: "There is something wrong. Try again!",
+        showConfirmButton: false,
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+      });
+      disableLoading();
+    }
+  };
 
   // console.log(paymentItems(checkedCategories()));
 
@@ -226,14 +269,14 @@ const PaymentComponent = (prop: {}) => {
   const fetchPayment = async (data: any) => {
     try {
       const response = await shopApi.createPaymentUrl(data);
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.isSuccess === true) {
         Swal.fire({
           title: "Chuyển qua VNPAY",
           icon: "success",
           showConfirmButton: false,
         });
-        console.log(response.data.result);
+        // console.log(response.data.result);
         window.location.href = response.data.result;
       } else {
         Swal.fire({
@@ -264,7 +307,7 @@ const PaymentComponent = (prop: {}) => {
       if (method === "VnPay" && result) {
         await fetchPayment(result);
       } else {
-         navigateToPage(PATH_SHOP.order);
+        navigateToPage(PATH_SHOP.order);
         // window.location.href = PATH_SHOP.order;
       }
       localStorage.removeItem("cartItems");

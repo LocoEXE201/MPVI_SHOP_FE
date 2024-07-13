@@ -6,11 +6,11 @@ import Swal from "sweetalert2";
 import customerApi from "@/api/shop/customerApi";
 
 interface Address {
-  $id: number;
-  id: number;
-  phone: string;
-  name: string;
+  $id: string;
   address: string;
+  id: number;
+  name: string;
+  phone: string;
 }
 
 interface Props {
