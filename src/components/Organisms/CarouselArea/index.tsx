@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import "./index.scss";
 import { useRouter } from "next/navigation";
 import { PATH_SHOP } from "@/routes/paths";
+import Image from "next/image";
 
 interface CarouselAreaProps {}
 
@@ -34,7 +35,9 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
             <b className="tracking-[0.48px] leading-[1.641rem] inline-block mq450:text-[1rem] mq450:leading-[1.313rem]">
               <ul className="m-0 font-inherit text-inherit mt-1 text-[1.35rem] mq450:text-[1rem] mq450:leading-[1.313rem]">
                 <li className="flex items-start gap-1 mt-[5px]">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className="h-[1rem] w-[1rem]"
                     alt=""
                     src="/LandingPage/Carousel/star.svg"
@@ -45,7 +48,9 @@ export const CarouselArea: FC<CarouselAreaProps> = ({}) => {
                   </span>
                 </li>
                 <li className="flex items-start gap-1 mt-[5px]">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className="h-[1rem] w-[1rem]"
                     alt=""
                     src="/LandingPage/Carousel/star.svg"

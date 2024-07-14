@@ -81,7 +81,7 @@ const RegisterPageComponent = (props: {}) => {
     <>
       <Loading loading={isLoading} />
       <PageTitle mainTitle="Đăng Ký" subTitle="Trang Chủ - Đăng Ký" />
-      <div className="mq900:w-screen mq900:px-[0.5rem] w-[117.563rem] mt-2 flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.25rem]">
+      <div className="mq900:w-screen mq900:px-[0.5rem]  mt-2 flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.25rem]">
         <div className="mq900:w-full mq900:block text-white py-[0.5rem] box-border max-w-full">
           <div
             className="border-[1px] border-solid border-whitesmoke-300 rounded-md min-h-[5rem] min-w-[5rem] flex flex-row items-center justify-between max-w-full

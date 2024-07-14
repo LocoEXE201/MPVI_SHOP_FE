@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { FC } from "react";
 
 interface CommimentsComponentProps {}
@@ -9,7 +10,9 @@ export const CommimentsComponent: FC<CommimentsComponentProps> = ({}) => {
         <div className="hover:bg-black hover:text-white flex-[0.7549] rounded-8xs bg-whitesmoke-100 box-border flex flex-col items-end justify-start py-[1.5rem] pr-[2.312rem] pl-[2.25rem] gap-[0.875rem] min-w-[15.688rem] max-w-[19.125rem] border-[1px] border-solid border-whitesmoke-300 mq450:flex-1">
           <div className="self-stretch h-[2.563rem] flex flex-row items-start justify-center py-[0rem] pr-[0rem] pl-[0.062rem] box-border">
             <div className="h-[2.563rem] w-[2.719rem] relative flex items-center justify-center">
-              <img
+              <Image
+                height={50}
+                width={50}
                 className="h-full w-full object-contain absolute left-[0.5rem] top-[0rem] [transform:scale(1.402)]"
                 loading="lazy"
                 alt=""
@@ -31,7 +34,9 @@ export const CommimentsComponent: FC<CommimentsComponentProps> = ({}) => {
         <div className="hover:bg-black hover:text-white flex-[0.7549] rounded-8xs bg-whitesmoke-100 box-border flex flex-col items-end justify-start py-[1.5rem] pr-[2.312rem] pl-[2.25rem] gap-[0.875rem] min-w-[15.688rem] max-w-[19.125rem] border-[1px] border-solid border-whitesmoke-300 mq450:flex-1">
           <div className="self-stretch h-[2.563rem] flex flex-row items-start justify-center py-[0rem] pr-[0rem] pl-[0.062rem] box-border">
             <div className="h-[2.563rem] w-[2.719rem] relative flex items-center justify-center">
-              <img
+              <Image
+                height={50}
+                width={50}
                 className="h-full w-full object-contain absolute left-[0.5rem] top-[0rem] [transform:scale(1.402)]"
                 loading="lazy"
                 alt=""
@@ -53,7 +58,9 @@ export const CommimentsComponent: FC<CommimentsComponentProps> = ({}) => {
         <div className="hover:bg-black hover:text-white flex-[0.7549] rounded-8xs bg-whitesmoke-100 box-border flex flex-col items-end justify-start py-[1.5rem] pr-[2.312rem] pl-[2.25rem] gap-[0.875rem] min-w-[15.688rem] max-w-[19.125rem] border-[1px] border-solid border-whitesmoke-300 mq450:flex-1">
           <div className="self-stretch h-[2.563rem] flex flex-row items-start justify-center py-[0rem] pr-[0rem] pl-[0.062rem] box-border">
             <div className="h-[2.563rem] w-[2.719rem] relative flex items-center justify-center">
-              <img
+              <Image
+                height={50}
+                width={50}
                 className="h-full w-full object-contain absolute left-[0.5rem] top-[0rem] [transform:scale(1.402)]"
                 loading="lazy"
                 alt=""
@@ -78,7 +85,9 @@ export const CommimentsComponent: FC<CommimentsComponentProps> = ({}) => {
         <div className="hover:bg-black hover:text-white flex-[0.7549] rounded-8xs bg-whitesmoke-100 box-border flex flex-col items-end justify-start py-[1.5rem] pr-[2.312rem] pl-[2.25rem] gap-[0.875rem] min-w-[15.688rem] max-w-[19.125rem] border-[1px] border-solid border-whitesmoke-300 mq450:flex-1">
           <div className="self-stretch h-[2.563rem] flex flex-row items-start justify-center py-[0rem] pr-[0rem] pl-[0.062rem] box-border">
             <div className="h-[2.563rem] w-[2.719rem] relative flex items-center justify-center">
-              <img
+              <Image
+                height={50}
+                width={50}
                 className="h-full w-full object-contain absolute left-[0.5rem] top-[0rem] [transform:scale(1.402)]"
                 loading="lazy"
                 alt=""

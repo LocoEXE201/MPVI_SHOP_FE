@@ -210,7 +210,7 @@ const ProductsComponent = (prop: {}) => {
     if (filterCategory?.length > 0) {
       return (
         <div className="flex flex-col justify-center items-center content-center gap-4 w-full p-4">
-          <div className="w-full grid grid-cols-4 gap-x-40 gap-y-9">
+          <div className="w-full grid grid-cols-4 gap-x-40 gap-y-9 mq1350:flex mq1350:flex-wrap mq1350:justify-center mq1350:gap-x-5">
             {filterCategory?.map((cate: any, index) => (
               <ProductCardComponent
                 key={index}
@@ -244,7 +244,7 @@ const ProductsComponent = (prop: {}) => {
     } else {
       return (
         <div className="flex justify-center items-center content-center text-lg text-zinc-400 font-bold font-baloo-2">
-          <div>Không có sản phẩm phù hợp</div>
+          <div className="mt-3 text-[1.2rem]">Không có sản phẩm phù hợp</div>
         </div>
       );
     }
@@ -254,19 +254,21 @@ const ProductsComponent = (prop: {}) => {
     <>
       <Loading loading={categoryLoading || superCategoryLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
-      <div className="w-[83rem] flex flex-row items-start justify-center max-w-full gap-5 mt-2.5 pl-2">
-        <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
+      <div className="w-[83rem] mq1350:w-full flex flex-row mq1350:flex-col items-start mq1350:items-center justify-center max-w-full gap-5 mt-2.5 pl-2">
+        <div className="flex flex-col gap-7 p-6 w-[306px] mq1350:w-[95%] h-[413px] mq1350:h-auto border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
           <div>
-            <div className="font-baloo text-lg">Danh Mục Sản Phẩm</div>
+            <div className="font-baloo text-lg mq1350:text-center text-black">
+              Danh Mục Sản Phẩm
+            </div>
             <hr className="h-px bg-zinc-200 border-0" />
           </div>
 
-          <div>
+          <div className="mq1350:flex mq1350:justify-center mq1350:w-full mq1350:flex-wrap">
             {superCategory ? (
               <Checkbox.Group style={{ width: "100%" }}>
-                <Col className="flex flex-col gap-3">
+                <Col className="flex flex-col gap-3 mq1350:flex-row mq1350:flex-wrap mq900:gap-x-[2%] mq1350:gap-[5%] mq1350:justify-center mq1350:w-full">
                   {superCategory?.map((supercategory: any, index: any) => (
-                    <Row key={index}>
+                    <Row key={index} className="mq900:w-[48%]">
                       <Checkbox
                         value={supercategory?.superCategoryName}
                         onChange={(e: CheckboxChangeEvent) =>
@@ -276,11 +278,11 @@ const ProductsComponent = (prop: {}) => {
                           )
                         }
                       >
-                        <div className="flex flex-row w-[200px] justify-between font-baloo-2 text-sm text-zinc-500">
-                          <div className="">
-                            {supercategory?.superCategoryName}
+                        <div className="flex flex-row mq1350:w-auto w-[200px] justify-between mq1350::justify-start font-baloo-2 text-sm text-zinc-500">
+                          <div>{supercategory?.superCategoryName}</div>
+                          <div className="mq1350:ml-[10px]">
+                            [{supercategory?.totalCategory}]
                           </div>
-                          <div>[{supercategory?.totalCategory}]</div>
                         </div>
                       </Checkbox>
                     </Row>
@@ -304,7 +306,7 @@ const ProductsComponent = (prop: {}) => {
           </div>
           <div className="flex flex-col gap-3">
             <div>
-              <div className="font-baloo text-lg">Lọc Theo Giá</div>
+              <div className="font-baloo text-lg text-black">Lọc Theo Giá</div>
               <hr className="h-px bg-zinc-200 border-0" />
             </div>
 
@@ -328,9 +330,9 @@ const ProductsComponent = (prop: {}) => {
             </div>
           </div>
         </div>
-        <div className="w-full h-full flex flex-col gap-3 justify-center align-items-center">
-          <div className="w-full h-[47px] flex flex-row gap-2 justify-evenly content-center items-center border-solid border-gray-300 bg-zinc-100 rounded shadow-lg">
-            <div className="flex flex-row gap-1 content-center p-2">
+        <div className="mq1350:w-[95%] w-full h-full flex flex-col gap-y-3 justify-center align-items-center">
+          <div className="w-full h-[47px] mq900:h-auto mq900:pb-3 mq900:gap-x flex flex-row mq900:flex-wrap gap-2 mq900:justify-start mq900:pl-3 justify-evenly content-center items-center border-solid border-gray-300 bg-zinc-100 rounded shadow-lg">
+            <div className="mq900:hidden flex flex-row gap-1 content-center p-2">
               <button className=" flex w-[30px] h-[30px] bg-chocolate rounded justify-center content-center items-center">
                 {" "}
                 <img
@@ -350,14 +352,14 @@ const ProductsComponent = (prop: {}) => {
                 />
               </button>
             </div>
-            <div className="w-[600px] font-baloo-2 text-gray-100 text-sm ">
+            <div className="mq900:w-[100%] flex-1 mq900:flex-auto mq900:text-primary w-[600px] mq1350:w-auto font-baloo-2 text-gray-100 text-sm mq900:font-baloo mq900:text-[1.1rem]">
               Chúng tôi tìm thấy <span>{category?.length}</span> sản phẩm bạn
               cần tìm
             </div>
-            <div className=" flex font-baloo text-gray-100 text-sm content-center mt-0.5 ">
+            <div className="flex font-baloo text-gray-100 text-sm content-center mq900:content-start mq900:justify-start mt-0.5 ">
               Sắp xếp
             </div>
-            <div>
+            <div className="mq900:ml-2 mq900:mr-2 text-black">
               <Select
                 defaultValue="All"
                 style={{ width: 150 }}
