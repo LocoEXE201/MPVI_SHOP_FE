@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { decrement, increment } from "@/store/features/cartSlice";
 import QuantityButton from "../QuantityButton";
 import { productQtySelector } from "../../../store/features/cartSlice";
+import Image from "next/image";
 
 interface Props {
   product: Product;
@@ -26,7 +27,13 @@ const AddCartButton = (props: Props) => {
           dispatch(increment(props.product));
         }}
       >
-        <img src="/Icons/cart.svg" className="w-[16px] h-[16px]" />
+        <Image
+          width={16}
+          height={16}
+          alt=""
+          src="/Icons/cart.svg"
+          className="w-[16px] h-[16px]"
+        />
         <div className="font-lato text-sm ">Thêm</div>
       </button>
     );

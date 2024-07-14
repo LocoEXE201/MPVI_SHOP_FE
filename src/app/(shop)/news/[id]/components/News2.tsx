@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const News2Component = (props: {}) => {
   return (
     <>
@@ -11,13 +13,18 @@ const News2Component = (props: {}) => {
               <span className="text-gray-100"> / 31-05-2024</span>
             </span>
           </div>
-          <b className="self-stretch relative text-[2.5rem] tracking-[0.48px] leading-[2.5rem] mq450:leading-[2rem] font-baloo-2 text-gray-300 mq900:text-[2rem] mq450:text-[1.5rem]">
+          <b
+            style={{ fontWeight: "bolder" }}
+            className="mq900:font-sans self-stretch relative text-[2.5rem] tracking-[0.48px] leading-[2.5rem] mq450:leading-[2rem] font-baloo text-gray-300 mq900:text-[2rem] mq450:text-[1.5rem]"
+          >
             NGÀY QUỐC TẾ NGƯỜI KHUYẾT TẬT 03/12/1992 - 03/12/2024
           </b>
         </div>
         <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.125rem] box-border max-w-full">
-          <img
-            className="mq900:object-top rounded-md mq1350:h-[25rem] mq900:h-[20rem] h-[30rem] flex-1 relative max-w-full overflow-hidden object-cover"
+          <Image
+            width={50}
+            height={50}
+            className="mq900:object-top object-top rounded-md mq1350:h-[45rem] mq900:h-[20rem] h-[45rem] flex-1 relative max-w-full overflow-hidden object-cover"
             style={{
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             }}

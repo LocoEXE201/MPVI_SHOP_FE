@@ -2,6 +2,7 @@
 import Loading from "@/components/Templates/Loading/Loading";
 import { CORE_INFORMATION } from "@/constants/CoreInformation";
 import { getAboutPageImage } from "@/hooks/useFirebaseStorage";
+import Image from "next/image";
 import { useLayoutEffect, useState } from "react";
 
 const AboutContentArea = (props: {}) => {
@@ -41,7 +42,11 @@ const AboutContentArea = (props: {}) => {
     <>
       <section className="mb-10">
         <div className="mq1350:hidden relative w-full flex flex-row">
-          <img
+          <Image
+            width={50}
+            height={50}
+            alt=""
+            loading="lazy"
             className="absolute w-full h-full object-cover object-center"
             src={imageList.find((x) => x.includes(`aboutPageImage_1`)) ?? ""}
           />

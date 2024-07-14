@@ -17,8 +17,10 @@ const FooterShopComponent = (props: {}) => {
     <>
       <footer className="mr-[-0.313rem] self-stretch bg-black box-border flex flex-col items-start justify-start pt-[5rem] px-[5rem] pb-[1.975rem] gap-[4rem] max-w-full z-[1] text-left text-[1.375rem] text-primary font-baloo border-t-[1px] border-solid border-black mq450:pt-[3.25rem] mq450:pb-[1.313rem] mq450:box-border mq900:gap-[1.25rem] mq900:pl-[4.813rem] mq900:pr-[4.813rem] mq1350:gap-[2.5rem] mq1350:pl-[9.688rem] mq1350:pr-[9.688rem] mq1350:box-border">
         <div className="w-[80.213rem] flex flex-row items-start justify-between max-w-full gap-[1.25rem] mq1725:flex-wrap">
-          <div className="w-[19.438rem] flex flex-col items-start justify-start py-[0rem] pr-[1.062rem] pl-[0rem] box-border gap-[0.681rem] text-white font-baloo-2">
-            <img
+          <div className="mq900:mb-[1.5rem] w-[19.438rem] flex flex-col items-start justify-start py-[0rem] pr-[1.062rem] pl-[0rem] box-border gap-[0.681rem] text-white font-baloo-2">
+            <Image
+              height={50}
+              width={50}
               onClick={() => {
                 navigateToPage(PATH_SHOP.root);
               }}
@@ -130,29 +132,37 @@ const FooterShopComponent = (props: {}) => {
               </div>
             </div>
           </div>
-          <div className="w-[21.15rem] flex flex-col items-start justify-start gap-[0.937rem] max-w-full">
+          <div className="w-[21.15rem] mq900:mt-[1.5rem] flex flex-col items-start justify-start gap-[0.937rem] max-w-full">
             <div className="w-[16.063rem] relative tracking-[0.48px] leading-[1.5rem] flex items-center mq450:text-[1.125rem] mq450:leading-[1.188rem]">
               Thư Viện
             </div>
             <div className="gap-[0.25rem] mq450:flex-wrap flex flex-col justify-between">
               <div className="self-stretch flex flex-row items-start justify-start ">
-                <img
+                <Image
+                  height={50}
+                  width={50}
                   className="mq450:hidden cursor-pointer relative rounded-8xs w-[6rem] h-[4rem] overflow-hidden"
                   alt=""
                   src="/LandingPage/Carousel/carousel.png"
                   style={{ objectFit: "fill" }}
                 />
-                <img
+                <Image
+                  height={50}
+                  width={50}
                   className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
                   src="/LandingPage/OutstandingNews/news1.jpg"
                 />
-                <img
+                <Image
+                  height={50}
+                  width={50}
                   className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
                   src="/LandingPage/OutstandingNews/news2.png"
                 />
-                <img
+                <Image
+                  height={50}
+                  width={50}
                   className="cursor-pointer ms-1 flex-1 relative rounded-8xs w-[5rem] h-[4rem] overflow-hidden object-cover"
                   alt=""
                   src="/LandingPage/OutstandingNews/news3.jpg"

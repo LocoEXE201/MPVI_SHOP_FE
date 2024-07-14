@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { PATH_AUTH } from "@/routes/paths";
 import Loading from "@/components/Templates/Loading/Loading";
 import Swal from "sweetalert2";
+import Image from "next/image";
 
 const LoginPageComponent = (props: {}) => {
   const { isLoading, enableLoading, disableLoading } = useAppContext();
@@ -88,7 +89,7 @@ const LoginPageComponent = (props: {}) => {
     <>
       <Loading loading={isLoading} />
       <PageTitle mainTitle="Đăng Nhập" subTitle="Trang Chủ - Đăng Nhập" />
-      <div className="mq900:w-screen mq900:px-[0.5rem] w-[117.563rem] mt-2 flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.25rem]">
+      <div className="mq900:w-screen mq900:px-[0.5rem] mt-2 flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.25rem]">
         <div className="mq900:w-full mq900:block text-white py-[0.5rem] box-border max-w-full">
           <div
             className="border-[1px] border-solid border-whitesmoke-300 rounded-md min-h-[5rem] min-w-[5rem] flex flex-row items-center justify-between max-w-full
@@ -224,10 +225,12 @@ const LoginPageComponent = (props: {}) => {
                   className="hover:bg-black hover:text-white text-black text-neutral-black mq450:gap-[0rem_2.313rem] mq450:pl-[1.25rem] mq450:pr-[1.25rem] mq450:box-border box-border flex w-full max-w-full cursor-pointer flex-row items-center justify-center gap-[0rem_1rem] self-stretch rounded-md bg-neutral-white px-[2.688rem] py-[10px] mt-3 text-center shadow-[0px_4px_10px_rgba(0,_0,_0,_0.25)]"
                 >
                   <div className="cursor-pointer box-border flex flex-row items-center justify-center px-[0rem] pb-[0rem]">
-                    <img
-                      className="relative z-[1] h-[1.5rem] min-h-[1.5rem] w-[1.5rem] shrink-0 overflow-hidden"
-                      loading="lazy"
+                    <Image
+                      width={50}
+                      height={50}
                       alt=""
+                      loading="lazy"
+                      className="relative z-[1] h-[1.5rem] min-h-[1.5rem] w-[1.5rem] shrink-0 overflow-hidden"
                       src="/Icons/google_icon.svg"
                     />
                     <div className="relative z-[1] w-full self-stretch pl-5 font-medium font-baloo">

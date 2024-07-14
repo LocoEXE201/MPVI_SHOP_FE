@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const News3Component = (props: {}) => {
   return (
     <>
@@ -16,7 +18,9 @@ const News3Component = (props: {}) => {
           </b>
         </div>
         <div className="self-stretch flex flex-row items-start justify-start py-[0rem] pr-[0rem] pl-[0.125rem] box-border max-w-full">
-          <img
+          <Image
+            width={50}
+            height={50}
             className="rounded-md mq1350:h-[25rem] mq900:h-[20rem] h-[30rem] flex-1 relative max-w-full overflow-hidden object-cover"
             style={{
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
