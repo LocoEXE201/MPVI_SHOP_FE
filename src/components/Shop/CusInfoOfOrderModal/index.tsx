@@ -180,13 +180,14 @@ const CusInfoOfOrderModal = ({
 
     // Show confirmation dialog
     const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Bạn có chắc không?",
+      text: "Bạn không thể quay lại được",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Quay lại",
     });
 
     if (result.isConfirmed) {

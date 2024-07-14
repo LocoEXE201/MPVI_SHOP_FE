@@ -97,6 +97,9 @@ const config: Config = {
       mq900: {
         raw: "screen and (max-width: 900px)",
       },
+      mq800: {
+        raw: "screen and (max-width: 800px)",
+      },
       mq450: {
         raw: "screen and (max-width: 450px)",
       },

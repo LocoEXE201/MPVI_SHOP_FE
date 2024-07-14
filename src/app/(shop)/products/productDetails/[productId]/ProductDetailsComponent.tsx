@@ -212,8 +212,8 @@ const ProductDetailsComponent = () => {
       <Loading loading={isLoading} />
       <PageTitle mainTitle="Sản Phẩm" subTitle="Trang Chủ - Sản Phẩm" />
       <div className="flex items-center justify-center w-full">
-        <div className="w-full h-full mt-2.5 mb-6 flex flex-row sm:flex-col md:flex-col lg:flex-col xl:flex-row">
-          <div className=" flex flex-col gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded ">
+        <div className="w-full h-full mt-2.5 mb-6 flex mq1725:flex-row mq1350:flex-row mq900:flex-col mq450: flex-col">
+          <div className=" flex flex-col mq1725:flex mq1350:flex mq900:hidden mq450:hidden gap-7 p-6 w-[306px] h-[413px] border-[1px] border-solid border-zinc-200 bg-zinc-100 rounded  ">
             <div>
               <div className="font-baloo text-lg">Danh Mục Sản Phẩm</div>
               <hr className="h-px bg-zinc-200 border-0" />
@@ -272,13 +272,13 @@ const ProductDetailsComponent = () => {
             </div>
 
             <div>
-              <button className="w-[82px] h-[40px] bg-chocolate text-base text-white rounded">
+              {/* <button className="w-[82px] h-[40px] bg-chocolate text-base text-white rounded">
                 Tìm Kiếm
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="w-full h-full flex flex-col gap-3 p-1 box-border ">
-            <div className="ml-2.5">
+            <div className="ml-2.5 mq800:flex justify-center items-center content-center">
               <ConfigProvider
                 theme={{
                   components: {
@@ -313,8 +313,8 @@ const ProductDetailsComponent = () => {
                 </Space>
               </ConfigProvider>
             </div>
-            <div className="flex flex-row gap-4 items-center">
-              <div className="flex flex-col w-[495px] h-[591px] items-center ">
+            <div className="flex mq1725:flex-row mq1350:flex-row mq900:flex-row mq800:flex-col mq450:flex-col gap-4 items-center">
+              <div className="flex flex-col w-[495px] h-max items-center ">
                 <div className="flex w-[400px] h-[400px] justify-center items-center content-center border-[1px] border-zinc-400 border-solid rounded mb-1.5 ">
                   <img
                     src={categoryItem?.image}
@@ -356,7 +356,7 @@ const ProductDetailsComponent = () => {
                   </ul>
                 </div>
               </div>
-              <div className="flex flex-col gap-3 w-[495px] h-[591px]">
+              <div className="flex flex-col gap-3 w-[495px] h-max py-5">
                 <div className="font-baloo text-xl">
                   {categoryItem?.categoryName}
                 </div>
@@ -454,7 +454,7 @@ const ProductDetailsComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="border-[2px] border-solid border-zinc-300 rounded p-4 box-border w-full h-full ">
+            <div className="border-[2px] border-solid border-zinc-300 rounded box-border w-full h-full px-2 ">
               <ConfigProvider
                 theme={{
                   components: {
@@ -484,11 +484,11 @@ const ProductDetailsComponent = () => {
               </ConfigProvider>
             </div>
 
-            <div className="flex flex-col gap-4 w-full justify-center">
+            <div className="flex flex-col gap-4 w-full justify-center  mq1350:justify-center items-center content-center mq900:justify-center items-center content-center mq450:justify-center items-center content-center ">
               <div className="flex justify-center items-center content-center font-baloo text-9xl ">
                 Sản Phẩm Khác
               </div>
-              <div className="grid grid-cols-4 col-auto ">
+              <div className="grid mq1725:grid-cols-4 gap-8 mq1350:grid-cols-2 gap-5 col-auto mq900:grid-cols-1 mq450: grid-cols-1 gap-5 col-auto ">
                 {category?.map((cate: any, index) => {
                   if (index < 4) {
                     return (
@@ -507,7 +507,7 @@ const ProductDetailsComponent = () => {
                   }
                 })}
               </div>
-              <div className="flex w-full justify-end items-end content-end border-box ">
+              <div className="flex w-full mq1725:justify-end items-end content-end mq1350:justify-center items-center content-center mq900: justify-center items-center content-center mq450: justify-center items-center content-center border-box ">
                 <button
                   className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
                   onClick={() => navigateToPage(PATH_SHOP.products)}
