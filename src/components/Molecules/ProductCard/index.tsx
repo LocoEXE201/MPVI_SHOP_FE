@@ -7,6 +7,8 @@ import { CategoryDTO } from "@/models/warehouse/CategoryDTO";
 import { formatPrice } from "@/utils/formatPrice";
 import { useRouter } from "next/navigation";
 import { PATH_SHOP } from "@/routes/paths";
+import useAppContext from "@/hooks/useAppContext";
+import Image from "next/image";
 
 interface ProductCardProps {
   productId?: number;
@@ -29,12 +31,14 @@ export const ProductCard: FC<ProductCardProps> = ({
   productCategoryId,
   productCategoryName,
 }) => {
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
   const router = useRouter();
 
   return (
     <div
       onClick={() => {
         if (productId) {
+          enableLoading();
           router.push(PATH_SHOP.productDetails(productId));
         }
       }}
@@ -42,12 +46,16 @@ export const ProductCard: FC<ProductCardProps> = ({
     >
       <div className="rounded-8xs flex flex-row items-start justify-start">
         <div className="flex flex-row items-start justify-start relative">
-          <img
+          <Image
+            height={50}
+            width={50}
             className="product_card_image h-[17.5rem] w-[17.5rem] relative rounded-8xs overflow-hidden shrink-0 object-cover"
             alt=""
-            src={productImage}
+            src={productImage ?? ""}
           />
-          <img
+          <Image
+            height={50}
+            width={50}
             className="product_card_lock_image h-[2.188rem] w-[2.188rem] absolute !m-[0] bottom-[-1rem] left-[calc(50%_-_17.5px)] rounded-16xl z-[1]"
             alt=""
             src="/Icons/lock_icon.svg"
@@ -64,27 +72,37 @@ export const ProductCard: FC<ProductCardProps> = ({
               {productDTO && productDTO.rate > 0 ? (
                 <>
                   <div className="flex flex-row items-center justify-center gap-[0.131rem] shrink-0">
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
                       src={`/Icons/${Math.ceil(productDTO.rate) >= 1 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
                       src={`/Icons/${Math.ceil(productDTO.rate) >= 2 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
                       src={`/Icons/${Math.ceil(productDTO.rate) >= 3 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
                       src={`/Icons/${Math.ceil(productDTO.rate) >= 4 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}
                     />
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className="h-[0.938rem] w-[0.969rem] relative overflow-hidden shrink-0 min-h-[0.938rem]"
                       alt=""
                       src={`/Icons/${Math.ceil(productDTO.rate) >= 5 ? "star_rating_icon_active" : "star_rating_icon"}.svg`}

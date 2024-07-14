@@ -3,7 +3,8 @@ import HomePageComponent from "./pageComponent";
 
 export const metadata: Metadata = {
   title: "Loco. - Love Connection",
-  description: "This is Loco. Landing Page",
+  description:
+    "We are Loco. who sell handmade products and help disadvantaged people.",
 };
 
 export default function Home() {

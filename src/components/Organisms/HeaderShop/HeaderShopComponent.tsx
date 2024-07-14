@@ -2,30 +2,34 @@
 import { useRouter } from "next/navigation";
 import "./index.scss";
 import { PATH_AUTH, PATH_SHOP } from "@/routes/paths";
-import {
-  Select,
-  InputLabel,
-  MenuItem,
-  FormHelperText,
-  FormControl,
-  InputAdornment,
-} from "@mui/material";
 import { CORE_INFORMATION } from "@/constants/CoreInformation";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstant";
 import useAuth from "@/hooks/useAuth";
 import Swal from "sweetalert2";
-import { useLayoutEffect, useState } from "react";
-import { getUserInfoId } from "@/utils/utils";
 import { useAppSelector } from "@/store/store";
 import { totalCartItemSelector } from "@/store/features/cartSlice";
+import Loading from "@/components/Templates/Loading/Loading";
+import useAppContext from "@/hooks/useAppContext";
+import { useEffect } from "react";
+import Image from "next/image";
 
 const HeaderShopComponent = (props: {}) => {
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
   const router = useRouter();
   const { logout, isAuthenticated } = useAuth();
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
+      if (
+        (localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+          !isActivePage(route)) ||
+        (!localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+          route != PATH_SHOP.root)
+      ) {
+        enableLoading();
+      }
       localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
     }
+    // window.location.href = route;
     router.push(route);
   };
 
@@ -41,9 +45,14 @@ const HeaderShopComponent = (props: {}) => {
     );
   };
 
+  useEffect(() => {
+    disableLoading();
+  }, []);
+
   return (
     <>
-      <header className="bg-white pt-[0.5rem] mq450:w-full w-[117.563rem] flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.3rem] text-black font-baloo-2">
+      <Loading loading={isLoading} />
+      <header className="bg-white pt-[0.5rem] mq450:w-full flex flex-row items-start justify-center py-[0rem] px-[1.25rem] box-border max-w-full text-left text-[1.3rem] text-black font-baloo-2">
         <div className="mq1350:hidden w-[78rem] flex flex-col items-start justify-start gap-[0rem] max-w-full">
           <div className="w-[83rem] py-[0.6rem] pb-[0.5rem] box-border flex flex-row items-center justify-between max-w-full text-[1.125rem] text-black border-b-[1px] border-solid border-whitesmoke-300 gap-[5rem]">
             <div className="w-[50rem] flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border max-w-full">
@@ -126,7 +135,9 @@ const HeaderShopComponent = (props: {}) => {
             >
               <div className="flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.137rem]">
                 <div className="flex flex-row items-center justify-center gap-[0.375rem]">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className="h-[1.5rem] w-[1.5rem] relative"
                     alt=""
                     src="/Icons/mail_icon.svg"
@@ -144,7 +155,9 @@ const HeaderShopComponent = (props: {}) => {
               </div>
               <div className="flex flex-col items-center justify-start pt-[0rem] px-[0rem] pb-[0.137rem]">
                 <div className="flex flex-row items-center justify-center">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className="h-[1.6rem] w-[1.6rem] relative"
                     alt=""
                     src="/Icons/phone_icon.svg"
@@ -166,7 +179,9 @@ const HeaderShopComponent = (props: {}) => {
           <div className="w-[83rem] py-[0.6rem] mt-[0.3rem] box-border flex flex-row items-center justify-between max-w-full text-[1.125rem] text-black gap-[5rem]">
             <div className="w-[50rem] flex flex-col items-start justify-start pt-[0.125rem] px-[0rem] pb-[0rem] box-border max-w-full">
               <div className="self-stretch flex flex-row items-start justify-between max-w-full gap-[1.25rem]">
-                <img
+                <Image
+                  height={50}
+                  width={50}
                   className="cursor-pointer h-[3.625rem] w-[7.625rem] relative object-cover z-[3]"
                   loading="lazy"
                   alt=""
@@ -191,7 +206,9 @@ const HeaderShopComponent = (props: {}) => {
                       </div>
                     </div>
                     <div className="flex flex-row items-start justify-end">
-                      <img
+                      <Image
+                        height={50}
+                        width={50}
                         className="cursor-pointer h-[2.813rem] w-[2.813rem] relative  min-h-[2.813rem] z-[1]"
                         loading="lazy"
                         alt=""
@@ -208,7 +225,9 @@ const HeaderShopComponent = (props: {}) => {
               {!isAuthenticated ? (
                 <>
                   <div className="flex flex-row items-center justify-end">
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className=" w-[1.656rem] h-[1.2rem] z-[1]"
                       alt=""
                       src="/Icons/account_icon.svg"
@@ -263,7 +282,9 @@ const HeaderShopComponent = (props: {}) => {
               {isAuthenticated ? (
                 <>
                   <div className="cursor-pointer flex flex-row items-center justify-end">
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className=" w-[1.656rem] h-[1.2rem] z-[1]"
                       alt=""
                       src="/Icons/cart_icon.svg"
@@ -287,7 +308,9 @@ const HeaderShopComponent = (props: {}) => {
                   </div>
 
                   <div className="flex flex-row items-center justify-end">
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className=" w-[1.656rem] h-[1.2rem] z-[1]"
                       alt=""
                       src="/Icons/heart_icon.svg"
@@ -311,7 +334,9 @@ const HeaderShopComponent = (props: {}) => {
                   </div>
 
                   <div className="flex flex-row items-center justify-end">
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className=" w-[1.656rem] h-[1.2rem] z-[1]"
                       alt=""
                       src="/Icons/account_icon.svg"
@@ -362,7 +387,9 @@ const HeaderShopComponent = (props: {}) => {
                     }}
                     className="cursor-pointer flex flex-row items-center justify-end"
                   >
-                    <img
+                    <Image
+                      height={50}
+                      width={50}
                       className=" w-[1.656rem] h-[1.2rem] z-[1]"
                       alt=""
                       src="/Icons/logout_icon.svg"
@@ -378,7 +405,9 @@ const HeaderShopComponent = (props: {}) => {
         </div>
 
         <div className="mq1350:flex mq1725:hidden flex flex-row mq900:flex-col mb-3 px-[2rem] mq450:mb-1 mq900:px-[0.5rem]">
-          <img
+          <Image
+            height={50}
+            width={50}
             className="mq900:hidden mq2000:hidden cursor-pointer h-[3.625rem] w-[7.625rem] relative object-cover z-[3]"
             loading="lazy"
             alt=""
@@ -389,7 +418,9 @@ const HeaderShopComponent = (props: {}) => {
           />
 
           <div className="hidden mq900:flex mx-[1rem] mq450:mx-0 self-stretch flex-row items-center justify-center max-w-full gap-[1.25rem]">
-            <img
+            <Image
+              height={50}
+              width={50}
               className="cursor-pointer h-[3.625rem] w-[7.625rem] relative object-cover z-[3]"
               loading="lazy"
               alt=""
@@ -404,7 +435,9 @@ const HeaderShopComponent = (props: {}) => {
             >
               <div className="flex flex-col items-start justify-end pt-[0rem] px-[0rem] pb-[0.137rem]">
                 <div className="flex flex-row items-center justify-center gap-[0.375rem]">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className="h-[1.5rem] w-[1.5rem] relative"
                     alt=""
                     src="/Icons/mail_icon.svg"
@@ -422,7 +455,9 @@ const HeaderShopComponent = (props: {}) => {
               </div>
               <div className="flex flex-col items-center justify-start pt-[0rem] px-[0rem] pb-[0.137rem]">
                 <div className="flex flex-row items-center justify-center">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className="h-[1.6rem] w-[1.6rem] relative"
                     alt=""
                     src="/Icons/phone_icon.svg"
@@ -506,7 +541,9 @@ const HeaderShopComponent = (props: {}) => {
             {!isAuthenticated ? (
               <>
                 <div className="w-full flex flex-row items-center justify-center">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
                     src="/Icons/account_icon.svg"
@@ -561,7 +598,9 @@ const HeaderShopComponent = (props: {}) => {
             {isAuthenticated ? (
               <>
                 <div className="mq450:mr-0 mr-3 mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
                     src="/Icons/cart_icon.svg"
@@ -585,7 +624,9 @@ const HeaderShopComponent = (props: {}) => {
                 </div>
 
                 <div className="mq450:mx-0 mx-3 mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
                     src="/Icons/heart_icon.svg"
@@ -609,7 +650,9 @@ const HeaderShopComponent = (props: {}) => {
                 </div>
 
                 <div className="mq450:mx-0 mx-3 mq450:w-[50%] mq450:mb-3 flex flex-row items-center justify-end mq450:justify-center">
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
                     src="/Icons/account_icon.svg"
@@ -660,7 +703,9 @@ const HeaderShopComponent = (props: {}) => {
                     });
                   }}
                 >
-                  <img
+                  <Image
+                    height={50}
+                    width={50}
                     className=" w-[1.656rem] h-[1.2rem] z-[1]"
                     alt=""
                     src="/Icons/logout_icon.svg"
