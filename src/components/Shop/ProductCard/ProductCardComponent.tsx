@@ -73,7 +73,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({
               {superCategoryName}
             </div>
             <div className="w-full font-baloo-2 text-lg text-black font-medium mb-2">
-              {categoryName}
+              {categoryName ? categoryName : "Không có thông tin"}
             </div>
             <div className="flex gap-3 items-center content-center">
               <Rate
