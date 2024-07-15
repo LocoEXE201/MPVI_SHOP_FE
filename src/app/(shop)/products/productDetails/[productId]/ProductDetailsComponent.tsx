@@ -322,7 +322,7 @@ const ProductDetailsComponent = () => {
                   />
                 </div>
                 <div>
-                  <ul className="flex flex-row gap-4  ">
+                  <ul className="mq1725:flex mq1350:flex mq900:flex mq800:hidden mq450:hidden flex-row gap-4  ">
                     <li className="w-[85px] h-[85px]">
                       <img
                         src={categoryItem?.image}
@@ -356,7 +356,7 @@ const ProductDetailsComponent = () => {
                   </ul>
                 </div>
               </div>
-              <div className="flex flex-col gap-3 w-[495px] h-max py-5">
+              <div className="flex flex-col gap-3 w-full h-max mq1725:py-5 mq1350:py-5 mq900:py-5 mq800:p-5 ml-5 mq768:justify-center items-center content-center mq450:p-5  ">
                 <div className="font-baloo text-xl">
                   {categoryItem?.categoryName}
                 </div>
@@ -365,7 +365,7 @@ const ProductDetailsComponent = () => {
                   ủng hộ người khiếm thị.
                 </div>
                 <hr className="h-px bg-zinc-300 border-0" />
-                <div className="flex gap-3">
+                <div className="flex gap-3 mq768:flex-col gap-3">
                   <Rate
                     className="text-base text-red-400"
                     allowHalf
@@ -373,7 +373,7 @@ const ProductDetailsComponent = () => {
                     defaultValue={categoryItem?.rate}
                     style={{ marginTop: "3px" }}
                   />
-                  <div className="font-poppins text-base text-zinc-400">
+                  <div className="font-poppins text-base text-zinc-400 ">
                     ( {totalFeedback} Đánh giá )
                   </div>
                 </div>
@@ -385,38 +385,8 @@ const ProductDetailsComponent = () => {
                     {formatPrice(categoryItem?.priceIn ?? 0)}đ
                   </div>
                 </div>
-                {/* <div className="flex flex-row gap-2 font-baloo-2 text-lg">
-                  <div className="font-semibold">Phân loại:</div>
-                  <ul className="flex flex-row justify-around gap-1">
-                    <li>
-                      <button className="w-[80px] h-[30px] flex items-center justify-center bg-chocolate font-medium text-white border-[1px] border-solid border-zinc-200 rounded">
-                        Teddy
-                      </button>
-                    </li>
-                    <li>
-                      <button className="w-[70px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
-                        Pooh
-                      </button>
-                    </li>
-                    <li>
-                      <button className="w-[80px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
-                        Thỏ
-                      </button>
-                    </li>
-                    <li>
-                      <button className="w-[80px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
-                        Gấu Dâu
-                      </button>
-                    </li>
-                    <li>
-                      <button className="w-[80px] h-[30px] flex items-center justify-center font-medium text-zinc-400 border-[1px] border-solid border-zinc-200 rounded">
-                        Cáo
-                      </button>
-                    </li>
-                  </ul>
-                </div> */}
                 <div className="flex flex-row gap-2 font-baloo-2 font-semibold text-lg">
-                  <div>Số lượng:</div>
+                  <div className="mq768:hidden">Số lượng:</div>
                   <div className="flex flex-row gap-3">
                     <QuantityButton
                       onIncrease={(e: any) => {
@@ -454,7 +424,7 @@ const ProductDetailsComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="border-[2px] border-solid border-zinc-300 rounded box-border w-full h-full px-2 ">
+            <div className="border-[2px] border-solid border-zinc-300 rounded box-border w-full h-full px-8 mq900:ml-3 px-4 mq800:ml-3 px-4 mq768:ml-4 mq450:ml-3 px-4  ">
               <ConfigProvider
                 theme={{
                   components: {
@@ -484,7 +454,7 @@ const ProductDetailsComponent = () => {
               </ConfigProvider>
             </div>
 
-            <div className="flex flex-col gap-4 w-full justify-center  mq1350:justify-center items-center content-center mq900:justify-center items-center content-center mq450:justify-center items-center content-center ">
+            <div className="flex flex-col gap-4 w-full justify-center mq1350:justify-center items-center content-center mq900:justify-center items-center content-center mq800:justify-center items-center content-center mq450:justify-center items-center content-center ">
               <div className="flex justify-center items-center content-center font-baloo text-9xl ">
                 Sản Phẩm Khác
               </div>
