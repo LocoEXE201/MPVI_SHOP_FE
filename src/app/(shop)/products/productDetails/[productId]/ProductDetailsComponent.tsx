@@ -25,15 +25,14 @@ import {
 } from "@/store/features/cartSlice";
 import { useDispatch } from "react-redux";
 import QuantityButton from "@/components/Atoms/QuantityButton";
-import cartApi from "@/api/shop/cartApi";
 import FeedbackFrame from "@/components/Shop/FeedbackFrame";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { SuperCategoryDTO } from "@/models/warehouse/SuperCategoryDTO";
 import superCategoryApi from "@/api/warehouse/superCategoryApi";
 
-interface Props {
-  product: Product;
-}
+// interface Props {
+//   product: Product;
+// }
 
 function valuetext(value: number) {
   return `đ ${value * 10000}`;
