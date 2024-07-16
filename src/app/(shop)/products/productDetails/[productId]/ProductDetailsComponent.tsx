@@ -5,7 +5,7 @@ import { Checkbox, Col, ConfigProvider, Row, Space } from "antd";
 import Slider from "@mui/material/Slider";
 import useAppContext from "@/hooks/useAppContext";
 import { Breadcrumb } from "antd";
-import { PATH_SHOP } from "@/routes/paths";
+import { PATH_AUTH, PATH_SHOP } from "@/routes/paths";
 import { Rate } from "antd";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
@@ -72,6 +72,14 @@ const ProductDetailsComponent = () => {
       localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
     }
     router.push(route);
+  };
+
+  const loadUserInformation = () => {
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("USER_INFO");
+      return user ? JSON.parse(user) : {};
+    }
+    return {};
   };
 
   const getAllCategory: any = async () => {
@@ -187,6 +195,8 @@ const ProductDetailsComponent = () => {
 
   // console.log(totalFeedback);
 
+  // console.log(loadUserInformation().id === undefined);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -277,7 +287,7 @@ const ProductDetailsComponent = () => {
             </div>
           </div>
           <div className="w-full h-full flex flex-col gap-3 p-1 box-border ">
-            <div className="ml-2.5 mq800:flex justify-center items-center content-center">
+            <div className="ml-2.5 mq900:px-8 mq800:flex justify-center items-center content-center">
               <ConfigProvider
                 theme={{
                   components: {
@@ -355,7 +365,7 @@ const ProductDetailsComponent = () => {
                   </ul>
                 </div>
               </div>
-              <div className="flex flex-col gap-3 w-full h-max mq1725:py-5 mq1350:py-5 mq900:py-5 mq800:p-5 ml-5 mq768:justify-center items-center content-center mq450:p-5  ">
+              <div className="flex flex-col gap-3 w-full mq1725:h-[491px] pt-5 mq1350:h-[491px] pt-5 mq900:h-[491px] p-5  mq768:h-max px-4 mq768:items-center mq450:h-max px-4 mq450:items-center">
                 <div className="font-baloo text-xl">
                   {categoryItem?.categoryName}
                 </div>
@@ -402,7 +412,7 @@ const ProductDetailsComponent = () => {
                 </div>
                 <div className="flex flex-row gap-4">
                   <button
-                    className="w-[152px] h-[40px] flex flex-row gap-1 bg-chocolate text-white text-base justify-center items-center content-center rounded"
+                    className="w-[152px] h-[40px] flex flex-row gap-1 bg-chocolate text-white text-base justify-center items-center content-center rounded hover:bg-orange-500"
                     onClick={(e) => {
                       e.preventDefault();
                       dispatch(increment(categoryItem));
@@ -412,12 +422,23 @@ const ProductDetailsComponent = () => {
                       src="/Icons/cart.svg"
                       className="w-[20px] h-[20px] text-base "
                     />
-                    <div className="font-baloo-2 text-base font-bold  ">
+                    <div className="font-baloo-2 text-base font-bold">
                       Thêm Giỏ Hàng
                     </div>
                   </button>
                   {/* <AddCartButtonDetails product={categoryItem} /> */}
-                  <button className="w-[95px] h-[40px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate">
+                  <button
+                    className="w-[95px] h-[40px] flex justify-center items-center content-center border-[1px] border-solid border-chocolate rounded text-chocolate hover:text-orange-600 hover:font-bold"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (loadUserInformation().id !== undefined) {
+                        dispatch(increment(categoryItem));
+                        navigateToPage(PATH_SHOP.cart);
+                      } else {
+                        navigateToPage(PATH_AUTH.login);
+                      }
+                    }}
+                  >
                     Mua Ngay
                   </button>
                 </div>

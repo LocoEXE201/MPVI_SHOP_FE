@@ -306,11 +306,14 @@ const PaymentComponent = (prop: {}) => {
       // console.log("abcd");
       if (method === "VnPay" && result) {
         await fetchPayment(result);
+        localStorage.removeItem("cartItems");
       } else {
-        navigateToPage(PATH_SHOP.order);
+        localStorage.removeItem("cartItems");
         // window.location.href = PATH_SHOP.order;
+        navigateToPage(PATH_SHOP.order);
+        // window.location.reload();
       }
-      localStorage.removeItem("cartItems");
+
       // navigateToPage(PATH_SHOP.order);
 
       // window.location.reload(); // Remove this line
@@ -340,7 +343,7 @@ const PaymentComponent = (prop: {}) => {
         </div>
 
         <div className="w-[83rem] max-h-max flex flex-row justify-center gap-9 ">
-          <div className="w-[420px] h-[508px] border-[2px] border-solid border-zinc-300 rounded flex flex-col justify-center content-center gap-3 pl-7 pr-3 py-5 ">
+          <div className="w-[420px] h-[508px] border-[2px] border-solid border-zinc-300 rounded flex flex-col justify-center content-center gap-3 pl-7 pr-3 py-5 mt-8">
             <div className="">
               <div className="font-baloo-2 font-semibold text-xl">
                 Phương Thức Vận Chuyển
@@ -435,7 +438,7 @@ const PaymentComponent = (prop: {}) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-3 w-[400px] max-h-max mt-5">
+          <div className="flex flex-col gap-3 w-[400px] max-h-max">
             <div className="font-baloo-2 text-xl font-semibold">
               Chi Tiết Đơn Hàng
             </div>
