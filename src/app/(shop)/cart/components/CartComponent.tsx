@@ -132,7 +132,7 @@ const CartComponent = () => {
     if (cartItems.length > 0 && selectedItems.length > 0) {
       return (
         <button
-          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded"
+          className="w-[128px] h-[46px] flex items-center justify-center content-center bg-chocolate text-white font-baloo text-base rounded hover:bg-transparent hover:border-[1px] border-solid border-chocolate hover:text-chocolate"
           onClick={() => navigateToPage(PATH_SHOP.payment)}
         >
           Thanh Toán
@@ -208,11 +208,12 @@ const CartComponent = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col h-full mb-8 mt-5 gap-5">
+
+        <div className="flex flex-col gap-4 w-full justify-center mq1350:justify-center items-center content-center mq900:justify-center items-center content-center mq800:justify-center items-center content-center mq450:justify-center items-center content-center ">
           <div className="flex justify-center items-center content-center font-baloo text-9xl ">
             Sản Phẩm Khác
           </div>
-          <div className="grid grid-cols-4 col-auto gap-x-14 ">
+          <div className="grid mq1725:grid-cols-4 gap-8 mq1350:grid-cols-2 gap-5 col-auto mq900:grid-cols-1 mq450: grid-cols-1 gap-5 col-auto ">
             {category?.map((cate: any, index) => {
               if (index < 4) {
                 return (
@@ -231,12 +232,12 @@ const CartComponent = () => {
               }
             })}
           </div>
-          <div className="flex justify-end">
+          <div className="flex w-3/4 mb-5 mq1725:justify-end items-end content-end mq1350:justify-center items-center content-center mq900: justify-center items-center content-center mq450: justify-center items-center content-center border-box ">
             <button
               className="flex flex-row justify-center items-center content-center w-[132px] h-[49px] bg-chocolate text-white rounded font-baloo-2 text-base font-bold"
               onClick={() => navigateToPage(PATH_SHOP.products)}
             >
-              <div className="flex flex-row justify-center items-center content-center ml-3 ">
+              <div className="flex flex-row justify-center items-center content-center ml-3">
                 Xem Thêm
               </div>
               <img

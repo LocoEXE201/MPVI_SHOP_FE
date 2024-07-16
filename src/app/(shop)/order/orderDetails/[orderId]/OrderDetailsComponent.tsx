@@ -233,7 +233,7 @@ const OrderDetailsComponent = () => {
         </div>
 
         <div className="w-full max-h-max flex flex-row justify-center gap-9 mb-6">
-          <div className="w-4/12 h-full border-[2px] border-solid border-zinc-300 rounded flex flex-col gap-1 box-border py-4 pt-6 ">
+          <div className="w-4/12 h-full border-[2px] border-solid border-zinc-300 rounded flex flex-col gap-1 box-border py-4 pt-6 mt-8">
             <div className="flex flex-col box-border pl-7 gap-5">
               <div>
                 <div className="font-baloo-2 font-semibold text-xl">
@@ -291,7 +291,7 @@ const OrderDetailsComponent = () => {
               </div> */}
             </div>
           </div>
-          <div className="flex flex-col gap-3 w-[400px] max-h-max mt-5">
+          <div className="flex flex-col gap-3 w-[400px] h-max ">
             <div className="font-baloo-2 text-xl font-semibold">
               Chi Tiết Đơn Hàng
             </div>
