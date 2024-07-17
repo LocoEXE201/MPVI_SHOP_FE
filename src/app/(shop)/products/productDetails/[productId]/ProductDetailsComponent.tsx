@@ -390,9 +390,7 @@ const ProductDetailsComponent = () => {
                   <div className="font-poppins text-2xl text-chocolate font-semibold">
                     {formatPrice(categoryItem?.priceSold ?? 0)}đ
                   </div>
-                  <div className="font-poppins text-base text-zinc-400 line-through mt-1.5">
-                    {formatPrice(categoryItem?.priceIn ?? 0)}đ
-                  </div>
+               
                 </div>
                 <div className="flex flex-row gap-2 font-baloo-2 font-semibold text-lg">
                   <div className="mq768:hidden">Số lượng:</div>
