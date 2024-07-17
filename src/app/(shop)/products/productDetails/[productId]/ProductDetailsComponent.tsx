@@ -148,13 +148,13 @@ const ProductDetailsComponent = () => {
     }
   };
 
-  const filterCategory = category?.filter((cate: any) => {
-    return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
-  });
+  // const filterCategory = category?.filter((cate: any) => {
+  //   return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
+  // });
 
-  const handleChange = (value: string) => {
-    setFilteredPrice(value);
-  };
+  // const handleChange = (value: string) => {
+  //   setFilteredPrice(value);
+  // };
 
   const handleCheckboxChange = (superCategory: string, checked: boolean) => {
     setSelectedItems((prevSelectedItems) => {
