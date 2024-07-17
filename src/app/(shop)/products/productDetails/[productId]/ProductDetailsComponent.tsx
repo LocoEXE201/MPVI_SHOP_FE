@@ -30,9 +30,9 @@ import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { SuperCategoryDTO } from "@/models/warehouse/SuperCategoryDTO";
 import superCategoryApi from "@/api/warehouse/superCategoryApi";
 
-// interface Props {
-//   product: Product;
-// }
+interface Props {
+  product: Product;
+}
 
 function valuetext(value: number) {
   return `đ ${value * 10000}`;
@@ -148,13 +148,13 @@ const ProductDetailsComponent = () => {
     }
   };
 
-  // const filterCategory = category?.filter((cate: any) => {
-  //   return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
-  // });
+  const filterCategory = category?.filter((cate: any) => {
+    return value2[0] <= cate.priceIn && cate.priceIn <= value2[1];
+  });
 
-  // const handleChange = (value: string) => {
-  //   setFilteredPrice(value);
-  // };
+  const handleChange = (value: string) => {
+    setFilteredPrice(value);
+  };
 
   const handleCheckboxChange = (superCategory: string, checked: boolean) => {
     setSelectedItems((prevSelectedItems) => {
