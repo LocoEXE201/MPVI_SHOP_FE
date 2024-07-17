@@ -154,6 +154,7 @@ const ProductsComponent = (prop: {}) => {
 
   const handleChange = (value: string) => {
     setFilteredPrice(value);
+    setPage(1);
   };
 
   const handleCheckboxChange = (superCategory: string, checked: boolean) => {
@@ -164,6 +165,7 @@ const ProductsComponent = (prop: {}) => {
         return prevSelectedItems.filter((cate) => cate !== superCategory);
       }
     });
+    setPage(1);
   };
 
   const selectedCategory = (
