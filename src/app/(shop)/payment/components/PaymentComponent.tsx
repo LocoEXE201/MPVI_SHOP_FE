@@ -6,7 +6,7 @@ import useAppContext from "@/hooks/useAppContext";
 import { Rate } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { CartItem } from "../../../../../interfaces";
-import { loadCartItems } from "@/store/features/cartSlice";
+import { clearAll, loadCartItems } from "@/store/features/cartSlice";
 import { formatPrice } from "@/utils/formatPrice";
 import shopApi from "@/api/shop/shopApi";
 import Swal from "sweetalert2";
@@ -16,6 +16,7 @@ import { PATH_SHOP } from "@/routes/paths";
 import Loading from "@/components/Templates/Loading/Loading";
 import CusInfoOfOrderModal from "@/components/Shop/CusInfoOfOrderModal";
 import customerApi from "@/api/shop/customerApi";
+import { useDispatch } from "react-redux";
 
 interface Address {
   $id: string;
@@ -35,6 +36,7 @@ const PaymentComponent = (prop: {}) => {
   const [receiverPhoneNumber, setReceiverPhoneNumber] = useState("");
 
   const router = useRouter();
+  const dispatch = useDispatch();
   const navigateToPage = (route: string) => {
     if (typeof window !== "undefined") {
       localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
@@ -310,7 +312,9 @@ const PaymentComponent = (prop: {}) => {
       } else {
         localStorage.removeItem("cartItems");
         // window.location.href = PATH_SHOP.order;
+        dispatch(clearAll());
         navigateToPage(PATH_SHOP.order);
+
         // window.location.reload();
       }
 

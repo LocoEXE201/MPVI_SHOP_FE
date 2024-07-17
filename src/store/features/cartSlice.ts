@@ -65,7 +65,11 @@ export const cartSlice = createSlice({
       );
       }
       saveCartItems(state.cartItems)
-    }   
+    }, 
+    clearAll: (state) => {
+      state.cartItems = [];
+      saveCartItems(state.cartItems);
+  }  
     },
 
 });
@@ -89,5 +93,5 @@ export const productQtySelector = createSelector(
 
 );
 
-export const {increment, decrement, clear} = cartSlice.actions;
+export const {increment, decrement, clear, clearAll} = cartSlice.actions;
 export default cartSlice.reducer
